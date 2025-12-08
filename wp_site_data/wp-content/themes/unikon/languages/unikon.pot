@@ -1,0 +1,1313 @@
+'# 'Copyright (C) 2024 wprealizer
+'# 'This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Unikon 1.0.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tags/unikon\n"
+"POT-Creation-Date: 2024-11-14 06:20:56+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+'#: '404.php:14
+msgid "Oops!"
+msgstr ""
+
+'#: '404.php:15 inc/kirki-customizer.php:1137
+msgid "Something went Wrong..."
+msgstr ""
+
+'#: '404.php:16
+msgid "Back To Home"
+msgstr ""
+
+'#: '404.php:17
+msgid "Sorry, we couldn't find your page."
+msgstr ""
+
+'#: '404.php:35
+msgid "Error 404"
+msgstr ""
+
+'#: 'comments.php:13
+msgid "Comment"
+msgid_plural "Comments"
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'comments.php:30
+msgid "Previous"
+msgstr ""
+
+'#: 'comments.php:31 template-parts/blog/blog-single-navigation.php:51
+msgid "Next"
+msgstr ""
+
+'#: 'comments.php:47
+msgid "Your Comment Here..."
+msgstr ""
+
+'#: 'comments.php:55
+msgid "Post Comment"
+msgstr ""
+
+'#: 'comments.php:63
+msgid "Save my name, email, and website in this browser for the next time I comment."
+msgstr ""
+
+'#: 'functions.php:49
+msgid "Main Menu"
+msgstr ""
+
+'#: 'functions.php:120
+msgid "Blue Quote"
+msgstr ""
+
+'#: 'functions.php:274
+msgid "Search"
+msgstr ""
+
+'#: 'header.php:33 inc/kirki-customizer.php:549
+msgid "Unikon"
+msgstr ""
+
+'#: 'inc/add_plugin.php:29
+msgid "Elementor Page Builder"
+msgstr ""
+
+'#: 'inc/add_plugin.php:34
+msgid "Unikon Core"
+msgstr ""
+
+'#: 'inc/add_plugin.php:41
+msgid "Advanced Custom Fields"
+msgstr ""
+
+'#: 'inc/add_plugin.php:48
+msgid "Contact Form 7"
+msgstr ""
+
+'#: 'inc/add_plugin.php:53
+msgid "One Click Demo Import"
+msgstr ""
+
+'#: 'inc/add_plugin.php:58
+msgid "Kirki Customizer Framework"
+msgstr ""
+
+'#: 'inc/add_plugin.php:74 inc/class-tgm-plugin-activation.php:97
+msgid "Install Required Plugins"
+msgstr ""
+
+'#: 'inc/add_plugin.php:75 inc/class-tgm-plugin-activation.php:98
+msgid "Install Plugins"
+msgstr ""
+
+'#. 'translators: %s: plugin name.
+
+'#: 'inc/add_plugin.php:76 inc/class-tgm-plugin-activation.php:100
+msgid "Installing Plugin: %s"
+msgstr ""
+
+'#. 'translators: %s: plugin name.
+
+'#: 'inc/add_plugin.php:77 inc/class-tgm-plugin-activation.php:102
+msgid "Updating Plugin: %s"
+msgstr ""
+
+'#: 'inc/add_plugin.php:78 inc/class-tgm-plugin-activation.php:103
+msgid "Something went wrong with the plugin API."
+msgstr ""
+
+'#: 'inc/add_plugin.php:79
+msgid "This theme requires the following plugin: %1$s."
+msgid_plural "This theme requires the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:84
+msgid "This theme recommends the following plugin: %1$s."
+msgid_plural "This theme recommends the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:89
+msgid "The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s."
+msgid_plural "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:94
+msgid "There is an update available for: %1$s."
+msgid_plural "There are updates available for the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:99
+msgid "The following required plugin is currently inactive: %1$s."
+msgid_plural "The following required plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:104
+msgid "The following recommended plugin is currently inactive: %1$s."
+msgid_plural "The following recommended plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+'#. 'translators: 1: plugin name(s).
+
+'#: 'inc/add_plugin.php:109 inc/class-tgm-plugin-activation.php:140
+msgid "Begin installing plugin"
+msgid_plural "Begin installing plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:114 inc/class-tgm-plugin-activation.php:145
+msgid "Begin updating plugin"
+msgid_plural "Begin updating plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:119 inc/class-tgm-plugin-activation.php:150
+msgid "Begin activating plugin"
+msgid_plural "Begin activating plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/add_plugin.php:124 inc/class-tgm-plugin-activation.php:155
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+'#: 'inc/add_plugin.php:125 inc/class-tgm-plugin-activation.php:157
+'#: 'inc/class-tgm-plugin-activation.php:2478
+msgid "Plugin activated successfully."
+msgstr ""
+
+'#: 'inc/add_plugin.php:126 inc/class-tgm-plugin-activation.php:158
+msgid "The following plugin was activated successfully:"
+msgstr ""
+
+'#. 'translators: 1: plugin name.
+
+'#: 'inc/add_plugin.php:127 inc/class-tgm-plugin-activation.php:160
+msgid "No action taken. Plugin %1$s was already active."
+msgstr ""
+
+'#. 'translators: 1: plugin name.
+
+'#: 'inc/add_plugin.php:128 inc/class-tgm-plugin-activation.php:162
+msgid "Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin."
+msgstr ""
+
+'#. 'translators: 1: dashboard link.
+
+'#: 'inc/add_plugin.php:129 inc/class-tgm-plugin-activation.php:164
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+'#: 'inc/add_plugin.php:130 inc/class-tgm-plugin-activation.php:165
+msgid "Dismiss this notice"
+msgstr ""
+
+'#: 'inc/add_plugin.php:131 inc/class-tgm-plugin-activation.php:166
+msgid "There are one or more required or recommended plugins to install, update or activate."
+msgstr ""
+
+'#: 'inc/add_plugin.php:132 inc/class-tgm-plugin-activation.php:167
+msgid "Please contact the administrator of this site for help."
+msgstr ""
+
+'#: 'inc/class-navwalker.php:381
+msgid "Home"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:156
+'#: 'inc/class-tgm-plugin-activation.php:511
+'#: 'inc/class-tgm-plugin-activation.php:1852
+'#: 'inc/class-tgm-plugin-activation.php:2899
+msgid "Return to the Dashboard"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:291
+msgid "This plugin needs to be updated to be compatible with your theme."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:292
+msgid "Update Required"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:603
+msgid "The remote plugin package does not contain a folder with the desired slug and renaming did not work."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:603
+'#: 'inc/class-tgm-plugin-activation.php:606
+msgid "Please contact the plugin provider and ask them to package their plugin according to the WordPress guidelines."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:606
+msgid "The remote plugin package consists of more than one file, but the files are not packaged in a folder."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:764
+'#: 'inc/class-tgm-plugin-activation.php:2267
+msgctxt "plugin A *and* plugin B"
+msgid "and"
+msgstr ""
+
+'#. 'translators: %s: version number
+
+'#: 'inc/class-tgm-plugin-activation.php:1332
+msgid "TGMPA v%s"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1592
+msgid "Required"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1595
+msgid "Recommended"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1611
+msgid "WordPress Repository"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1614
+msgid "External Source"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1617
+msgid "Pre-Packaged"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1634
+msgid "Not Installed"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1638
+msgid "Installed But Not Activated"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1640
+msgid "Active"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1646
+msgid "Required Update not Available"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1649
+msgid "Requires Update"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1652
+msgid "Update recommended"
+msgstr ""
+
+'#. 'translators: 1: install status, 2: update status
+
+'#: 'inc/class-tgm-plugin-activation.php:1661
+msgctxt "Install/Update Status"
+msgid "%1$s, %2$s"
+msgstr ""
+
+'#. 'translators: 1: number of plugins.
+
+'#: 'inc/class-tgm-plugin-activation.php:1707
+msgctxt "plugins"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+'#. 'translators: 1: number of plugins.
+
+'#: 'inc/class-tgm-plugin-activation.php:1711
+msgid "To Install <span class=\"count\">(%s)</span>"
+msgid_plural "To Install <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+'#. 'translators: 1: number of plugins.
+
+'#: 'inc/class-tgm-plugin-activation.php:1715
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+'#. 'translators: 1: number of plugins.
+
+'#: 'inc/class-tgm-plugin-activation.php:1719
+msgid "To Activate <span class=\"count\">(%s)</span>"
+msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1801
+msgctxt "as in: \"version nr unknown\""
+msgid "unknown"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1809
+msgid "Installed version:"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1817
+msgid "Minimum required version:"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1829
+msgid "Available version:"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1852
+msgid "No plugins to install, update or activate."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1866
+msgid "Plugin"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1867
+msgid "Source"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1868
+msgid "Type"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1872
+msgid "Version"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:1873
+msgid "Status"
+msgstr ""
+
+'#. 'translators: %2$s: plugin name in screen reader markup
+
+'#: 'inc/class-tgm-plugin-activation.php:1922
+msgid "Install %2$s"
+msgstr ""
+
+'#. 'translators: %2$s: plugin name in screen reader markup
+
+'#: 'inc/class-tgm-plugin-activation.php:1927
+msgid "Update %2$s"
+msgstr ""
+
+'#. 'translators: %2$s: plugin name in screen reader markup
+
+'#: 'inc/class-tgm-plugin-activation.php:1933
+msgid "Activate %2$s"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2003
+msgid "Upgrade message from the plugin author:"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2036
+msgid "Install"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2042
+msgid "Update"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2045
+msgid "Activate"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2076
+msgid "No plugins were selected to be installed. No action taken."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2078
+msgid "No plugins were selected to be updated. No action taken."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2119
+msgid "No plugins are available to be installed at this time."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2121
+msgid "No plugins are available to be updated at this time."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2227
+msgid "No plugins were selected to be activated. No action taken."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2253
+msgid "No plugins are available to be activated at this time."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2477
+msgid "Plugin activation failed."
+msgstr ""
+
+'#. 'translators: 1: plugin name, 2: action number 3: total number of actions.
+
+'#: 'inc/class-tgm-plugin-activation.php:2817
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+'#. 'translators: 1: plugin name, 2: error message.
+
+'#: 'inc/class-tgm-plugin-activation.php:2820
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+'#. 'translators: 1: plugin name.
+
+'#: 'inc/class-tgm-plugin-activation.php:2822
+msgid "The installation of %1$s failed."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2826
+msgid "The installation and activation process is starting. This process may take a while on some hosts, so please be patient."
+msgstr ""
+
+'#. 'translators: 1: plugin name.
+
+'#: 'inc/class-tgm-plugin-activation.php:2828
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2829
+msgid "All installations and activations have been completed."
+msgstr ""
+
+'#. 'translators: 1: plugin name, 2: action number 3: total number of actions.
+
+'#: 'inc/class-tgm-plugin-activation.php:2831
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2834
+msgid "The installation process is starting. This process may take a while on some hosts, so please be patient."
+msgstr ""
+
+'#. 'translators: 1: plugin name.
+
+'#: 'inc/class-tgm-plugin-activation.php:2836
+msgid "%1$s installed successfully."
+msgstr ""
+
+'#: 'inc/class-tgm-plugin-activation.php:2837
+msgid "All installations have been completed."
+msgstr ""
+
+'#. 'translators: 1: plugin name, 2: action number 3: total number of actions.
+
+'#: 'inc/class-tgm-plugin-activation.php:2839
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+'#: 'inc/common/comments-form-list.php:17
+msgid "Name*"
+msgstr ""
+
+'#: 'inc/common/comments-form-list.php:26
+msgid "Email"
+msgstr ""
+
+'#: 'inc/common/comments-form-list.php:34
+msgid "Website"
+msgstr ""
+
+'#: 'inc/common/comments-form-list.php:84
+msgid "Pingback:"
+msgstr ""
+
+'#: 'inc/common/comments-form-list.php:107
+msgid "at"
+msgstr ""
+
+'#: 'inc/common/comments-form-list.php:113
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+'#: 'inc/common/unikon-breadcrumb.php:24 inc/common/unikon-breadcrumb.php:27
+msgid "Blog"
+msgstr ""
+
+'#: 'inc/common/unikon-breadcrumb.php:36
+msgid "Search Results for : "
+msgstr ""
+
+'#: 'inc/common/unikon-breadcrumb.php:38
+msgid "Page not Found"
+msgstr ""
+
+'#: 'inc/common/unikon-breadcrumb.php:138
+msgid "Search for product..."
+msgstr ""
+
+'#: 'inc/common/unikon-breadcrumb.php:147
+msgid "Search by :"
+msgstr ""
+
+'#. 'Translators: If there are characters in your language that are not
+'#. 'supported
+'#. '    by chosen font(s), translate this to 'off'. Do not translate into your
+'#. 'own language.
+
+'#: 'inc/common/unikon-scripts.php:71
+msgctxt "Google font: on or off"
+msgid "on"
+msgstr ""
+
+'#: 'inc/common/unikon-widgets.php:15
+msgid "Blog Sidebar"
+msgstr ""
+
+'#: 'inc/common/unikon-widgets.php:17
+msgid "Set Your Blog Widget"
+msgstr ""
+
+'#: 'inc/common/unikon-widgets.php:29
+msgid "Footer %1$s"
+msgstr ""
+
+'#: 'inc/common/unikon-widgets.php:31
+msgid "Footer column %1$s"
+msgstr ""
+
+'#: 'inc/common/unikon-widgets.php:43
+msgid "Services Sidebar"
+msgstr ""
+
+'#: 'inc/common/unikon-widgets.php:45
+msgid "Set Your Services Widget"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:8
+msgid "Unikon Customizer"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:9
+msgid "Unikon Theme Customizer."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:19
+msgid "Theme Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:20
+msgid "Theme Controls."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:29
+msgid "Header Sticky Switcher"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:30
+msgid "Header Sticky On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:34 inc/kirki-customizer.php:64
+'#: 'inc/kirki-customizer.php:130 inc/kirki-customizer.php:295
+'#: 'inc/kirki-customizer.php:462 inc/kirki-customizer.php:538
+'#: 'inc/kirki-customizer.php:599 inc/kirki-customizer.php:1411
+msgid "Enable"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:35 inc/kirki-customizer.php:65
+'#: 'inc/kirki-customizer.php:131 inc/kirki-customizer.php:296
+'#: 'inc/kirki-customizer.php:463 inc/kirki-customizer.php:539
+'#: 'inc/kirki-customizer.php:600 inc/kirki-customizer.php:1412
+msgid "Disable"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:49
+msgid "Header Main Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:50
+msgid "Header Main Controls."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:59
+msgid "Header Custom/Elementor Switch"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:60
+msgid "Header Custom/Elementor On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:73
+msgid "Chose Header Style"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:108
+msgid "Elementor Header Template"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:110 inc/kirki-customizer.php:643
+'#: 'inc/kirki-customizer.php:1393 inc/kirki-customizer.php:1455
+msgid "Choose an option"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:125
+msgid "Header Right Switch"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:126
+msgid "Header Right On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:139
+msgid "Header Right Button Text"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:141 template-parts/header/header-1.php:16
+msgid "Lets Talk"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:156
+msgid "Header Right Button Link"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:158 template-parts/header/header-1.php:17
+msgid "#"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:178
+msgid "Header Logo"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:179
+msgid "Header Logo Settings."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:189
+msgid "Header Black Logo"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:190
+msgid "Theme Default/Primary Logo Here"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:198
+msgid "Header White Logo"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:199
+msgid "Theme White Logo Here"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:208
+msgid "Width"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:245
+msgid "Offcanvas Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:246
+msgid "Offcanvas Controls."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:255
+msgid "Offcanvas Logo"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:265
+msgid "Logo Width"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:290
+msgid "Offcanvas Content Switch"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:291
+msgid "Offcanvas Content On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:304
+msgid "Offcanvas Content"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:306 template-parts/offcanvas/offcanvas-1.php:13
+msgid "Discover, Explore & Understanding The Product Description Maecenas ullamcorper eros libero, facilities tempore mi darius vel. Sed ut felid ligula. Pellentesque."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:321
+msgid "Offcanvas Number Label"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:323 template-parts/offcanvas/offcanvas-1.php:15
+msgid "Contact Us 24/7"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:338
+msgid "Offcanvas Number"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:340
+msgid "+55 (9900) 666 22"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:355
+msgid "Offcanvas Email Label"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:357 template-parts/offcanvas/offcanvas-1.php:18
+msgid "Contact Mail"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:372
+msgid "Offcanvas Email"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:374 template-parts/offcanvas/offcanvas-1.php:19
+msgid "info.unikon@demo.com"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:389
+msgid "Offcanvas Location Label"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:391 template-parts/offcanvas/offcanvas-1.php:21
+msgid "Contact Location"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:406
+msgid "Offcanvas Location"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:408 template-parts/offcanvas/offcanvas-1.php:22
+msgid "18/2, Topkhana Road, Australia."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:423
+msgid "Offcanvas Copyright"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:425
+msgid "@Unikon.Copyright © 2024"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:447
+msgid "Back To Top Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:448
+msgid "Back To Top Controls."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:457
+msgid "Back To Top Switch"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:458
+msgid "Back To Top On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:471
+msgid "Back To Top BG Color"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:472
+msgid "You can change Back To Top bg color from here."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:494
+msgid "Back To Top Icon Color"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:495
+msgid "You can change Back To Top icon color from here."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:523
+msgid "Preloader Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:524
+msgid "Preloader Controls."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:533
+msgid "Preloader Switch"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:534
+msgid "Preloader On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:547
+msgid "Preloader Loading Text"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:569
+msgid "Breadcrumb Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:570
+msgid "Breadcrumb Settings."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:579
+msgid "Show Breadcrumb Globally"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:580
+msgid "Breadcrumb On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:584
+msgid "Show"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:585
+msgid "Hide"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:594
+msgid "Breadcrumb Custom/Elementor Switch"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:595
+msgid "Breadcrumb Custom/Elementor On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:608
+msgid "Chose Breadcrumb Style"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:641
+msgid "Elementor Breadcrumb Template"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:658 inc/kirki-customizer.php:673
+'#: 'inc/kirki-customizer.php:704 inc/kirki-customizer.php:735
+msgid "Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:663
+msgid "Desktop"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:664
+msgid "Tablet"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:665
+msgid "Mobile"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:674
+msgid "Set typography for desktop"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:705
+msgid "Set typography for tablet"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:736
+msgid "Set typography for mobile"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:766
+msgid "Padding"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:804
+msgid "Blog Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:805
+msgid "Blog Section Settings."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:814 inc/kirki-customizer.php:856
+'#: 'inc/kirki-customizer.php:897
+msgid "Vertical Padding"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:815 inc/kirki-customizer.php:857
+'#: 'inc/kirki-customizer.php:898
+msgid "Change Vertical Padding here"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:938
+msgid "Set Height"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:939
+msgid "Adjust height of hero section."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:975
+msgid "Blog Category Meta On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:986
+msgid "Blog Author Meta On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:996
+msgid "Blog Date Meta On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1006
+msgid "Blog Comments Meta On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1016
+msgid "Blog Tags Meta On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1026
+msgid "Post Box Social On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1036
+msgid "Blog BTN On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1046
+msgid "Single Blog Social Share"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1057
+msgid "Blog Button Text"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1074
+msgid "Enable Related Post?"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1075
+msgid "Related Post For Single On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1085
+msgid "Blog Related Title"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1107
+msgid "404 Page"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1108
+msgid "404 Page Settings."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1117
+msgid "Error Image"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1118
+msgid "Error Image Here"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1128
+msgid "Not Found Title"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1148
+msgid "Not Found description"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1159
+msgid "Error Link Text"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1174
+msgid "Typography"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1175
+msgid "Typography Settings."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1184
+msgid "H1 Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1185 inc/kirki-customizer.php:1209
+'#: 'inc/kirki-customizer.php:1233 inc/kirki-customizer.php:1257
+'#: 'inc/kirki-customizer.php:1281 inc/kirki-customizer.php:1305
+'#: 'inc/kirki-customizer.php:1329 inc/kirki-customizer.php:1353
+msgid "The full set of options."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1208
+msgid "H2 Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1232
+msgid "H3 Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1256
+msgid "H4 Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1280
+msgid "H5 Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1304
+msgid "H6 Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1328
+msgid "Body Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1352
+msgid "Paragraph Typography Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1380
+msgid "Footer"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1381
+msgid "Footer Settings."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1390
+msgid "Footer Widget Number"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1395
+msgid "1"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1396
+msgid "2"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1397
+msgid "3"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1398
+msgid "4"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1406
+msgid "Footer Custom/Elementor Switch"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1407
+msgid "Footer Custom/Elementor On/Off"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1420
+msgid "Footer Layout Control"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1453
+msgid "Elementor Footer Template"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1470
+msgid "Footer Copyright"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1472
+msgid "© 2024 Unikon. All rights reserved."
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1485
+msgid "Slug Settings"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1494
+msgid "Portfolios Slug"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1496
+msgid "wpr-portfolios"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1504
+msgid "Services Slug"
+msgstr ""
+
+'#: 'inc/kirki-customizer.php:1506
+msgid "wpr-services"
+msgstr ""
+
+'#: 'inc/template-functions.php:87
+msgid "Image Alt Text"
+msgstr ""
+
+'#: 'inc/template-helper.php:109 inc/template-helper.php:147
+'#: 'inc/template-helper.php:202 inc/template-helper.php:235
+'#: 'inc/template-helper.php:261 inc/template-helper.php:294
+msgid "English"
+msgstr ""
+
+'#: 'inc/template-helper.php:148 inc/template-helper.php:203
+'#: 'inc/template-helper.php:262 inc/template-helper.php:295
+msgid "Spanish"
+msgstr ""
+
+'#: 'inc/template-helper.php:149 inc/template-helper.php:204
+'#: 'inc/template-helper.php:263 inc/template-helper.php:296
+msgid "French"
+msgstr ""
+
+'#: 'inc/template-helper.php:165
+msgid "EN"
+msgstr ""
+
+'#: 'inc/template-helper.php:230
+msgid "language"
+msgstr ""
+
+'#: 'inc/template-helper.php:330 template-parts/offcanvas/offcanvas-1.php:37
+msgid "unikon Logo"
+msgstr ""
+
+'#: 'inc/template-helper.php:435
+msgid "Copyright 2024 Unikon. Inc."
+msgstr ""
+
+'#: 'inc/template-helper.php:869
+msgid "Add Color Code"
+msgstr ""
+
+'#: 'inc/template-helper.php:877 inc/template-helper.php:909
+msgid "Color"
+msgstr ""
+
+'#: 'inc/template-helper.php:932
+msgid "Dashboard"
+msgstr ""
+
+'#: 'inc/template-helper.php:932
+msgid "Login"
+msgstr ""
+
+'#: 'inc/template-helper.php:933
+msgid "Reset Password"
+msgstr ""
+
+'#: 'inc/template-helper.php:934
+msgid "My Profile"
+msgstr ""
+
+'#: 'inc/template-helper.php:935
+msgid "Enrolled Courses"
+msgstr ""
+
+'#: 'inc/template-helper.php:936
+msgid "My Courses"
+msgstr ""
+
+'#: 'inc/template-helper.php:937
+msgid "Settings"
+msgstr ""
+
+'#: 'inc/template-helper.php:938
+msgid "Wishlist"
+msgstr ""
+
+'#: 'inc/template-helper.php:939
+msgid "Reviews"
+msgstr ""
+
+'#: 'inc/template-helper.php:940
+msgid "My quiz attempts"
+msgstr ""
+
+'#: 'inc/template-helper.php:941
+msgid "Purchase History"
+msgstr ""
+
+'#: 'inc/template-helper.php:942
+msgid "Question & Answer"
+msgstr ""
+
+'#: 'inc/template-helper.php:943
+msgid "Announcements"
+msgstr ""
+
+'#: 'inc/template-helper.php:944
+msgid "Withdraw"
+msgstr ""
+
+'#: 'inc/template-helper.php:945
+msgid "Quiz attempts"
+msgstr ""
+
+'#: 'inc/template-helper.php:946
+msgid "Reset password"
+msgstr ""
+
+'#: 'inc/template-helper.php:947
+msgid "Withdraw Settings"
+msgstr ""
+
+'#: 'search.php:26
+msgid "Search Results For:"
+msgstr ""
+
+'#: 'single.php:74
+msgid "Back to main blog"
+msgstr ""
+
+'#: 'template-parts/blog/blog-single-navigation.php:14
+msgid "PREVIOUS"
+msgstr ""
+
+'#: 'template-parts/blog/blog-single-navigation.php:24
+msgid "No Previous Post Available"
+msgstr ""
+
+'#: 'template-parts/blog/blog-single-navigation.php:64
+msgid "No Next Post Available"
+msgstr ""
+
+'#: 'template-parts/blog/blog-single-related.php:12
+msgid "Related Posts"
+msgstr ""
+
+'#: 'template-parts/content-none.php:14
+msgid "Nothing Found"
+msgstr ""
+
+'#. 'translators: 1: link to WP admin new post page.
+
+'#: 'template-parts/content-none.php:24
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+'#: 'template-parts/content-none.php:37
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr ""
+
+'#: 'template-parts/content-none.php:43
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+'#: 'template-parts/content-page.php:5 template-parts/content-search.php:32
+'#: 'template-parts/content.php:29
+msgid "Pages:"
+msgstr ""
+
+'#: 'template-parts/content-page.php:9
+msgid "Page"
+msgstr ""
+
+'#: 'template-parts/offcanvas/offcanvas-1.php:16
+msgid "+55(9900)66622"
+msgstr ""
+
+'#: 'template-parts/offcanvas/offcanvas-1.php:23
+msgid "@Unikon.Copyright © 2024 "
+msgstr ""

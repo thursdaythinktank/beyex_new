@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyex • Premium 3D Virtual Tours for UK Property & Hospitality</title>
+  <meta name="description" content="Transform physical spaces into immersive digital experiences. Premium 3D virtual tours that sell faster and engage deeper across the UK.">
+
+  <!-- Fonts: Instrument Serif + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Refined British Palette */
+      --slate-950: #0f1419;
+      --slate-900: #1a1f28;
+      --slate-800: #2a3342;
+      --slate-700: #3d4758;
+      --slate-600: #57647a;
+      --slate-500: #7a8599;
+      --slate-400: #a1adc2;
+      --slate-300: #d1d8e3;
+      --slate-200: #e8ecf2;
+      --slate-100: #f4f6fa;
+      --slate-50: #fafbfc;
+
+      /* Accent System */
+      --sage-500: #6b7f72;
+      --sage-400: #8ba393;
+      --terracotta-500: #c66b5c;
+      --navy-500: #354e6c;
+      --cream: #faf8f5;
+
+      /* Brand */
+      --primary: var(--navy-500);
+      --accent: var(--terracotta-500);
+      --muted: var(--sage-500);
+
+      /* Depth */
+      --z-base: 1;
+      --z-nav: 100;
+      --z-portal: 50;
+
+      /* Motion */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-portal: cubic-bezier(0.83, 0, 0.17, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--slate-950);
+      color: var(--slate-100);
+      overflow-x: hidden;
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Subtle Background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(107, 127, 114, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(198, 107, 92, 0.03) 0%, transparent 40%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Fine Grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* Typography Scale - Refined UK Style */
+    h1, h2, h3 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: var(--slate-50);
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+    }
+
+    h2 {
+      font-size: clamp(1.875rem, 4vw, 3.25rem);
+    }
+
+    h3 {
+      font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    }
+
+    p {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: var(--z-nav);
+      padding: 1.75rem 5%;
+      backdrop-filter: blur(24px) saturate(150%);
+      background: rgba(15, 20, 25, 0.75);
+      border-bottom: 1px solid rgba(161, 173, 194, 0.08);
+      transition: all 0.4s var(--ease-smooth);
+    }
+
+    nav.scrolled {
+      padding: 1.25rem 5%;
+      background: rgba(15, 20, 25, 0.92);
+      border-bottom-color: rgba(161, 173, 194, 0.12);
+    }
+
+    .nav-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--slate-50);
+      letter-spacing: -0.01em;
+      transition: opacity 0.3s var(--ease-smooth);
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--slate-300);
+      text-decoration: none;
+      font-weight: 450;
+      font-size: 0.9375rem;
+      letter-spacing: -0.01em;
+      position: relative;
+      transition: color 0.3s var(--ease-smooth);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--slate-300);
+      transition: width 0.35s var(--ease-portal);
+    }
+
+    .nav-links a:hover {
+      color: var(--slate-50);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      border-radius: 6px;
+      color: var(--slate-50);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      letter-spacing: -0.01em;
+      transition: all 0.25s var(--ease-smooth);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-cta:hover {
+      background: #415d7f;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(53, 78, 108, 0.25);
+    }
+
+    .nav-cta::after {
+      display: none;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 9rem 5% 5rem;
+      position: relative;
+    }
+
+    .hero-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: var(--z-base);
+    }
+
+    .hero-content {
+      animation: fadeSlideUp 1s var(--ease-smooth) backwards;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(32px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(107, 127, 114, 0.08);
+      border: 1px solid rgba(107, 127, 114, 0.2);
+      border-radius: 6px;
+      color: var(--sage-400);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 2rem;
+      animation: fadeSlideUp 1s 0.15s var(--ease-smooth) backwards;
+    }
+
+    .hero h1 {
+      margin-bottom: 1.5rem;
+      animation: fadeSlideUp 1s 0.25s var(--ease-smooth) backwards;
+    }
+
+    .hero h1 .accent-text {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-description {
+      font-size: 1.1875rem;
+      color: var(--slate-400);
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+      max-width: 560px;
+      animation: fadeSlideUp 1s 0.35s var(--ease-smooth) backwards;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      animation: fadeSlideUp 1s 0.45s var(--ease-smooth) backwards;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+      background: rgba(42, 51, 66, 0.4);
+      border: 1px solid rgba(161, 173, 194, 0.1);
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      transition: all 0.35s var(--ease-smooth);
+    }
+
+    .stat-card:hover {
+      background: rgba(42, 51, 66, 0.6);
+      border-color: rgba(161, 173, 194, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .stat-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.25rem;
+      color: var(--slate-50);
+      display: block;
+      margin-bottom: 0.375rem;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--slate-500);
+      font-weight: 450;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeSlideUp 1s 0.55s var(--ease-smooth) backwards;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      transition: all 0.25s var(--ease-smooth);
+      cursor: pointer;
+      border: none;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--slate-50);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary:hover {
+      background: #415d7f;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(53, 78, 108, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--slate-200);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.25s var(--ease-smooth);
+    }
+
+    .btn:hover svg {
+      transform: translateX(2px);
+    }
+
+    /* Portal Frame */
+    .hero-portal {
+      position: relative;
+      animation: fadeSlideUp 1s 0.65s var(--ease-smooth) backwards;
+    }
+
+    .portal-frame {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(161, 173, 194, 0.12);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+      transition: all 0.4s var(--ease-smooth);
+    }
+
+    .portal-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+        rgba(107, 127, 114, 0.08) 0%,
+        rgba(198, 107, 92, 0.06) 100%);
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-smooth);
+    }
+
+    .portal-frame:hover::before {
+      opacity: 1;
+    }
+
+    .portal-frame:hover {
+      border-color: rgba(161, 173, 194, 0.2);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+    }
+
+    .tour-embed {
+      position: relative;
+      padding-top: 75%;
+      background: var(--slate-900);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .tour-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .portal-label {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.5rem 0.875rem;
+      background: rgba(15, 20, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--slate-300);
+      z-index: 2;
+      border: 1px solid rgba(161, 173, 194, 0.15);
+    }
+
+    /* Why Section */
+    .why-section {
+      padding: 8rem 5%;
+      position: relative;
+    }
+
+    .section-container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-eyebrow {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(198, 107, 92, 0.08);
+      border: 1px solid rgba(198, 107, 92, 0.2);
+      border-radius: 6px;
+      color: var(--terracotta-500);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+      margin-bottom: 1.25rem;
+    }
+
+    .section-description {
+      font-size: 1.125rem;
+      color: var(--slate-400);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    .benefit-card {
+      padding: 2.25rem;
+      background: rgba(42, 51, 66, 0.3);
+      border: 1px solid rgba(161, 173, 194, 0.1);
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+      transition: all 0.35s var(--ease-smooth);
+      position: relative;
+    }
+
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--sage-500), var(--terracotta-500));
+      opacity: 0;
+      transition: opacity 0.35s var(--ease-smooth);
+    }
+
+    .benefit-card:hover::before {
+      opacity: 1;
+    }
+
+    .benefit-card:hover {
+      background: rgba(42, 51, 66, 0.5);
+      border-color: rgba(161, 173, 194, 0.18);
+      transform: translateY(-4px);
+    }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1.5rem;
+      color: var(--slate-400);
+      transition: all 0.35s var(--ease-smooth);
+    }
+
+    .benefit-card:hover .benefit-icon {
+      color: var(--sage-400);
+      transform: scale(1.05);
+    }
+
+    .benefit-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.875rem;
+      color: var(--slate-100);
+    }
+
+    .benefit-card p {
+      color: var(--slate-400);
+      line-height: 1.7;
+      font-size: 0.9375rem;
+    }
+
+    /* Sectors Section */
+    .sectors-section {
+      padding: 8rem 5%;
+      position: relative;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(26, 31, 40, 0.3) 50%,
+        transparent 100%);
+    }
+
+    .sector-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 6rem;
+    }
+
+    .sector-detail:last-child {
+      margin-bottom: 0;
+    }
+
+    .sector-info {
+      padding: 2rem 0;
+    }
+
+    .sector-badge {
+      display: inline-block;
+      padding: 0.375rem 0.875rem;
+      background: rgba(107, 127, 114, 0.15);
+      border: 1px solid rgba(107, 127, 114, 0.3);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--sage-400);
+      margin-bottom: 1.25rem;
+    }
+
+    .sector-info h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--slate-50);
+    }
+
+    .sector-description {
+      color: var(--slate-400);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-size: 1.0625rem;
+    }
+
+    .sector-features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sector-features li {
+      padding: 0.75rem 0;
+      padding-left: 1.75rem;
+      position: relative;
+      color: var(--slate-300);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .sector-features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.125rem;
+      width: 6px;
+      height: 6px;
+      background: var(--sage-500);
+      border-radius: 50%;
+    }
+
+    .sector-tour {
+      position: relative;
+    }
+
+    .sector-placeholder {
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(42, 51, 66, 0.3);
+      border: 1px solid rgba(161, 173, 194, 0.1);
+      border-radius: 12px;
+    }
+
+    .placeholder-content {
+      text-align: center;
+      padding: 3rem;
+      max-width: 360px;
+    }
+
+    .placeholder-content svg {
+      color: var(--slate-500);
+      margin-bottom: 1.5rem;
+    }
+
+    .placeholder-content h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--slate-200);
+      margin-bottom: 0.75rem;
+    }
+
+    .placeholder-content p {
+      color: var(--slate-500);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* Demo Section */
+    .demo-section {
+      padding: 8rem 5%;
+      position: relative;
+    }
+
+    .demo-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .demo-content h2 {
+      margin-bottom: 1.25rem;
+    }
+
+    .demo-content p {
+      font-size: 1.125rem;
+      color: var(--slate-400);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .demo-benefits {
+      list-style: none;
+      margin-bottom: 2.5rem;
+    }
+
+    .demo-benefits li {
+      padding: 0.875rem 0;
+      padding-left: 1.75rem;
+      position: relative;
+      color: var(--slate-300);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .demo-benefits li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.125rem;
+      width: 6px;
+      height: 6px;
+      background: var(--sage-500);
+      border-radius: 50%;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      padding: 2.5rem;
+      background: rgba(42, 51, 66, 0.4);
+      border: 1px solid rgba(161, 173, 194, 0.12);
+      border-radius: 12px;
+      backdrop-filter: blur(16px);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.625rem;
+      font-weight: 500;
+      color: var(--slate-200);
+      font-size: 0.875rem;
+      letter-spacing: -0.01em;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: rgba(15, 20, 25, 0.6);
+      border: 1px solid rgba(161, 173, 194, 0.15);
+      border-radius: 6px;
+      color: var(--slate-100);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9375rem;
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--slate-600);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--slate-500);
+      background: rgba(15, 20, 25, 0.8);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: var(--slate-50);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .form-submit:hover {
+      background: #415d7f;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(53, 78, 108, 0.3);
+    }
+
+    .form-submit:active {
+      transform: translateY(0);
+    }
+
+    .form-note {
+      font-size: 0.8125rem;
+      color: var(--slate-500);
+      margin-top: 0.875rem;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      padding: 4rem 5% 2rem;
+      border-top: 1px solid rgba(161, 173, 194, 0.08);
+      background: linear-gradient(180deg, transparent, rgba(26, 31, 40, 0.3));
+    }
+
+    .footer-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      font-style: italic;
+      color: var(--slate-100);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-description {
+      color: var(--slate-500);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-size: 0.9375rem;
+    }
+
+    .footer-title {
+      font-weight: 500;
+      color: var(--slate-200);
+      margin-bottom: 1.25rem;
+      font-size: 0.9375rem;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.625rem;
+    }
+
+    .footer-links a {
+      color: var(--slate-500);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: color 0.25s var(--ease-smooth);
+    }
+
+    .footer-links a:hover {
+      color: var(--slate-300);
+    }
+
+    .footer-bottom {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(161, 173, 194, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--slate-600);
+      font-size: 0.875rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: rgba(161, 173, 194, 0.06);
+      border: 1px solid rgba(161, 173, 194, 0.1);
+      color: var(--slate-500);
+      text-decoration: none;
+      transition: all 0.25s var(--ease-smooth);
+      font-size: 0.875rem;
+    }
+
+    .social-link:hover {
+      background: rgba(161, 173, 194, 0.12);
+      border-color: rgba(161, 173, 194, 0.2);
+      color: var(--slate-300);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: all 0.7s var(--ease-smooth);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .sector-detail {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        margin-bottom: 5rem;
+      }
+
+      .demo-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1.25rem 5%;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 7rem 5% 3rem;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="nav-container">
+      <div class="logo">Beyex</div>
+      <ul class="nav-links">
+        <li><a href="#sectors">Sectors</a></li>
+        <li><a href="#why">Benefits</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#demo" class="nav-cta">Get Demo</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="6" cy="6" r="6" fill="currentColor" opacity="0.5"/>
+          </svg>
+          Premium 3D Virtual Tours
+        </div>
+        <h1>
+          Transform Spaces Into
+          <span class="accent-text">Immersive Experiences</span>
+        </h1>
+        <p class="hero-description">
+          Premium 3D virtual tours that convert browsers into buyers. Showcase properties, venues, and spaces with photorealistic digital twins that engage prospects 24/7.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value">+49%</span>
+            <span class="stat-label">More enquiries</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">31%</span>
+            <span class="stat-label">Faster sales</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">+9%</span>
+            <span class="stat-label">Higher value</span>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="#demo" class="btn btn-primary">
+            Book Free Demo
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#why" class="btn btn-secondary">
+            See Benefits
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-portal">
+        <div class="portal-frame">
+          <span class="portal-label">Interactive Tour</span>
+          <div class="tour-embed">
+            <iframe
+              src="https://my.matterport.com/show/?m=eMkANY4WhdJ"
+              allow="xr-spatial-tracking; fullscreen; vr"
+              title="Interactive 3D Virtual Tour">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Section -->
+  <section class="why-section" id="why">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">The Beyex Advantage</span>
+        <h2>Why Virtual Tours Work</h2>
+        <p class="section-description">
+          Immersive digital experiences that qualify prospects, reduce viewings, and accelerate decisions across the UK market.
+        </p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 8V12L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h3>24/7 Global Access</h3>
+          <p>
+            Prospects explore your space anytime, from anywhere—no scheduling, no geographic barriers.
+          </p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h3>Self-Qualifying Prospects</h3>
+          <p>
+            Pre-qualified leads who've thoroughly explored, reducing time-wasters and no-shows.
+          </p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <h3>Precise Measurements</h3>
+          <p>
+            Built-in measurement tools let prospects verify dimensions and plan layouts remotely.
+          </p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 8H17M7 12H17M7 16H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <h3>Interactive Information</h3>
+          <p>
+            Contextual tags highlight features, specifications, and details throughout the tour.
+          </p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h3>Search Visibility</h3>
+          <p>
+            Rich visual content that ranks higher in search results and drives organic traffic.
+          </p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9 9H15M9 15H15M9 12H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h3>Universal Embeds</h3>
+          <p>
+            Seamless integration across websites, portals, and social platforms with one click.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sectors Section -->
+  <section class="sectors-section" id="sectors">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Industries We Serve</span>
+        <h2>Tailored for Your Sector</h2>
+        <p class="section-description">
+          From residential property to commercial hospitality—bespoke 3D experiences that drive tangible results.
+        </p>
+      </div>
+
+      <!-- Real Estate -->
+      <div class="sector-detail reveal">
+        <div class="sector-info">
+          <span class="sector-badge">Property</span>
+          <h3>Real Estate</h3>
+          <p class="sector-description">
+            Virtual viewings for residential, commercial, and office spaces. Generate more qualified enquiries, reduce viewing time, and close faster.
+          </p>
+          <ul class="sector-features">
+            <li>Ideal for residential developers, estate agents, and commercial landlords</li>
+            <li>Reduce unnecessary viewings while boosting buyer confidence</li>
+            <li>Generate up to 49% more enquiries with immersive tours</li>
+          </ul>
+        </div>
+        <div class="sector-tour">
+          <div class="portal-frame">
+            <span class="portal-label">Live Property Tour</span>
+            <div class="tour-embed">
+              <iframe
+                src="https://my.matterport.com/show/?m=eMkANY4WhdJ"
+                allow="xr-spatial-tracking; fullscreen; vr"
+                title="Real Estate 3D Virtual Tour">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Venues & Events -->
+      <div class="sector-detail reveal">
+        <div class="sector-tour">
+          <div class="portal-frame">
+            <span class="portal-label">Live Venue Tour</span>
+            <div class="tour-embed">
+              <iframe
+                src="https://my.matterport.com/show/?m=eStYzywQFMG"
+                allow="xr-spatial-tracking; fullscreen; vr"
+                title="Venue & Events 3D Virtual Tour">
+              </iframe>
+            </div>
+          </div>
+        </div>
+        <div class="sector-info">
+          <span class="sector-badge">Hospitality</span>
+          <h3>Venues & Events</h3>
+          <p class="sector-description">
+            Showcase ambiance, capacity, and layouts for event spaces, hotels, and entertainment venues. Drive more bookings with immersive previews.
+          </p>
+          <ul class="sector-features">
+            <li>Perfect for breweries, event venues, and entertainment spaces</li>
+            <li>Highlight ambiance, amenities, and floor layouts</li>
+            <li>Increase enquiries and bookings with 24/7 virtual access</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Restaurants -->
+      <div class="sector-detail reveal">
+        <div class="sector-info">
+          <span class="sector-badge">Food & Beverage</span>
+          <h3>Restaurants & Cafés</h3>
+          <p class="sector-description">
+            Present atmosphere, seating arrangements, and views. Increase reservations and group bookings with authentic dining previews.
+          </p>
+          <ul class="sector-features">
+            <li>Great for fine dining, casual eateries, and cafés</li>
+            <li>Show ambiance, décor, and views from every table</li>
+            <li>Boost online engagement and encourage group bookings</li>
+          </ul>
+        </div>
+        <div class="sector-tour">
+          <div class="portal-frame">
+            <span class="portal-label">Live Restaurant Tour</span>
+            <div class="tour-embed">
+              <iframe
+                src="https://my.matterport.com/show/?m=8jrsKsP2cyY"
+                allow="xr-spatial-tracking; fullscreen; vr"
+                title="Restaurant 3D Virtual Tour">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Academia & AEC -->
+      <div class="sector-detail reveal">
+        <div class="sector-tour sector-placeholder">
+          <div class="placeholder-content">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+            <h4>Private Demonstrations</h4>
+            <p>For confidentiality, we don't publish sensitive institutional tours. Sample content available on request.</p>
+          </div>
+        </div>
+        <div class="sector-info">
+          <span class="sector-badge">Education & Construction</span>
+          <h3>Academia & AEC</h3>
+          <p class="sector-description">
+            Campus showcases, facility tours, and construction documentation. Secure hosting with privacy controls for sensitive environments.
+          </p>
+          <ul class="sector-features">
+            <li>Universities, research labs, schools, and training centres</li>
+            <li>Construction progress tracking with visual accuracy</li>
+            <li>Secure, unlisted tours with password protection available</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Section -->
+  <section class="demo-section" id="demo">
+    <div class="demo-container">
+      <div class="demo-content reveal">
+        <h2>Ready to Get Started?</h2>
+        <p>
+          Request a complimentary demo tour. We'll scan one room at no cost to demonstrate the impact of premium 3D visualisation.
+        </p>
+
+        <ul class="demo-benefits">
+          <li>Rapid turnaround, typically within 48 hours</li>
+          <li>Customised to your brand guidelines</li>
+          <li>Compatible with mobile, desktop, and VR headsets</li>
+          <li>Secure hosting with granular privacy controls</li>
+          <li>Simple embeds for any platform or CMS</li>
+        </ul>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm">
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-input"
+            placeholder="John Smith"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            placeholder="john@company.co.uk"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="sector">Industry Sector</label>
+          <select id="sector" name="sector" class="form-select" required>
+            <option value="">Select your sector</option>
+            <option value="real-estate">Real Estate / Property</option>
+            <option value="venues">Venues & Events</option>
+            <option value="restaurants">Restaurants & Hospitality</option>
+            <option value="academia">Education & Training</option>
+            <option value="aec">Architecture, Engineering, Construction</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">About Your Space</label>
+          <textarea
+            id="message"
+            name="message"
+            class="form-textarea"
+            placeholder="Brief description of the property or space you'd like to showcase..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">
+          Request Free Demo
+        </button>
+
+        <p class="form-note">
+          We'll contact you within one business day to arrange your complimentary demo scan.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <div class="footer-brand">Beyex</div>
+        <p class="footer-description">
+          Transforming UK properties and venues into immersive digital experiences that accelerate sales and bookings.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Sectors</h4>
+        <ul class="footer-links">
+          <li><a href="#sectors">Real Estate</a></li>
+          <li><a href="#sectors">Venues & Events</a></li>
+          <li><a href="#sectors">Restaurants</a></li>
+          <li><a href="#sectors">Academia</a></li>
+          <li><a href="#sectors">AEC</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Company</h4>
+        <ul class="footer-links">
+          <li><a href="#why">Benefits</a></li>
+          <li><a href="#demo">Get Demo</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Contact</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@beyex.co.uk">hello@beyex.co.uk</a></li>
+          <li><a href="tel:+442012345678">+44 20 1234 5678</a></li>
+          <li><a href="#">Schedule a Call</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Beyex Ltd. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+        <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+        <a href="#" class="social-link" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky Nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Scroll Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -80px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form Submission
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const submitBtn = e.target.querySelector('.form-submit');
+      const originalText = submitBtn.textContent;
+
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        submitBtn.textContent = 'Request Sent';
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          e.target.reset();
+        }, 2000);
+      }, 1500);
+    });
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

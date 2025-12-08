@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beyex • Turn Physical Spaces Into Digital Sales Machines</title>
+  <meta name="description" content="Beyex creates immersive 3D virtual tours that help real estate, venues, restaurants, academia and AEC sell faster, book quicker, and engage 24/7." />
+  <style>
+    :root{
+      --bg:#0b0e14;         /* deep slate */
+      --card:#111522;       /* card base */
+      --muted:#8fa3bf;      /* secondary text */
+      --text:#e6eefc;       /* main text */
+      --brand:#63b3ff;      /* primary */
+      --brand-2:#7ff0c6;    /* accent gradient */
+      --ring: 0 0 0 3px rgba(99,179,255,.25);
+      --radius:20px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;scroll-behavior:smooth;background:radial-gradient(1200px 600px at 80% -10%, rgba(127,240,198,.15), transparent 60%), linear-gradient(180deg, #0b0e14 0%, #0a0d12 100%); color:var(--text); font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji"}
+    a{color:var(--brand); text-decoration:none}
+    .container{max-width:1180px;margin-inline:auto;padding:0 20px}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .75rem;border-radius:999px;background:rgba(127,240,198,.08);border:1px solid rgba(127,240,198,.25);color:#c8ffe9}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.1rem;border-radius:14px;background:linear-gradient(90deg,var(--brand),var(--brand-2)); color:#00131e; font-weight:700; border:0; cursor:pointer; box-shadow:var(--shadow)}
+    .btn:hover{filter:brightness(1.05)}
+    .btn.secondary{background:transparent;color:var(--text); border:1px solid rgba(99,179,255,.35)}
+    header.nav{position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px); background:rgba(11,14,20,.6); border-bottom:1px solid rgba(99,179,255,.12); z-index:40}
+    header .row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.3px}
+    .logo-badge{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand-2)); display:grid;place-items:center;color:#00131e;font-weight:900}
+    nav a{margin:0 10px;color:var(--text);opacity:.85}
+    nav a:hover{opacity:1}
+
+    .hero{padding:72px 0 48px; position:relative;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr; gap:32px; align-items:center}
+    .hero h1{font-size: clamp(28px, 4.2vw, 52px); line-height:1.05; margin:10px 0 16px}
+    .hero p{font-size: clamp(16px, 1.6vw, 20px); color:var(--muted)}
+    .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02)); border:1px solid rgba(99,179,255,.15); border-radius:var(--radius); box-shadow:var(--shadow)}
+
+    .stats{display:grid;grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px}
+    .stat{padding:18px; text-align:center}
+    .stat strong{font-size:28px}
+    .stat span{display:block;color:var(--muted)}
+
+    .embed{position:relative; padding-top:56.25%; border-radius:16px; overflow:hidden; border:1px solid rgba(99,179,255,.2)}
+    .embed iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+    .section{padding:58px 0}
+    .section h2{font-size: clamp(22px, 3.2vw, 36px); margin:0 0 12px}
+    .section p.lead{color:var(--muted); margin:0 0 24px}
+
+    .grid{display:grid;gap:20px}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+
+    .benefits{display:grid;grid-template-columns:repeat(2,1fr); gap:16px}
+    .benefit{padding:16px; display:flex; gap:12px; align-items:start}
+    .benefit svg{flex:0 0 22px}
+
+    .badge{display:inline-block;padding:.35rem .6rem;border-radius:999px;border:1px solid rgba(99,179,255,.35); color:var(--muted); font-size:.85rem}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr); gap:20px}
+    .use-card{padding:18px}
+    .use-card h3{margin:8px 0}
+    .use-card ul{margin:10px 0 0; padding-left:18px; color:var(--muted)}
+
+    .faq{display:grid; gap:10px}
+    details.faq-item{border:1px solid rgba(99,179,255,.2); border-radius:14px; padding:14px 16px; background:rgba(255,255,255,.02)}
+    details summary{cursor:pointer; list-style:none}
+    details summary::-webkit-details-marker{display:none}
+
+    footer{padding:40px 0; color:#a7b7cc; border-top:1px solid rgba(99,179,255,.12)}
+
+    /* responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr 1fr 1fr}
+      .grid.cols-2{grid-template-columns:1fr}
+      .grid.cols-3,.cards{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 640px){
+      .stats{grid-template-columns:1fr 1fr}
+      .cards{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container row">
+      <div class="logo"><span class="logo-badge">Bx</span> Beyex</div>
+      <nav aria-label="primary">
+        <a href="#real-estate">Real Estate</a>
+        <a href="#venues">Venues</a>
+        <a href="#restaurants">Restaurants</a>
+        <a href="#academia">Academia</a>
+        <a href="#aec">AEC</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="pill">3D Tours That Convert</span>
+        <h1>Turn Your Physical Spaces Into <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Digital Sales Machines</span></h1>
+        <p>Sell more. Book faster. Engage visitors 24/7 with 3D tours so real they turn interest into action. We blend realism, interactivity, and accessibility for real estate, hospitality, commercial, AEC, education and research.</p>
+        <div class="cta">
+          <a class="btn" href="#demo">Book a Free 3D Demo</a>
+          <a class="btn secondary" href="#why">Why 3D Tours?</a>
+        </div>
+        <div class="stats">
+          <div class="card stat"><strong>+49%</strong><span>more leads*</span></div>
+          <div class="card stat"><strong>31% faster</strong><span>to sell / book*</span></div>
+          <div class="card stat"><strong>+9%</strong><span>higher prices*</span></div>
+        </div>
+        <small style="color:var(--muted)">*Representative industry figures; links available on request.</small>
+      </div>
+      <div class="card" style="padding:14px">
+        <div class="embed" aria-label="Hero 3D tour embed preview">
+          <iframe title="Matterport Example" src="https://my.matterport.com/show/?m=eMkANY4WhdJ" allow="xr-spatial-tracking; fullscreen; vr"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" class="section">
+    <div class="container">
+      <h2>Why Use 3D Virtual Tours for Marketing & Sales</h2>
+      <p class="lead">Reach more people, save time, and close deals faster with interactive, high‑fidelity digital twins.</p>
+      <div class="benefits">
+        <div class="card benefit">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="2"/></svg>
+          <div>
+            <strong>Market 24/7, globally</strong>
+            <div class="muted">Viewers can explore anytime, anywhere—no appointments needed.</div>
+          </div>
+        </div>
+        <div class="card benefit">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2"/></svg>
+          <div>
+            <strong>Self‑qualify viewers</strong>
+            <div class="muted">Reduce unnecessary site visits and idle inquiries.</div>
+          </div>
+        </div>
+        <div class="card benefit">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M4 7h16M4 12h12M4 17h8" stroke="currentColor" stroke-width="2"/></svg>
+          <div>
+            <strong>Interactive info tags</strong>
+            <div class="muted">Highlight features, amenities, exhibits, or compliance notes.</div>
+          </div>
+        </div>
+        <div class="card benefit">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M3 12a9 9 0 1018 0 9 9 0 10-18 0zm6-1l2 2 4-4" stroke="currentColor" stroke-width="2"/></svg>
+          <div>
+            <strong>Measurements</strong>
+            <div class="muted">Check furniture/equipment fit with on‑tour measurements.</div>
+          </div>
+        </div>
+        <div class="card benefit">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 3l7 4v10l-7 4-7-4V7l7-4z" stroke="currentColor" stroke-width="2"/></svg>
+          <div>
+            <strong>Stand‑out listings</strong>
+            <div class="muted">Modern, rich content boosts visibility on Google & social.</div>
+          </div>
+        </div>
+        <div class="card benefit">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M8 17l4 4 4-4M12 3v18" stroke="currentColor" stroke-width="2"/></svg>
+          <div>
+            <strong>Embed anywhere</strong>
+            <div class="muted">Drop‑in embeds for sites, booking systems, and portals.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="real-estate" class="section">
+    <div class="container grid cols-2">
+      <div>
+        <span class="badge">Real Estate</span>
+        <h2>Virtual Walkthroughs That Sell Faster</h2>
+        <p class="lead">Explore every corner at your own pace—from anywhere. Add interactive floor plans, room measurements, and multimedia tags for a complete viewing experience.</p>
+        <ul>
+          <li>Ideal for residential developers, agents, landlords & office spaces</li>
+          <li>Reduce unnecessary viewings, boost buyer confidence</li>
+        </ul>
+        <div class="cards" style="margin-top:16px">
+          <div class="card use-card">
+            <h3>Key Benefits</h3>
+            <ul>
+              <li>Market 24/7 to a global audience</li>
+              <li>Generate up to 49% more leads*</li>
+              <li>Sell up to 31% faster & up to 9% higher*</li>
+            </ul>
+          </div>
+          <div class="card use-card">
+            <h3>Who it's for</h3>
+            <ul>
+              <li>Developers & Agents</li>
+              <li>Landlords & Property Managers</li>
+              <li>Commercial & Office Spaces</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="embed">
+          <iframe title="Real Estate Tour" src="https://my.matterport.com/show/?m=eMkANY4WhdJ" allow="xr-spatial-tracking; fullscreen; vr"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="venues" class="section">
+    <div class="container grid cols-2">
+      <div>
+        <span class="badge">Venue & Events</span>
+        <h2>Transform Your Space into a Destination</h2>
+        <p class="lead">Invite audiences inside to envision their event and decide faster. Integrate with booking systems to turn interest into action.</p>
+        <ul>
+          <li>Perfect for breweries, office buildings, and event venues</li>
+          <li>Highlight ambiance, amenities, and layouts</li>
+          <li>Increase inquiries & bookings (representative +14%*)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="embed">
+          <iframe title="Brewhouse Tour" src="https://my.matterport.com/show/?m=eStYzywQFMG" allow="xr-spatial-tracking; fullscreen; vr"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="restaurants" class="section">
+    <div class="container grid cols-2">
+      <div>
+        <span class="badge">Restaurants & Cafés</span>
+        <h2>Drive Footfall with Immersive Dining Previews</h2>
+        <p class="lead">Show ambiance, seating, décor, and even the view from the table—right from a phone or laptop.</p>
+        <ul>
+          <li>Great for fine dining, casual eateries, food halls, and cafés</li>
+          <li>Boost online engagement & accessibility</li>
+          <li>Encourage group bookings & reservations</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="embed">
+          <iframe title="Restaurant Tour" src="https://my.matterport.com/show/?m=8jrsKsP2cyY" allow="xr-spatial-tracking; fullscreen; vr"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="academia" class="section">
+    <div class="container grid cols-2">
+      <div>
+        <span class="badge">Academic & Training Institutions</span>
+        <h2>Showcase World‑Class Facilities</h2>
+        <p class="lead">Open your campus to the world—from lecture halls to research labs. Ideal for onboarding, fundraising, and international outreach.</p>
+        <ul>
+          <li>Universities, labs, innovation hubs, schools, training centers</li>
+          <li>We support confidential environments with secure, non‑public tours</li>
+        </ul>
+        <div class="card use-card">
+          <strong>Security & Privacy</strong>
+          <p style="margin:6px 0 0; color:var(--muted)">Hosted on secure servers; access can be unlisted, restricted, or password‑protected. Sample content available privately on request.</p>
+        </div>
+      </div>
+      <div class="card" aria-hidden="true" style="display:grid;place-items:center;padding:24px;min-height:340px">
+        <div>
+          <div class="pill">Private Demonstrations</div>
+          <p style="color:var(--muted)">For confidentiality, we don't publish sensitive tours. We can demonstrate capabilities using secure sample content.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aec" class="section">
+    <div class="container grid cols-2">
+      <div>
+        <span class="badge">Architecture • Engineering • Construction</span>
+        <h2>Bring Clarity & Control to Projects</h2>
+        <p class="lead">Document progress, inspect sites remotely, and present designs in real‑world context—without constant site visits.</p>
+        <ul>
+          <li>Track construction milestones with visual accuracy</li>
+          <li>Reduce unnecessary site visits</li>
+          <li>Improve client communication & coordination</li>
+        </ul>
+        <div class="card use-card">
+          <em>Demo coming soon</em>
+        </div>
+      </div>
+      <div class="card" style="display:grid;place-items:center;min-height:340px">
+        <div class="pill">AEC Demo Placeholder</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" class="section">
+    <div class="container grid cols-2">
+      <div>
+        <h2>Ready to Upgrade Your Space to 3D?</h2>
+        <p class="lead">Book a Free 3D Demo Tour — we'll scan one room for you, on us.</p>
+        <ul>
+          <li>Fast turnaround (often within 48 hours)</li>
+          <li>Tailored to your brand & goals</li>
+          <li>Mobile, desktop & VR‑ready</li>
+        </ul>
+        <div class="cta">
+          <a class="btn" href="#contact">Book a 3D Scan</a>
+          <a class="btn secondary" href="#faq">See FAQs</a>
+        </div>
+      </div>
+      <form class="card" style="padding:18px; display:grid; gap:10px" onsubmit="event.preventDefault(); alert('Thanks! We\'ll be in touch.');">
+        <label> Name <br/>
+          <input required aria-label="Name" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(99,179,255,.35);background:#0e1220;color:var(--text)" />
+        </label>
+        <label> Email <br/>
+          <input type="email" required aria-label="Email" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(99,179,255,.35);background:#0e1220;color:var(--text)" />
+        </label>
+        <label> Sector <br/>
+          <select aria-label="Sector" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(99,179,255,.35);background:#0e1220;color:var(--text)">
+            <option>Real Estate</option>
+            <option>Venue & Events</option>
+            <option>Restaurants & Cafés</option>
+            <option>Academic & Training</option>
+            <option>AEC</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label> Message <br/>
+          <textarea rows="4" aria-label="Message" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(99,179,255,.35);background:#0e1220;color:var(--text)"></textarea>
+        </label>
+        <button class="btn" type="submit">Request Free Demo</button>
+        <small style="color:var(--muted)">By submitting, you agree to be contacted about your request.</small>
+      </form>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq">
+        <details class="faq-item">
+          <summary><strong>How long does a scan take?</strong></summary>
+          <div>Most single‑property scans are completed in under 3 hours, depending on size and complexity.</div>
+        </details>
+        <details class="faq-item">
+          <summary><strong>Can I embed the tour on my website?</strong></summary>
+          <div>Yes. We provide a simple embed code compatible with major website platforms, booking systems, and property portals.</div>
+        </details>
+        <details class="faq-item">
+          <summary><strong>Is it accessible on mobile and VR?</strong></summary>
+          <div>Absolutely. Tours are mobile‑friendly, VR‑compatible, and viewable on any device—phone, tablet, desktop, or headset.</div>
+        </details>
+        <details class="faq-item">
+          <summary><strong>Is my data secure and private?</strong></summary>
+          <div>Yes. Tours are hosted on secure Matterport servers. Access can be controlled via private links, embed restrictions, or password‑protected pages. Unlisted by default, removable any time.</div>
+        </details>
+        <details class="faq-item">
+          <summary><strong>How fast is delivery?</strong></summary>
+          <div>We move fast without compromising quality—professional edits typically delivered within ~48 hours for standard scopes.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container grid cols-2" style="align-items:center">
+      <div>
+        <div class="logo" style="margin-bottom:6px"><span class="logo-badge">Bx</span> Beyex</div>
+        <div>Call us | Email us | Book a 3D Scan</div>
+        <small style="display:block;margin-top:8px;color:var(--muted)">© <span id="year"></span> Beyex. All rights reserved.</small>
+      </div>
+      <div style="justify-self:end">
+        <a class="btn" href="#demo" aria-label="Book a 3D scan now">Book a 3D Scan Now</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // year stamp
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

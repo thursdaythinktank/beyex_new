@@ -1,0 +1,140 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Button } from './ui/Button';
+import { TourModal } from './ui/TourModal';
+
+/**
+ * Hero section - Experience First approach
+ * The tour preview IS the hero - visitors can try it immediately
+ */
+export function Hero() {
+  const [showTour, setShowTour] = useState(false);
+
+  const scrollToProcess = () => {
+    document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <section className="relative pt-28 pb-16 px-6 min-h-screen flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Text content - centered above the tour */}
+        <motion.div
+          className="text-center mb-12 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h1
+            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-apple-gray-900 leading-tight mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Step Inside Any Space.
+            <br />
+            <span className="text-apple-blue-500">From Anywhere.</span>
+          </motion.h1>
+
+          <motion.p
+            className="text-xl sm:text-2xl text-apple-gray-500 max-w-2xl mx-auto mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            We capture real places and transform them into immersive digital twins you can explore from anywhere in the world.
+          </motion.p>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Button size="lg" onClick={() => setShowTour(true)}>
+              <span className="flex items-center gap-2">
+                <PlayIcon className="w-5 h-5" />
+                Explore a Space
+              </span>
+            </Button>
+            <Button size="lg" variant="secondary" onClick={scrollToProcess}>
+              See How It Works
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        {/* Featured Tour Showcase - Live Matterport Preview */}
+        <motion.div
+          className="relative cursor-pointer group"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <div className="relative aspect-[16/9] max-h-[500px] rounded-3xl overflow-hidden shadow-2xl bg-apple-gray-900">
+            {/* Live Matterport iframe preview - Commercial Venue */}
+            <iframe
+              src="https://my.matterport.com/show/?m=eStYzywQFMG&play=1&qs=1&title=0&brand=0&mls=0&mt=0&tagNav=0&portal=0&f=0&dh=0&nozoom=1"
+              className="w-full h-full"
+              title="Commercial Venue Preview"
+              frameBorder="0"
+              allow="xr-spatial-tracking"
+              style={{ pointerEvents: 'none' }}
+              key="commercial-venue"
+            />
+
+            {/* Clickable overlay to open full modal */}
+            <div
+              className="absolute inset-0 cursor-pointer bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+              onClick={() => setShowTour(true)}
+            >
+              <motion.div
+                className="flex flex-col items-center gap-4"
+                initial={{ opacity: 0, y: 10 }}
+                whileHover={{ scale: 1.05 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 hover:bg-white/30 transition-colors">
+                  <ExpandIcon className="w-8 h-8 text-white" />
+                </div>
+                <span className="text-white text-lg font-medium drop-shadow-lg">Click for full experience</span>
+              </motion.div>
+            </div>
+
+            {/* Badge */}
+            <div className="absolute top-6 left-6 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
+              <span className="text-white text-sm font-medium">Live Preview - Commercial Venue</span>
+            </div>
+
+            {/* Instructions hint */}
+            <div className="absolute bottom-6 right-6 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
+              <span className="text-white/80 text-xs">Hover & click for full tour</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Tour Modal */}
+      <TourModal
+        isOpen={showTour}
+        onClose={() => setShowTour(false)}
+        tourUrl="https://my.matterport.com/show/?m=eStYzywQFMG"
+        title="Commercial Venue"
+      />
+    </section>
+  );
+}
+
+function PlayIcon({ className }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+function ExpandIcon({ className }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+    </svg>
+  );
+}

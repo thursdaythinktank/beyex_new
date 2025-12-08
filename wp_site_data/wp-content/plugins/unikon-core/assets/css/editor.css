@@ -1,0 +1,24 @@
+.elementor-panel .elementor-element .icon i.wpr-icon::before {
+    display: none;
+}
+
+.elementor-panel .elementor-element .icon i.wpr-icon::after {
+    width: 35px;
+    height: 35px;
+    content: "";
+    display: inline-block;
+    border-radius: 5px;
+    background: url("../img/icons/wpr-logo-sm.png") no-repeat center center/cover;
+}
+
+.elementor-icons-manager__tab-link i.wpr-icon {
+    width: 35px;
+    height: 35px;
+    content: "";
+    border-radius: 100%;
+    background: url(../img/icons/wpr-logo-sm.png) no-repeat center center/cover;
+    display: inline-block;
+    position: relative;
+    top: 10px;
+    margin-right: 6px;
+}

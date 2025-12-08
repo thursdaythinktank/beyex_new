@@ -1,0 +1,66 @@
+
+---Downloaded files---
+The import files for: Home 4 were successfully downloaded!
+Initial max execution time = 360
+Files info:
+Site URL = https://beyex.com
+Data file = /home/u867043172/domains/beyex.com/public_html/wp-content/themes/unikon/sample-data/contents-demo.xml
+Widget file = /home/u867043172/domains/beyex.com/public_html/wp-content/themes/unikon/sample-data/widget-settings.json
+Customizer file = /home/u867043172/domains/beyex.com/public_html/wp-content/themes/unikon/sample-data/customizer-data.dat
+Redux files:
+not defined!
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+---Importing widgets---
+Blog Sidebar : 
+
+Search - Search - Imported
+Categories - Categories - Imported
+WPR :: Blog Sidebar Post - Recent Articles - Imported
+Tag Cloud - Popular Tags - Imported
+
+Services Sidebar : 
+
+Search - No Title - Imported
+Custom HTML - No Title - Imported
+Custom HTML - No Title - Imported
+Custom HTML - No Title - Imported
+
+
+
+---Importing customizer settings---
+Customizer settings import finished!
+
+---ocdi/after_import---
+
