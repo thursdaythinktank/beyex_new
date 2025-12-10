@@ -16,7 +16,7 @@ export function Hero() {
 
   return (
     <section className="relative pt-28 pb-16 px-6 min-h-screen flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-7xl mx-auto w-full flex flex-col">
         {/* Text content - centered above the tour */}
         <motion.div
           className="text-center mb-12 max-w-4xl mx-auto"
@@ -62,35 +62,31 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Featured Tour Showcase - Live Matterport Preview */}
+        {/* Featured Tour Showcase - Live Matterport Preview - aligned right */}
         <motion.div
-          className="relative cursor-pointer group"
+          className="relative cursor-pointer group ml-auto"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <div className="relative aspect-[16/9] max-h-[500px] rounded-3xl overflow-hidden shadow-2xl bg-apple-gray-900">
-            {/* Live Matterport iframe preview - Commercial Venue */}
-            <iframe
-              src="https://my.matterport.com/show/?m=eStYzywQFMG&play=1&qs=1&title=0&brand=0&mls=0&mt=0&tagNav=0&portal=0&f=0&dh=0&nozoom=1"
-              className="w-full h-full"
-              title="Commercial Venue Preview"
-              frameBorder="0"
-              allow="xr-spatial-tracking"
-              style={{ pointerEvents: 'none' }}
-              key="commercial-venue"
+          <div className="relative aspect-[2/1] max-h-[500px] max-w-[800px] rounded-3xl overflow-hidden shadow-2xl bg-apple-gray-900">
+            {/* Brewhouse building image */}
+            <img
+              src="/brewhouse.png"
+              alt="Brewhouse Building"
+              className="w-full h-full object-cover"
             />
 
-            {/* Clickable overlay to open full modal */}
+            {/* Clickable overlay to open full modal - positioned on the right side */}
             <div
-              className="absolute inset-0 cursor-pointer bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+              className="absolute top-0 right-0 bottom-0 w-1/3 cursor-pointer bg-gradient-to-l from-black/40 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
               onClick={() => setShowTour(true)}
             >
               <motion.div
                 className="flex flex-col items-center gap-4"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, x: 10 }}
                 whileHover={{ scale: 1.05 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, x: 0 }}
               >
                 <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 hover:bg-white/30 transition-colors">
                   <ExpandIcon className="w-8 h-8 text-white" />
@@ -101,7 +97,7 @@ export function Hero() {
 
             {/* Badge */}
             <div className="absolute top-6 left-6 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
-              <span className="text-white text-sm font-medium">Live Preview - Commercial Venue</span>
+              <span className="text-white text-sm font-medium">Brewhouse - Virtual Tour</span>
             </div>
 
             {/* Instructions hint */}

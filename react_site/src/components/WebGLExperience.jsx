@@ -45,13 +45,13 @@ export function WebGLExperience({ children }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white" ref={containerRef}>
+    <div className="min-h-screen" ref={containerRef}>
       {/* Background gradient layer */}
       <div className="fixed inset-0 z-0 bg-gradient-to-b from-apple-gray-50 via-white to-apple-gray-50 pointer-events-none" />
 
-      {/* WebGL Canvas - stops above GetStarted section */}
+      {/* WebGL Canvas - renders on top of background, below content */}
       <div
-        className="fixed top-0 left-0 right-0 z-[1] pointer-events-none overflow-hidden"
+        className="fixed top-0 left-0 right-0 z-[2] pointer-events-none overflow-hidden"
         style={{ height: canvasHeight }}
       >
         <Canvas

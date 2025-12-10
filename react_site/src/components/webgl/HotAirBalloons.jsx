@@ -1,5 +1,4 @@
 import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 /**
@@ -7,12 +6,22 @@ import * as THREE from 'three';
  * Visible during hero section for whimsical atmosphere
  */
 export function HotAirBalloons() {
-  // Negative X = right side of screen (camera faces +Z with slight sway)
+  // Camera: (20, 45, -20) looks at Eye (-25, 28.5, 110)
+  // View direction: (-45, -16.5, 130) - pointing LEFT and FORWARD
+  //
+  // To appear on RIGHT side of screen, balloons must be:
+  // - In the camera's view frustum (along the view direction)
+  // - Offset RIGHT of the camera-to-Eye line
+  //
+  // At Z=40, the camera-to-Eye line passes through approximately:
+  //   X = 20 + ((-25-20) * (40-(-20)) / (110-(-20))) = 20 + (-45 * 60/130) ≈ 20 - 20.8 ≈ -1
+  // So at Z=40, center of view is around X=-1
+  // RIGHT side = higher X values, so X=10 to X=20 should be visible on right
+  //
+  // Balloons positioned to be visible in frustum, on the right side
   const balloons = useMemo(() => [
-    { position: [-25, 20, 15], scale: 1.6, color: '#007AFF', speed: 0.3 },
-    { position: [-35, 25, 30], scale: 1.3, color: '#00D4FF', speed: 0.4 },
-    { position: [-30, 18, 45], scale: 1.4, color: '#007AFF', speed: 0.35 },
-    { position: [-40, 22, 60], scale: 1.1, color: '#64D2FF', speed: 0.45 },
+    { position: [12, 38, 40], scale: 4.0, color: '#7AB8E8' },   // Sky blue - right of view center
+    { position: [18, 42, 35], scale: 3.5, color: '#6BA3E0' },   // Lighter blue - closer, more right
   ], []);
 
   return (
@@ -31,33 +40,24 @@ export function HotAirBalloons() {
   );
 }
 
-function HotAirBalloon({ position, scale = 1, color = '#007AFF', speed = 0.3, index }) {
+function HotAirBalloon({ position, scale = 1, color = '#007AFF', index }) {
   const groupRef = useRef();
 
-  // Gentle floating animation
-  useFrame((state) => {
-    if (groupRef.current) {
-      const time = state.clock.elapsedTime;
-      // Gentle bobbing motion - larger amplitude for bigger balloons
-      groupRef.current.position.y = position[1] + Math.sin(time * speed + index * 2) * 0.8;
-      // Subtle sway - move left/right gently
-      groupRef.current.position.x = position[0] + Math.sin(time * speed * 0.5 + index) * 0.5;
-      // Very gentle rotation
-      groupRef.current.rotation.y = Math.sin(time * 0.1 + index) * 0.15;
-    }
-  });
+  // Static position - no animation
 
   return (
     <group ref={groupRef} position={position} scale={scale}>
       {/* Balloon envelope (main balloon part) - large sphere */}
       <mesh position={[0, 3, 0]}>
-        <sphereGeometry args={[2.5, 12, 10]} />
+        <sphereGeometry args={[2.5, 16, 12]} />
         <meshStandardMaterial
           color={color}
+          emissive={color}
+          emissiveIntensity={0.2}
           transparent
-          opacity={0.7}
-          metalness={0.3}
-          roughness={0.4}
+          opacity={0.85}
+          metalness={0.2}
+          roughness={0.5}
         />
       </mesh>
 
@@ -66,10 +66,12 @@ function HotAirBalloon({ position, scale = 1, color = '#007AFF', speed = 0.3, in
         <coneGeometry args={[1.2, 2, 12]} />
         <meshStandardMaterial
           color={color}
+          emissive={color}
+          emissiveIntensity={0.15}
           transparent
-          opacity={0.65}
-          metalness={0.3}
-          roughness={0.4}
+          opacity={0.8}
+          metalness={0.2}
+          roughness={0.5}
         />
       </mesh>
 

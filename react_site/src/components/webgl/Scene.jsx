@@ -3,11 +3,17 @@ import { useFrame } from '@react-three/fiber';
 import { useScrollSync } from '../../hooks/useScrollSync';
 import { EffectComposer, Bloom, Vignette, TiltShift2 } from '@react-three/postprocessing';
 import * as THREE from 'three';
-import { RoomPortals } from './RoomPortals';
 import { SpeedLines } from './SpeedLines';
 import { Buildings } from './Buildings';
-import { Trees } from './Trees';
 import { HotAirBalloons } from './HotAirBalloons';
+
+// London scene color palette
+const COLORS = {
+  fog: '#c8d8e8',         // Blue-gray fog
+  ambient: '#e8f0ff',     // Cool ambient
+  grid: '#4A90D9',        // Blue grid
+  particle: '#6BA3E0',    // Light blue particles
+};
 
 /**
  * Volumetric Grid - Multiple grid planes the camera flies through
@@ -72,7 +78,7 @@ function VolumetricGrid({ cameraZ = 0 }) {
           scale={[config.scale, config.scale, 1]}
         >
           <lineBasicMaterial
-            color="#007AFF"
+            color={COLORS.grid}
             transparent
             opacity={config.opacity}
             blending={THREE.AdditiveBlending}
@@ -104,11 +110,11 @@ function FloatingParticles({ cameraZ = 0 }) {
       pos[i3 + 1] = (Math.random() - 0.5) * 100;  // Y spread - wider
       pos[i3 + 2] = Math.random() * 160 - 20;     // Z from -20 to 140
 
-      // Blue spectrum colors (cyan to deep blue) - slightly more white/misty
+      // Blue-gray spectrum for London atmosphere
       const t = Math.random();
-      col[i3] = 0.4 + t * 0.3;                    // R - more white
-      col[i3 + 1] = 0.6 + t * 0.3;                // G - more white
-      col[i3 + 2] = 0.85 + t * 0.15;              // B
+      col[i3] = 0.45 + t * 0.2;                   // R - gray-blue
+      col[i3 + 1] = 0.55 + t * 0.25;              // G - gray-blue
+      col[i3 + 2] = 0.7 + t * 0.2;                // B - blue tint
 
       // Varied sizes - larger particles for more obscuring
       siz[i] = Math.random() * 0.4 + 0.1;
@@ -155,16 +161,15 @@ function FloatingParticles({ cameraZ = 0 }) {
 }
 
 /**
- * Ambient glow spheres - subtle light sources along the journey
+ * Ambient glow spheres - subtle light sources for London scene
  */
 function AmbientGlows({ cameraZ = 0 }) {
   const glowPositions = useMemo(() => [
-    { pos: [8, 5, 15], color: '#007AFF', intensity: 0.8 },
-    { pos: [-10, -3, 35], color: '#00D4FF', intensity: 0.6 },
-    { pos: [5, 8, 55], color: '#007AFF', intensity: 0.7 },
-    { pos: [-8, -6, 75], color: '#00D4FF', intensity: 0.5 },
-    { pos: [12, 4, 95], color: '#007AFF', intensity: 0.6 },
-    { pos: [-6, 5, 115], color: '#00D4FF', intensity: 0.5 },
+    { pos: [15, 8, 20], color: '#4A90D9', intensity: 0.7 },
+    { pos: [-20, 5, 40], color: '#6BA3E0', intensity: 0.5 },
+    { pos: [10, 10, 60], color: '#4A90D9', intensity: 0.6 },
+    { pos: [-25, 15, 65], color: '#8BB8E8', intensity: 0.8 }, // Near London Eye
+    { pos: [25, 8, 70], color: '#6BA3E0', intensity: 0.5 },
   ], []);
 
   return (
@@ -175,7 +180,7 @@ function AmbientGlows({ cameraZ = 0 }) {
           position={glow.pos}
           color={glow.color}
           intensity={glow.intensity}
-          distance={25}
+          distance={35}
           decay={2}
         />
       ))}
@@ -193,24 +198,25 @@ export function Scene({ scrollData }) {
 
   return (
     <>
-      {/* Exponential fog for depth atmosphere - increased for atmospheric obscuring */}
-      <fogExp2 attach="fog" color="#d8e8f8" density={0.012} />
+      {/* Exponential fog for depth atmosphere - reduced for better visibility */}
+      <fogExp2 attach="fog" color={COLORS.fog} density={0.008} />
 
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.5} color="#e8f0ff" />
+      {/* Ambient lighting - increased for better visibility */}
+      <ambientLight intensity={0.8} color={COLORS.ambient} />
 
       {/* Key light - follows camera roughly */}
       <directionalLight
-        position={[10, 10, cameraZ + 20]}
-        intensity={0.7}
+        position={[10, 30, cameraZ + 20]}
+        intensity={1.0}
         color="#FFFFFF"
       />
 
-      {/* Additional light for buildings */}
-      <pointLight position={[0, 5, cameraZ + 15]} intensity={0.8} distance={25} />
+      {/* Additional light for buildings and balloons */}
+      <pointLight position={[0, 20, cameraZ + 15]} intensity={1.2} distance={50} />
+      <pointLight position={[30, 40, 10]} intensity={0.8} distance={60} /> {/* Light for balloons */}
 
-      {/* Volumetric grid planes */}
-      <VolumetricGrid cameraZ={cameraZ} />
+      {/* Volumetric grid planes - hidden for cleaner look */}
+      {/* <VolumetricGrid cameraZ={cameraZ} /> */}
 
       {/* Particle field */}
       <FloatingParticles cameraZ={cameraZ} />
@@ -218,14 +224,8 @@ export function Scene({ scrollData }) {
       {/* Ambient glow lights */}
       <AmbientGlows cameraZ={cameraZ} />
 
-      {/* Glass portal frames at section transitions */}
-      <RoomPortals />
-
-      {/* Low-poly buildings along the scroll journey */}
+      {/* London landmarks - wireframe city scene */}
       <Buildings cameraZ={cameraZ} />
-
-      {/* Low-poly trees scattered across journey */}
-      <Trees cameraZ={cameraZ} />
 
       {/* Hot air balloons floating on the right side */}
       <HotAirBalloons />

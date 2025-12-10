@@ -1,74 +1,117 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { scrollToCameraZ, SCENE_CONFIG } from '../utils/constants/sceneConfig';
+import { SCENE_CONFIG } from '../utils/constants/sceneConfig';
 
 /**
- * Curved camera path calculation
- * Starts at 45-degree angle, curves down to ground level, then goes straight
+ * London Scene Camera Path
+ *
+ * Camera ALWAYS looks at the London Eye hub center (fixed target).
+ * Camera STARTS high (Y=45) above the Eye hub (Y=28.5) - looking DOWN.
+ * Camera DESCENDS in a smooth curve as user scrolls.
+ * Camera ENDS at ground level (Y=0) - looking UP at the Eye.
+ *
+ * Visual effect:
+ * - At start: Looking slightly down at Eye from above
+ * - As you scroll: Camera descends, Eye stays centered
+ * - At end: Looking up at the majestic Eye towering above
+ *
+ * Three-phase speed:
+ * 1. Fast initial descent (0-30% progress)
+ * 2. Moderate approach (30-70% progress)
+ * 3. Very slow final glide (70-100% progress)
+ */
+
+// Camera path configuration
+const PATH = {
+  // Starting position - HIGH above the London Eye hub (at Y≈28.5 with 1.5x scale)
+  startX: 20,      // East of center
+  startY: 45,      // ABOVE Eye hub - looking DOWN at Eye initially
+  startZ: -20,     // Farther back for dramatic approach
+
+  // End position - at Eye BASE level
+  endX: -15,       // Closer to Eye X position (-25)
+  endY: 0,         // At Eye BASE level - looking UP at Eye at end
+  endZ: 60,        // Stop before river, Eye fills view
+
+  // Look-at target - London Eye hub center (FIXED point)
+  // Camera always looks at this point, pitch changes naturally as camera descends
+  lookAtX: -25,    // London Eye X position
+  lookAtY: 28.5,   // London Eye hub Y (wheelRadius=18 * 1.5 scale + base height)
+  lookAtZ: 110,    // London Eye Z position
+};
+
+/**
+ * Three-phase easing for bird-like landing
+ * Fast → Moderate → Very Slow
+ */
+function threePhaseEase(t) {
+  if (t < 0.3) {
+    // Phase 1: Fast descent (0-30%)
+    // Map 0-0.3 to 0-0.5 of actual progress (faster)
+    const phase = t / 0.3;
+    return phase * 0.5;
+  } else if (t < 0.7) {
+    // Phase 2: Moderate approach (30-70%)
+    // Map 0.3-0.7 to 0.5-0.85 of actual progress (moderate)
+    const phase = (t - 0.3) / 0.4;
+    return 0.5 + phase * 0.35;
+  } else {
+    // Phase 3: Very slow final glide (70-100%)
+    // Map 0.7-1.0 to 0.85-1.0 of actual progress (very slow)
+    const phase = (t - 0.7) / 0.3;
+    // Use ease-out for gentle landing
+    const eased = 1 - Math.pow(1 - phase, 3);
+    return 0.85 + eased * 0.15;
+  }
+}
+
+/**
+ * Get camera position along curved descent path
  */
 function getCameraPosition(progress) {
-  // Path parameters
-  const startY = 15;      // Starting height (high up)
-  const startZ = -30;     // Starting Z position (far back)
-  const groundY = 0.5;    // Ground level camera height
-  const curveEndZ = 30;   // Z position where curve ends and straight begins
-  const totalZ = SCENE_CONFIG.totalDistance;
+  // Apply three-phase easing
+  const easedProgress = threePhaseEase(progress);
 
-  // Curve phase: 0 to ~25% of journey (Z: -30 to 30)
-  // Straight phase: 25% to 100% of journey (Z: 30 to 120)
+  // Curved path using quadratic bezier-like interpolation
+  // Control point creates smooth descending arc from high start to ground level
+  const controlX = (PATH.startX + PATH.endX) / 2;
+  const controlY = PATH.startY * 0.7;  // Arc peaks at 70% of start height (31.5)
+  const controlZ = (PATH.startZ + PATH.endZ) / 2;
 
-  const curveLength = curveEndZ - startZ; // 60 units of curve
-  const straightLength = totalZ - curveEndZ; // 90 units straight
+  // Quadratic bezier interpolation
+  const t = easedProgress;
+  const mt = 1 - t;
+  const mt2 = mt * mt;
+  const t2 = t * t;
 
-  // Map progress to actual Z position
-  const targetZ = startZ + (progress * (totalZ - startZ));
+  const x = mt2 * PATH.startX + 2 * mt * t * controlX + t2 * PATH.endX;
+  const y = mt2 * PATH.startY + 2 * mt * t * controlY + t2 * PATH.endY;
+  const z = mt2 * PATH.startZ + 2 * mt * t * controlZ + t2 * PATH.endZ;
 
-  if (targetZ <= curveEndZ) {
-    // In the curve phase - use quadratic bezier-like curve
-    const curveProgress = (targetZ - startZ) / curveLength;
-    // Ease out curve for smooth descent
-    const easedProgress = 1 - Math.pow(1 - curveProgress, 2);
-    const y = startY - (startY - groundY) * easedProgress;
-    return { y, z: targetZ };
-  } else {
-    // In the straight phase - maintain ground level
-    return { y: groundY, z: targetZ };
-  }
+  return { x, y, z };
 }
 
 /**
- * Calculate look-at point based on camera position on curve
- * Initially points at buildings (Z=10-20 area), then looks ahead
+ * Get look-at target based on camera position
+ * Camera ALWAYS looks at the HORIZON (same Y as camera)
+ * This creates a natural cinematic view where:
+ * - Buildings/landmarks below horizon appear in lower screen
+ * - Balloons/sky above horizon appear in upper screen
+ * - London Eye rises dramatically above the horizon line
  */
-function getLookAtPosition(cameraY, cameraZ, progress) {
-  // Buildings are at Z=10 (shop), Z=18 (restaurant) for first cluster
-  const buildingTargetZ = 15; // Center of first building cluster
-
-  // During intro/early curve phase, look at the buildings
-  if (progress < 0.15) {
-    // Look directly at buildings area, slightly above ground
-    const lookY = 2; // Slightly above ground where buildings are
-    // Blend from looking at buildings to looking ahead
-    const blendFactor = progress / 0.15;
-    const targetZ = buildingTargetZ + (blendFactor * 20);
-    return { x: 0, y: lookY, z: targetZ };
-  }
-
-  // During curve phase, look ahead and toward ground
-  if (progress < 0.35) {
-    const lookAheadDistance = 30;
-    const lookY = Math.max(0.5, cameraY - 8);
-    return { x: 0, y: lookY, z: cameraZ + lookAheadDistance };
-  }
-
-  // In straight phase, look straight ahead
-  return { x: 0, y: cameraY, z: cameraZ + 25 };
+function getLookAtTarget(progress, cameraPos) {
+  // Look at horizon = same Y as camera position
+  // X and Z aim toward London Eye area in the distance
+  return {
+    x: PATH.lookAtX,  // -25 (toward London Eye)
+    y: cameraPos.y,   // HORIZON - same height as camera
+    z: PATH.lookAtZ   // 110 (far distance)
+  };
 }
 
 /**
- * Scroll-to-camera sync hook
- * Maps scroll progress to curved camera path with cinematic movement
- * Camera starts at 45-degree angle, curves down, then travels straight
+ * Scroll-to-camera sync hook for London scene
+ * Maps scroll progress to cinematic bird-landing camera path
  */
 export function useScrollSync(scrollData) {
   const targetProgress = useRef(0);
@@ -76,41 +119,32 @@ export function useScrollSync(scrollData) {
   const velocity = useRef(0);
   const lastProgress = useRef(0);
   const introComplete = useRef(false);
-  const introEndProgress = 0.08; // Lock this as minimum progress
+  const introEndProgress = 0.08;
 
   // Update target progress when scroll changes
   if (scrollData) {
     targetProgress.current = scrollData.progress;
   }
 
-  // Helper: consistent sway calculation (position-based)
-  const calculateSway = (z) => Math.sin(z * 0.04) * 0.15;
-
-  // Smoothly interpolate camera along curved path
+  // Smoothly interpolate camera along path
   useFrame((state) => {
-    // Ensure camera up vector is correct (prevents flipping)
+    // Ensure proper up vector
     state.camera.up.set(0, 1, 0);
 
-    // Intro animation (first 2.5 seconds) - sweep in from starting position
+    // Intro animation (first 2.5 seconds)
     if (!introComplete.current) {
       const elapsed = state.clock.elapsedTime;
       if (elapsed < 2.5) {
-        // Animate from 0 to intro end progress
         const introProgress = elapsed / 2.5;
-        const easedIntro = 1 - Math.pow(1 - introProgress, 3); // easeOutCubic
+        const easedIntro = 1 - Math.pow(1 - introProgress, 3);
         const animProgress = easedIntro * introEndProgress;
 
         const pos = getCameraPosition(animProgress);
+        state.camera.position.set(pos.x, pos.y, pos.z);
 
-        // Always look ahead during intro (simpler, no flip risk)
-        const lookAheadZ = pos.z + 40;
-        const lookY = Math.max(0, pos.y - 6); // Look slightly down
-
-        // Use position-based sway (consistent with post-intro)
-        const sway = calculateSway(pos.z);
-
-        state.camera.position.set(sway, pos.y, pos.z);
-        state.camera.lookAt(0, lookY, lookAheadZ);
+        // Look at the London Eye hub (Y=28.5 with 1.5x scale)
+        // This creates natural pitch toward the Eye
+        state.camera.lookAt(PATH.lookAtX, PATH.lookAtY, PATH.lookAtZ);
 
         currentProgress.current = animProgress;
         lastProgress.current = animProgress;
@@ -121,34 +155,25 @@ export function useScrollSync(scrollData) {
       lastProgress.current = introEndProgress;
     }
 
-    // Track velocity before updating position
+    // Track velocity
     velocity.current = currentProgress.current - lastProgress.current;
     lastProgress.current = currentProgress.current;
 
-    // Variable damping for smooth movement
-    const baseDamping = 0.05;
-    const velocityFactor = Math.min(Math.abs(velocity.current) * 5, 0.02);
+    // Variable damping
+    const baseDamping = 0.04;
+    const velocityFactor = Math.min(Math.abs(velocity.current) * 3, 0.02);
     const damping = baseDamping + velocityFactor;
 
-    // Smooth lerp progress toward target (but never go below intro end)
+    // Smooth lerp progress toward target
     const effectiveTarget = Math.max(targetProgress.current, introEndProgress);
     currentProgress.current += (effectiveTarget - currentProgress.current) * damping;
 
     // Get position on curved path
     const pos = getCameraPosition(currentProgress.current);
+    state.camera.position.set(pos.x, pos.y, pos.z);
 
-    // Simple look-ahead calculation (avoids complex phase transitions)
-    const lookAheadZ = pos.z + 35;
-    const lookY = pos.y > 2 ? Math.max(0, pos.y - 6) : pos.y; // Look down while high, straight when low
-
-    // Consistent sway calculation
-    const sway = calculateSway(pos.z);
-    const bob = Math.cos(pos.z * 0.03) * 0.05;
-
-    state.camera.position.set(sway, pos.y + bob, pos.z);
-    state.camera.lookAt(0, lookY, lookAheadZ);
-
-    // No rotation.z manipulation - let lookAt handle orientation
+    // Look at the London Eye hub - camera pitches naturally to keep Eye in view
+    state.camera.lookAt(PATH.lookAtX, PATH.lookAtY, PATH.lookAtZ);
   });
 
   // Return Z position for other components
