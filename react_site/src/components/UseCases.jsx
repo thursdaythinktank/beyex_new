@@ -34,16 +34,16 @@ export function UseCases() {
     <section id="use-cases" className="py-24">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-16 glass-liquid rounded-3xl py-12 px-8 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl sm:text-5xl font-semibold text-apple-gray-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-semibold text-apple-gray-900 mb-4 text-shadow-white">
             Built for your industry.
           </h2>
-          <p className="text-xl text-apple-gray-500 max-w-2xl mx-auto">
+          <p className="text-xl text-apple-gray-500 max-w-2xl mx-auto text-shadow-white">
             Whether you're selling spaces, hosting events, or welcoming customers — virtual tours work.
           </p>
         </motion.div>

@@ -16,22 +16,21 @@ export function FeaturedExperiences() {
       description: 'Walk through every room, examine details, feel the space',
       badge: '4,200 sq ft captured',
       tourUrl: 'https://my.matterport.com/show/?m=eMkANY4WhdJ',
-      // Embed URL with minimal UI for preview
-      embedUrl: 'https://my.matterport.com/show/?m=eMkANY4WhdJ&play=1&qs=1&title=0&brand=0&mls=0&mt=0&tagNav=0&portal=0&f=0&dh=0&nozoom=1',
+      image: '/home-card.png',
     },
     {
       title: 'Commercial Venue',
       description: 'Experience event spaces and plan layouts virtually',
       badge: '360° dollhouse view',
       tourUrl: 'https://my.matterport.com/show/?m=eStYzywQFMG',
-      embedUrl: 'https://my.matterport.com/show/?m=eStYzywQFMG&play=1&qs=1&title=0&brand=0&mls=0&mt=0&tagNav=0&portal=0&f=0&dh=0&nozoom=1',
+      image: '/brewhouse-card.png',
     },
     {
       title: 'Restaurant & Retail',
       description: 'Showcase ambience and atmosphere before the visit',
       badge: 'Street-level access',
       tourUrl: 'https://my.matterport.com/show/?m=8jrsKsP2cyY',
-      embedUrl: 'https://my.matterport.com/show/?m=8jrsKsP2cyY&play=1&qs=1&title=0&brand=0&mls=0&mt=0&tagNav=0&portal=0&f=0&dh=0&nozoom=1',
+      image: '/dosakitchen-card.png',
     },
   ];
 
@@ -97,23 +96,17 @@ function ExperienceCard({ experience, index, onClick }) {
         stiffness: 100,
       }}
     >
-      {/* Card with live Matterport preview */}
+      {/* Card with static image preview */}
       <div
         className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 bg-apple-gray-900 shadow-lg group-hover:shadow-xl transition-shadow duration-300"
         onClick={onClick}
       >
-        {/* Live Matterport iframe preview - auto-plays, minimal UI */}
-        <iframe
-          src={experience.embedUrl}
-          className="w-full h-full"
-          title={`${experience.title} Preview`}
-          frameBorder="0"
-          allow="xr-spatial-tracking"
-          style={{ pointerEvents: 'none' }}
+        {/* Static image preview */}
+        <img
+          src={experience.image}
+          alt={experience.title}
+          className="w-full h-full object-cover"
         />
-
-        {/* Slight blue tint overlay */}
-        <div className="absolute inset-0 bg-apple-blue-500/10 mix-blend-multiply pointer-events-none" />
 
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -131,12 +124,6 @@ function ExperienceCard({ experience, index, onClick }) {
         {/* Badge */}
         <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
           <span className="text-xs font-medium text-white">{experience.badge}</span>
-        </div>
-
-        {/* Live indicator */}
-        <div className="absolute top-4 right-4 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-xs text-white/80">Live</span>
         </div>
       </div>
 

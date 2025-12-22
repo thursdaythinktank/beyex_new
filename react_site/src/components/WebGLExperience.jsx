@@ -2,19 +2,25 @@ import { useState, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Scene } from './webgl/Scene';
 import { useLenis } from '../hooks/useLenis';
+import { useWebGLCapability } from '../hooks/useWebGLCapability';
+import { StaticBackground } from './StaticBackground';
 
 /**
  * WebGL Experience wrapper
  * Canvas stops above GetStarted section, buildings partially visible
+ * Falls back to static SVG on mobile/low-capability devices
  */
 export function WebGLExperience({ children }) {
+  const { checked, shouldUseFallback } = useWebGLCapability();
   const [scrollData, setScrollData] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState('100vh');
   const containerRef = useRef(null);
 
-  // Initialize Lenis smooth scroll
+  // Initialize Lenis smooth scroll (only when not using fallback)
   useLenis((data) => {
-    setScrollData(data);
+    if (!shouldUseFallback) {
+      setScrollData(data);
+    }
   });
 
   // Calculate canvas height to stop above #get-started section
@@ -44,6 +50,27 @@ export function WebGLExperience({ children }) {
     };
   }, []);
 
+  // Show loading state until capability check completes
+  if (!checked) {
+    return (
+      <div className="min-h-screen">
+        <div className="fixed inset-0 z-0 bg-gradient-to-b from-apple-gray-50 via-white to-apple-gray-50" />
+        <div className="relative z-10">{children}</div>
+      </div>
+    );
+  }
+
+  // Use static SVG fallback for mobile/low-capability devices
+  if (shouldUseFallback) {
+    return (
+      <div className="min-h-screen" ref={containerRef}>
+        <StaticBackground />
+        <div className="relative z-10">{children}</div>
+      </div>
+    );
+  }
+
+  // Full WebGL experience for capable devices
   return (
     <div className="min-h-screen" ref={containerRef}>
       {/* Background gradient layer */}

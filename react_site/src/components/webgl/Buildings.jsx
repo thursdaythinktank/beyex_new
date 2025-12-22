@@ -50,13 +50,13 @@ export function Buildings({ cameraZ = 0 }) {
       <ThamesBoat position={[5, 0.3, 72]} rotation={[0, 0.3, 0]} />
 
       {/* London Eye - far background at Z=110, scaled 1.5x for prominence */}
-      <LondonEye position={[-25, 0, 110]} scale={1.5} />
+      <LondonEye position={[-15, 0, 110]} scale={1.5} />
 
-      {/* Westminster Bridge - crosses the river at Z=78 */}
-      <WestminsterBridge position={[15, 0, 78]} />
+      {/* Tower Bridge - crosses the river perpendicularly */}
+      <TowerBridge position={[20, 0, 75]} rotation={[0, Math.PI / 2 + Math.PI / 12 + Math.PI / 4 - Math.PI / 18, 0]} scale={0.8} />
 
-      {/* Palace of Westminster + Big Ben - north bank at Z=65 */}
-      <PalaceOfWestminster position={[35, 0, 65]} />
+      {/* Palace of Westminster + Big Ben - closer to camera, rotated 180° to show clock */}
+      <PalaceOfWestminster position={[-50, 0, 55]} rotation={[0, Math.PI, 0]} />
 
       {/* Building clusters - NORTH of river (Z < 70) - city we fly over */}
       {/* Camera path: Z=-5 to Z=70, so these are all visible */}
@@ -65,10 +65,9 @@ export function Buildings({ cameraZ = 0 }) {
       <BuildingCluster position={[12, 0, 25]} rotation={[0, 0.4, 0]} />
       <BuildingCluster position={[-8, 0, 35]} rotation={[0, -0.1, 0]} />
 
-      {/* Brewhouse and Kitchen - on north bank, back against river */}
-      {/* River at Z=75, building depth 6, so center at Z=72 (back wall at Z=75) */}
-      {/* Aligned with London Eye center at X=-25, rotated to face camera */}
-      <Brewhouse position={[-25, 0, 72]} rotation={[0, Math.PI, 0]} scale={1.0} />
+      {/* Westminster Abbey - on north bank, back against river */}
+      {/* River at Z=75, aligned with London Eye center at X=-25, rotated to show front (west facade) */}
+      <WestminsterAbbey position={[-25, 0, 72]} rotation={[0, -Math.PI / 4, 0]} scale={0.6} />
 
       {/* REMOVED: County Hall (Z=120) and South building clusters (Z=95-105) */}
       {/* These were behind the London Eye and not visible from camera path */}
@@ -225,17 +224,17 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
 }
 
 /**
- * London Eye - Large observation wheel with 32 spokes
- * Geometrically accurate with A-frame supports
+ * London Eye - Large observation wheel with 32 capsules
+ * Realistic: two parallel rims with crisscross cables, oval horizontal pods, A-frame support
  * Scale prop allows sizing the entire structure uniformly
  */
 function LondonEye({ position, scale = 1 }) {
   const wheelRef = useRef();
   const capsulesRef = useRef();
   const wheelRadius = 18;  // Base radius (scaled by group scale prop)
-  const spokeCount = 32;
   const capsuleCount = 32;
-  const rotationSpeed = 0.012;  // Slightly slower for larger wheel
+  const rotationSpeed = 0.012;
+  const rimSpacing = 4;  // Distance between the two parallel rims
 
   // Slow rotation - update both wheel and capsule positions
   useFrame((state) => {
@@ -253,91 +252,126 @@ function LondonEye({ position, scale = 1 }) {
         const x = Math.cos(currentAngle) * wheelRadius;
         const y = Math.sin(currentAngle) * wheelRadius;
         capsule.position.set(x, y, 0);
-        // Capsules stay upright (no rotation) due to gravity
       });
     }
   });
 
   return (
     <group position={position} scale={scale}>
-      {/* A-frame support - left leg */}
-      <mesh position={[-4.5, 9, -1.5]} rotation={[0.1, 0, 0.15]}>
-        <boxGeometry args={[1.2, 21, 1.2]} />
+      {/* A-frame support - legs lean INWARD toward hub (correct orientation) */}
+      {/* Left leg - starts wide at bottom, angles inward to hub */}
+      <mesh position={[-3, 10, 0]} rotation={[0, 0, -0.18]}>
+        <boxGeometry args={[0.6, 22, 0.6]} />
         <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
       </mesh>
-      <lineSegments position={[-4.5, 9, -1.5]} rotation={[0.1, 0, 0.15]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(1.2, 21, 1.2)]} />
+      <lineSegments position={[-3, 10, 0]} rotation={[0, 0, -0.18]}>
+        <edgesGeometry args={[new THREE.BoxGeometry(0.6, 22, 0.6)]} />
         <lineBasicMaterial color={COLORS.wireframe} />
       </lineSegments>
 
-      {/* A-frame support - right leg (scaled 1.5x) */}
-      <mesh position={[4.5, 9, -1.5]} rotation={[0.1, 0, -0.15]}>
-        <boxGeometry args={[1.2, 21, 1.2]} />
+      {/* Right leg - mirrors left, angles inward */}
+      <mesh position={[3, 10, 0]} rotation={[0, 0, 0.18]}>
+        <boxGeometry args={[0.6, 22, 0.6]} />
         <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
       </mesh>
-      <lineSegments position={[4.5, 9, -1.5]} rotation={[0.1, 0, -0.15]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(1.2, 21, 1.2)]} />
+      <lineSegments position={[3, 10, 0]} rotation={[0, 0, 0.18]}>
+        <edgesGeometry args={[new THREE.BoxGeometry(0.6, 22, 0.6)]} />
         <lineBasicMaterial color={COLORS.wireframe} />
       </lineSegments>
 
-      {/* Cross braces (scaled 1.5x) */}
-      <mesh position={[0, 6, -1.5]}>
-        <boxGeometry args={[7.5, 0.6, 0.6]} />
-        <meshStandardMaterial color={COLORS.primary} />
-      </mesh>
-      <mesh position={[0, 12, -1.5]}>
-        <boxGeometry args={[6, 0.45, 0.45]} />
+      {/* Horizontal brace between A-frame legs */}
+      <mesh position={[0, 8, 0]}>
+        <boxGeometry args={[5, 0.3, 0.3]} />
         <meshStandardMaterial color={COLORS.primary} />
       </mesh>
 
-      {/* Central hub (scaled 1.5x, Y=19.5) - cylinder along Z axis */}
+      {/* Central hub - small */}
       <mesh position={[0, 19.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[2.25, 2.25, 1.8, 16]} />
+        <cylinderGeometry args={[1, 1, rimSpacing + 0.5, 16]} />
         <meshStandardMaterial color={COLORS.primary} metalness={0.6} roughness={0.4} />
       </mesh>
       <lineSegments position={[0, 19.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <edgesGeometry args={[new THREE.CylinderGeometry(2.25, 2.25, 1.8, 16)]} />
+        <edgesGeometry args={[new THREE.CylinderGeometry(1, 1, rimSpacing + 0.5, 16)]} />
         <lineBasicMaterial color={COLORS.wireframe} />
       </lineSegments>
 
-      {/* Rotating wheel group (centered at Y=19.5) - rim and spokes only */}
+      {/* Rotating wheel group - TWO parallel rims with crisscross cables */}
       <group ref={wheelRef} position={[0, 19.5, 0]}>
-        {/* Outer rim - THIN torus (in XY plane, no rotation needed) */}
-        <mesh>
+        {/* Front rim */}
+        <mesh position={[0, 0, rimSpacing / 2]}>
           <torusGeometry args={[wheelRadius, 0.15, 8, 64]} />
           <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
         </mesh>
-        <lineSegments>
+        <lineSegments position={[0, 0, rimSpacing / 2]}>
           <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius, 0.15, 8, 64)]} />
           <lineBasicMaterial color={COLORS.wireframe} />
         </lineSegments>
 
-        {/* Inner rim - also thin */}
-        <mesh>
-          <torusGeometry args={[wheelRadius * 0.7, 0.1, 8, 48]} />
-          <meshStandardMaterial color={COLORS.secondary} metalness={0.4} roughness={0.6} />
+        {/* Back rim */}
+        <mesh position={[0, 0, -rimSpacing / 2]}>
+          <torusGeometry args={[wheelRadius, 0.15, 8, 64]} />
+          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
         </mesh>
+        <lineSegments position={[0, 0, -rimSpacing / 2]}>
+          <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius, 0.15, 8, 64)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
 
-        {/* 32 Spokes (scaled) */}
-        {Array.from({ length: spokeCount }).map((_, i) => {
-          const angle = (i / spokeCount) * Math.PI * 2;
-          const midX = Math.cos(angle) * (wheelRadius / 2);
-          const midY = Math.sin(angle) * (wheelRadius / 2);
+        {/* Crisscross cables between the two rims */}
+        {Array.from({ length: 64 }).map((_, i) => {
+          const angle1 = (i / 64) * Math.PI * 2;
+          const angle2 = ((i + 1) / 64) * Math.PI * 2;
+          const x1 = Math.cos(angle1) * wheelRadius;
+          const y1 = Math.sin(angle1) * wheelRadius;
+          const x2 = Math.cos(angle2) * wheelRadius;
+          const y2 = Math.sin(angle2) * wheelRadius;
+
+          // Calculate diagonal cable position and rotation
+          const midX = (x1 + x2) / 2;
+          const midY = (y1 + y2) / 2;
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const segmentLength = Math.sqrt(dx * dx + dy * dy + rimSpacing * rimSpacing);
+          const angleXY = Math.atan2(dy, dx);
+          const angleZ = Math.atan2(rimSpacing, Math.sqrt(dx * dx + dy * dy));
+
           return (
-            <mesh
-              key={`spoke-${i}`}
-              position={[midX, midY, 0]}
-              rotation={[0, 0, angle + Math.PI / 2]}
-            >
-              <boxGeometry args={[0.12, wheelRadius, 0.12]} />
-              <meshStandardMaterial color={COLORS.primary} />
-            </mesh>
+            <group key={`cross-${i}`}>
+              {/* Diagonal cable from front-i to back-(i+1) */}
+              <mesh
+                position={[midX, midY, 0]}
+                rotation={[angleZ, 0, angleXY]}
+              >
+                <cylinderGeometry args={[0.04, 0.04, segmentLength, 4]} />
+                <meshStandardMaterial color={COLORS.secondary} />
+              </mesh>
+            </group>
+          );
+        })}
+
+        {/* Radial spokes from hub to rims */}
+        {Array.from({ length: 32 }).map((_, i) => {
+          const angle = (i / 32) * Math.PI * 2;
+          const x = Math.cos(angle) * (wheelRadius / 2);
+          const y = Math.sin(angle) * (wheelRadius / 2);
+          return (
+            <group key={`spoke-${i}`}>
+              {/* Front spoke */}
+              <mesh position={[x, y, rimSpacing / 4]} rotation={[0, 0, angle + Math.PI / 2]}>
+                <boxGeometry args={[0.05, wheelRadius - 1, 0.05]} />
+                <meshStandardMaterial color={COLORS.secondary} />
+              </mesh>
+              {/* Back spoke */}
+              <mesh position={[x, y, -rimSpacing / 4]} rotation={[0, 0, angle + Math.PI / 2]}>
+                <boxGeometry args={[0.05, wheelRadius - 1, 0.05]} />
+                <meshStandardMaterial color={COLORS.secondary} />
+              </mesh>
+            </group>
           );
         })}
       </group>
 
-      {/* Capsules group - NOT inside rotating wheel, positions updated in useFrame */}
-      {/* Capsules stay UPRIGHT (gravity) while moving with the wheel */}
+      {/* Capsules - horizontal oval pods (rotated 90°) */}
       <group ref={capsulesRef} position={[0, 19.5, 0]}>
         {Array.from({ length: capsuleCount }).map((_, i) => {
           const angle = (i / capsuleCount) * Math.PI * 2;
@@ -345,9 +379,9 @@ function LondonEye({ position, scale = 1 }) {
           const y = Math.sin(angle) * wheelRadius;
           return (
             <group key={`capsule-${i}`} position={[x, y, 0]}>
-              {/* Capsule stays upright - NO rotation */}
-              <mesh>
-                <boxGeometry args={[3, 4.5, 2.2]} />
+              {/* Horizontal oval capsule (wider than tall) */}
+              <mesh scale={[1.5, 0.9, 1.1]} rotation={[0, 0, 0]}>
+                <sphereGeometry args={[1.1, 16, 12]} />
                 <meshStandardMaterial
                   color={COLORS.glass}
                   emissive={COLORS.glassEmissive}
@@ -355,25 +389,26 @@ function LondonEye({ position, scale = 1 }) {
                   metalness={0.1}
                   roughness={0.2}
                   transparent
-                  opacity={0.5}
+                  opacity={0.85}
                 />
               </mesh>
-              <lineSegments>
-                <edgesGeometry args={[new THREE.BoxGeometry(3, 4.5, 2.2)]} />
-                <lineBasicMaterial color={COLORS.wireframe} />
-              </lineSegments>
+              {/* Capsule mounting bracket */}
+              <mesh position={[0, 1.2, 0]}>
+                <boxGeometry args={[0.2, 0.8, 0.2]} />
+                <meshStandardMaterial color={COLORS.primary} />
+              </mesh>
             </group>
           );
         })}
       </group>
 
-      {/* Base platform (scaled 1.5x) */}
+      {/* Base platform */}
       <mesh position={[0, 0.3, 0]}>
-        <boxGeometry args={[12, 0.6, 6]} />
+        <boxGeometry args={[10, 0.5, 5]} />
         <meshStandardMaterial color={COLORS.buildingAlt} />
       </mesh>
       <lineSegments position={[0, 0.3, 0]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(12, 0.6, 6)]} />
+        <edgesGeometry args={[new THREE.BoxGeometry(10, 0.5, 5)]} />
         <lineBasicMaterial color={COLORS.wireframe} />
       </lineSegments>
     </group>
@@ -381,58 +416,278 @@ function LondonEye({ position, scale = 1 }) {
 }
 
 /**
- * Westminster Bridge - 5-7 arched spans
+ * Tower Bridge - Iconic Victorian bridge with twin Gothic towers
+ * Features: two towers, upper walkway, bascule span, suspension side spans
  */
-function WestminsterBridge({ position }) {
-  const archCount = 7;
-  const archWidth = 6;
-  const bridgeLength = archCount * archWidth;
+function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
+  const towerHeight = 28;
+  const towerWidth = 6;
+  const towerDepth = 5;
+  const towerSpacing = 18; // Distance between tower centers
+  const walkwayHeight = 22;
+  const deckHeight = 3;
 
-  return (
-    <group position={position} rotation={[0, -0.3, 0]}>
-      {/* Bridge deck */}
-      <mesh position={[0, 1.5, 0]}>
-        <boxGeometry args={[bridgeLength, 0.8, 4]} />
-        <meshStandardMaterial color={COLORS.building} metalness={0.3} roughness={0.7} />
+  // Tower colors
+  const towerColor = COLORS.building;       // Main tower
+  const towerDark = COLORS.buildingAlt;     // Details, roofs
+  const walkwayColor = COLORS.secondary;    // Upper walkway
+  const deckColor = COLORS.buildingWarm;    // Bridge deck
+
+  // Single tower component
+  const Tower = ({ xPos }) => (
+    <group position={[xPos, 0, 0]}>
+      {/* Main tower body - lower section */}
+      <mesh position={[0, towerHeight / 2, 0]}>
+        <boxGeometry args={[towerWidth, towerHeight, towerDepth]} />
+        <meshStandardMaterial color={towerColor} metalness={0.3} roughness={0.7} />
       </mesh>
-      <lineSegments position={[0, 1.5, 0]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(bridgeLength, 0.8, 4)]} />
+      <lineSegments position={[0, towerHeight / 2, 0]}>
+        <edgesGeometry args={[new THREE.BoxGeometry(towerWidth, towerHeight, towerDepth)]} />
         <lineBasicMaterial color={COLORS.wireframe} />
       </lineSegments>
 
-      {/* Bridge arches */}
-      {Array.from({ length: archCount }).map((_, i) => {
-        const xPos = (i - (archCount - 1) / 2) * archWidth;
-        return (
-          <group key={`arch-${i}`} position={[xPos, 0, 0]}>
-            {/* Arch pier */}
-            <mesh position={[0, 0.5, 0]}>
-              <boxGeometry args={[1.2, 2, 4.5]} />
-              <meshStandardMaterial color={COLORS.buildingAlt} />
-            </mesh>
-            <lineSegments position={[0, 0.5, 0]}>
-              <edgesGeometry args={[new THREE.BoxGeometry(1.2, 2, 4.5)]} />
-              <lineBasicMaterial color={COLORS.wireframe} />
-            </lineSegments>
+      {/* Pointed roof */}
+      <mesh position={[0, towerHeight + 3, 0]}>
+        <coneGeometry args={[towerWidth / 2 + 0.5, 6, 4]} />
+        <meshStandardMaterial color={towerDark} />
+      </mesh>
+      <lineSegments position={[0, towerHeight + 3, 0]}>
+        <edgesGeometry args={[new THREE.ConeGeometry(towerWidth / 2 + 0.5, 6, 4)]} />
+        <lineBasicMaterial color={COLORS.wireframe} />
+      </lineSegments>
 
-            {/* Arch - half torus */}
-            <mesh position={[0, 1, 0]} rotation={[Math.PI / 2, 0, 0]}>
-              <torusGeometry args={[2.5, 0.4, 8, 16, Math.PI]} />
-              <meshStandardMaterial color={COLORS.building} />
+      {/* Corner turrets (4 corners) */}
+      {[[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([x, z], i) => (
+        <group key={`turret-${i}`} position={[x * (towerWidth / 2 - 0.3), 0, z * (towerDepth / 2 - 0.3)]}>
+          {/* Turret body */}
+          <mesh position={[0, towerHeight / 2 + 2, 0]}>
+            <cylinderGeometry args={[0.8, 0.8, towerHeight + 4, 8]} />
+            <meshStandardMaterial color={towerColor} />
+          </mesh>
+          {/* Turret cap */}
+          <mesh position={[0, towerHeight + 5.5, 0]}>
+            <coneGeometry args={[1, 3, 8]} />
+            <meshStandardMaterial color={towerDark} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Windows - front and back */}
+      {[-1, 1].map((side, i) => (
+        <group key={`windows-${i}`}>
+          {/* Large arched window */}
+          <mesh position={[0, walkwayHeight - 2, side * (towerDepth / 2 + 0.1)]}>
+            <boxGeometry args={[3, 6, 0.3]} />
+            <meshStandardMaterial color={COLORS.glass} transparent opacity={0.6} />
+          </mesh>
+          {/* Lower windows */}
+          {[8, 14].map((y, j) => (
+            <mesh key={`win-${j}`} position={[0, y, side * (towerDepth / 2 + 0.1)]}>
+              <boxGeometry args={[2, 3, 0.3]} />
+              <meshStandardMaterial color={COLORS.glass} transparent opacity={0.5} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+
+      {/* Horizontal band detail */}
+      <mesh position={[0, walkwayHeight - 6, 0]}>
+        <boxGeometry args={[towerWidth + 0.5, 1, towerDepth + 0.5]} />
+        <meshStandardMaterial color={towerDark} />
+      </mesh>
+    </group>
+  );
+
+  return (
+    <group position={position} rotation={rotation} scale={scale}>
+      {/* Left Tower */}
+      <Tower xPos={-towerSpacing / 2} />
+
+      {/* Right Tower */}
+      <Tower xPos={towerSpacing / 2} />
+
+      {/* Upper Walkway - Two parallel walkways */}
+      {[-1.2, 1.2].map((zOffset, i) => (
+        <group key={`walkway-${i}`}>
+          <mesh position={[0, walkwayHeight, zOffset]}>
+            <boxGeometry args={[towerSpacing - towerWidth, 1, 2]} />
+            <meshStandardMaterial color={walkwayColor} metalness={0.4} roughness={0.6} />
+          </mesh>
+          <lineSegments position={[0, walkwayHeight, zOffset]}>
+            <edgesGeometry args={[new THREE.BoxGeometry(towerSpacing - towerWidth, 1, 2)]} />
+            <lineBasicMaterial color={COLORS.wireframe} />
+          </lineSegments>
+
+          {/* Walkway windows/railings */}
+          <mesh position={[0, walkwayHeight + 1, zOffset]}>
+            <boxGeometry args={[towerSpacing - towerWidth - 1, 1.5, 0.3]} />
+            <meshStandardMaterial color={COLORS.glass} transparent opacity={0.4} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Walkway roof */}
+      <mesh position={[0, walkwayHeight + 2.5, 0]}>
+        <boxGeometry args={[towerSpacing - towerWidth + 1, 0.5, 5]} />
+        <meshStandardMaterial color={towerDark} />
+      </mesh>
+
+      {/* Center Bascule Span (the drawbridge deck) */}
+      <mesh position={[0, deckHeight, 0]}>
+        <boxGeometry args={[towerSpacing - towerWidth + 2, 0.8, 5]} />
+        <meshStandardMaterial color={deckColor} metalness={0.3} roughness={0.7} />
+      </mesh>
+      <lineSegments position={[0, deckHeight, 0]}>
+        <edgesGeometry args={[new THREE.BoxGeometry(towerSpacing - towerWidth + 2, 0.8, 5)]} />
+        <lineBasicMaterial color={COLORS.wireframe} />
+      </lineSegments>
+
+      {/* Side Spans - Left */}
+      <group position={[-towerSpacing / 2 - 10, 0, 0]}>
+        {/* Deck */}
+        <mesh position={[0, deckHeight, 0]}>
+          <boxGeometry args={[16, 0.8, 4.5]} />
+          <meshStandardMaterial color={deckColor} />
+        </mesh>
+        <lineSegments position={[0, deckHeight, 0]}>
+          <edgesGeometry args={[new THREE.BoxGeometry(16, 0.8, 4.5)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+
+        {/* Suspension cables */}
+        {[-5, 0, 5].map((x, i) => (
+          <group key={`cable-l-${i}`}>
+            <mesh position={[x, deckHeight + 5, 1.8]}>
+              <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
+              <meshStandardMaterial color={COLORS.accent} />
+            </mesh>
+            <mesh position={[x, deckHeight + 5, -1.8]}>
+              <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
+              <meshStandardMaterial color={COLORS.accent} />
             </mesh>
           </group>
-        );
-      })}
+        ))}
 
-      {/* Railings */}
-      <mesh position={[0, 2.2, 1.8]}>
-        <boxGeometry args={[bridgeLength, 0.6, 0.15]} />
+        {/* Support pier */}
+        <mesh position={[-6, deckHeight / 2, 0]}>
+          <boxGeometry args={[2, deckHeight + 1, 5]} />
+          <meshStandardMaterial color={towerDark} />
+        </mesh>
+      </group>
+
+      {/* Side Spans - Right */}
+      <group position={[towerSpacing / 2 + 10, 0, 0]}>
+        {/* Deck */}
+        <mesh position={[0, deckHeight, 0]}>
+          <boxGeometry args={[16, 0.8, 4.5]} />
+          <meshStandardMaterial color={deckColor} />
+        </mesh>
+        <lineSegments position={[0, deckHeight, 0]}>
+          <edgesGeometry args={[new THREE.BoxGeometry(16, 0.8, 4.5)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+
+        {/* Suspension cables */}
+        {[-5, 0, 5].map((x, i) => (
+          <group key={`cable-r-${i}`}>
+            <mesh position={[x, deckHeight + 5, 1.8]}>
+              <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
+              <meshStandardMaterial color={COLORS.accent} />
+            </mesh>
+            <mesh position={[x, deckHeight + 5, -1.8]}>
+              <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
+              <meshStandardMaterial color={COLORS.accent} />
+            </mesh>
+          </group>
+        ))}
+
+        {/* Support pier */}
+        <mesh position={[6, deckHeight / 2, 0]}>
+          <boxGeometry args={[2, deckHeight + 1, 5]} />
+          <meshStandardMaterial color={towerDark} />
+        </mesh>
+      </group>
+
+      {/* Railings on deck */}
+      <mesh position={[0, deckHeight + 0.8, 2.3]}>
+        <boxGeometry args={[50, 0.5, 0.1]} />
         <meshStandardMaterial color={COLORS.primary} />
       </mesh>
-      <mesh position={[0, 2.2, -1.8]}>
-        <boxGeometry args={[bridgeLength, 0.6, 0.15]} />
+      <mesh position={[0, deckHeight + 0.8, -2.3]}>
+        <boxGeometry args={[50, 0.5, 0.1]} />
         <meshStandardMaterial color={COLORS.primary} />
       </mesh>
+
+      {/* Car on the bridge - centered on deck */}
+      <group position={[0, deckHeight + 0.9, 0.5]}>
+        {/* Car body */}
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[3, 1, 1.5]} />
+          <meshStandardMaterial color={COLORS.buildingAlt} metalness={0.5} roughness={0.4} />
+        </mesh>
+        <lineSegments position={[0, 0, 0]}>
+          <edgesGeometry args={[new THREE.BoxGeometry(3, 1, 1.5)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+        {/* Car cabin */}
+        <mesh position={[0, 0.7, 0]}>
+          <boxGeometry args={[1.8, 0.8, 1.3]} />
+          <meshStandardMaterial color={COLORS.glass} transparent opacity={0.6} />
+        </mesh>
+        <lineSegments position={[0, 0.7, 0]}>
+          <edgesGeometry args={[new THREE.BoxGeometry(1.8, 0.8, 1.3)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+        {/* Wheels */}
+        {[[-1, -0.6], [-1, 0.6], [1, -0.6], [1, 0.6]].map(([x, z], i) => (
+          <mesh key={`wheel-${i}`} position={[x, -0.4, z]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.3, 0.3, 0.2, 8]} />
+            <meshStandardMaterial color={COLORS.buildingAlt} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Extended road - Left approach */}
+      <group position={[-towerSpacing / 2 - 33, 0, 0]}>
+        <mesh position={[0, deckHeight - 0.5, 0]}>
+          <boxGeometry args={[35, 0.8, 4.5]} />
+          <meshStandardMaterial color={deckColor} />
+        </mesh>
+        <lineSegments position={[0, deckHeight - 0.5, 0]}>
+          <edgesGeometry args={[new THREE.BoxGeometry(35, 0.8, 4.5)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+        {/* Road railings */}
+        <mesh position={[0, deckHeight + 0.3, 2.3]}>
+          <boxGeometry args={[35, 0.5, 0.1]} />
+          <meshStandardMaterial color={COLORS.primary} />
+        </mesh>
+        <mesh position={[0, deckHeight + 0.3, -2.3]}>
+          <boxGeometry args={[35, 0.5, 0.1]} />
+          <meshStandardMaterial color={COLORS.primary} />
+        </mesh>
+      </group>
+
+      {/* Extended road - Right approach */}
+      <group position={[towerSpacing / 2 + 33, 0, 0]}>
+        <mesh position={[0, deckHeight - 0.5, 0]}>
+          <boxGeometry args={[35, 0.8, 4.5]} />
+          <meshStandardMaterial color={deckColor} />
+        </mesh>
+        <lineSegments position={[0, deckHeight - 0.5, 0]}>
+          <edgesGeometry args={[new THREE.BoxGeometry(35, 0.8, 4.5)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+        {/* Road railings */}
+        <mesh position={[0, deckHeight + 0.3, 2.3]}>
+          <boxGeometry args={[35, 0.5, 0.1]} />
+          <meshStandardMaterial color={COLORS.primary} />
+        </mesh>
+        <mesh position={[0, deckHeight + 0.3, -2.3]}>
+          <boxGeometry args={[35, 0.5, 0.1]} />
+          <meshStandardMaterial color={COLORS.primary} />
+        </mesh>
+      </group>
     </group>
   );
 }
@@ -441,9 +696,9 @@ function WestminsterBridge({ position }) {
  * Palace of Westminster + Big Ben
  * Long horizontal Gothic building with jagged roofline + clock tower
  */
-function PalaceOfWestminster({ position }) {
+function PalaceOfWestminster({ position, rotation = [0, 0, 0] }) {
   return (
-    <group position={position}>
+    <group position={position} rotation={rotation}>
       {/* Main Palace building - long horizontal block */}
       <mesh position={[0, 4, 0]}>
         <boxGeometry args={[35, 8, 10]} />
@@ -567,250 +822,501 @@ function PalaceOfWestminster({ position }) {
 /* CountyHall component removed - was positioned at Z=120, not visible from camera path */
 
 /**
- * Brewhouse and Kitchen - Detailed architectural model
- * Yellow brick pub with curved corner, hip roof, outdoor deck
- * Positioned in front of London Eye on the south bank
+ * Westminster Abbey - Gothic cathedral with detailed architecture
+ * Blue wireframe theme matching scene palette
+ * Full detail: nave, transepts, towers, chapter house, lady chapel
  */
-function Brewhouse({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1 }) {
-  // Brewhouse colors - warm yellows/browns for brick, dark for roof
-  const BREWHOUSE_COLORS = {
-    brick: '#D4A84B',        // Yellow brick
-    brickDark: '#C49A3F',    // Darker brick accent
-    roof: '#4A5568',         // Dark slate roof
-    roofTile: '#3D4852',     // Darker roof accent
-    window: '#87CEEB',       // Light blue glass
-    windowFrame: '#2D3748',  // Dark window frames
-    wood: '#8B7355',         // Wood deck
-    signage: '#2D3748',      // Dark signage band
-    foliage: '#4A7C59',      // Green planters
-    umbrella: '#C53030',     // Red umbrellas
-    metal: '#718096',        // Metal poles
+function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 0.6 }) {
+  // Blue color palette matching scene
+  const ABBEY_COLORS = {
+    stone: '#7EB8E5',        // Light blue (primary structure)
+    stoneDark: '#5A8BC4',    // Medium blue (buttresses, accents)
+    roof: '#4A7BB8',         // Dark blue (roofs)
+    window: '#2D3748',       // Dark gray-blue (windows)
+    copper: '#4A90D9',       // Accent blue (Lady Chapel roof)
   };
 
-  // Create curved corner geometry (quarter cylinder approximation)
-  const curvedCornerSegments = 10;
+  // Dimensions
+  const naveWidth = 12, naveLength = 50, naveHeight = 18;
+  const bayCount = 10;
+  const bayWidth = naveLength / bayCount;
+  const transeptZ = 10;
+  const transeptLength = 24, transeptHeight = 20;
+
+  // Memoized roof shape for nave
+  const naveRoofShape = useMemo(() => {
+    const shape = new THREE.Shape();
+    shape.moveTo(-naveWidth/2 - 1, 0);
+    shape.lineTo(0, 8);
+    shape.lineTo(naveWidth/2 + 1, 0);
+    shape.closePath();
+    return shape;
+  }, []);
+
+  // Memoized roof shape for transept
+  const transeptRoofShape = useMemo(() => {
+    const shape = new THREE.Shape();
+    shape.moveTo(-5.5, 0);
+    shape.lineTo(0, 6);
+    shape.lineTo(5.5, 0);
+    shape.closePath();
+    return shape;
+  }, []);
+
+  // Lady chapel roof shape
+  const ladyRoofShape = useMemo(() => {
+    const ladyWidth = 14;
+    const shape = new THREE.Shape();
+    shape.moveTo(-ladyWidth/2 - 0.5, 0);
+    shape.lineTo(0, 5);
+    shape.lineTo(ladyWidth/2 + 0.5, 0);
+    shape.closePath();
+    return shape;
+  }, []);
 
   return (
     <group position={position} rotation={rotation} scale={scale}>
-      {/* === BASE BUILDING === */}
-      {/* Main two-story rectangular mass - wide 3:1 ratio */}
-      <mesh position={[0, 4, 0]}>
-        <boxGeometry args={[18, 8, 6]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.brick} metalness={0.1} roughness={0.8} />
+      {/* === NAVE WITH WINDOW BAYS === */}
+      {[...Array(bayCount)].map((_, i) => {
+        const zPos = -naveLength/2 + bayWidth/2 + i * bayWidth;
+        return (
+          <group key={`bay-${i}`}>
+            {/* Wall section */}
+            <mesh position={[0, naveHeight/2, zPos]}>
+              <boxGeometry args={[naveWidth, naveHeight, bayWidth * 0.7]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+            </mesh>
+            <lineSegments position={[0, naveHeight/2, zPos]}>
+              <edgesGeometry args={[new THREE.BoxGeometry(naveWidth, naveHeight, bayWidth * 0.7)]} />
+              <lineBasicMaterial color={COLORS.wireframe} />
+            </lineSegments>
+
+            {/* Buttress piers on each side */}
+            {[-1, 1].map(side => {
+              const pierH = naveHeight + 2;
+              return (
+                <group key={`pier-${i}-${side}`}>
+                  <mesh position={[side * (naveWidth/2 + 0.5), pierH/2, zPos + bayWidth * 0.35]}>
+                    <boxGeometry args={[2, pierH, 1.5]} />
+                    <meshStandardMaterial color={ABBEY_COLORS.stoneDark} metalness={0.3} roughness={0.7} />
+                  </mesh>
+                  <lineSegments position={[side * (naveWidth/2 + 0.5), pierH/2, zPos + bayWidth * 0.35]}>
+                    <edgesGeometry args={[new THREE.BoxGeometry(2, pierH, 1.5)]} />
+                    <lineBasicMaterial color={COLORS.wireframe} />
+                  </lineSegments>
+
+                  {/* Pinnacle on pier */}
+                  <mesh position={[side * (naveWidth/2 + 0.5), pierH + 1.5, zPos + bayWidth * 0.35]}>
+                    <coneGeometry args={[0.5, 3, 4]} />
+                    <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                  </mesh>
+                </group>
+              );
+            })}
+
+            {/* Window recesses */}
+            {[-1, 1].map(side => (
+              <mesh key={`win-${i}-${side}`} position={[side * (naveWidth/2 - 0.2), naveHeight * 0.55, zPos]}>
+                <boxGeometry args={[0.5, naveHeight * 0.6, bayWidth * 0.5]} />
+                <meshStandardMaterial color={ABBEY_COLORS.window} />
+              </mesh>
+            ))}
+          </group>
+        );
+      })}
+
+      {/* Clerestory (upper nave) */}
+      <mesh position={[0, naveHeight + 2.5, 0]}>
+        <boxGeometry args={[naveWidth * 0.7, 5, naveLength]} />
+        <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
       </mesh>
-      <lineSegments position={[0, 4, 0]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(18, 8, 6)]} />
+      <lineSegments position={[0, naveHeight + 2.5, 0]}>
+        <edgesGeometry args={[new THREE.BoxGeometry(naveWidth * 0.7, 5, naveLength)]} />
         <lineBasicMaterial color={COLORS.wireframe} />
       </lineSegments>
 
-      {/* Curved corner section (right side) - quarter cylinder */}
-      <mesh position={[9, 4, 0]} rotation={[0, 0, 0]}>
-        <cylinderGeometry args={[3, 3, 8, curvedCornerSegments, 1, false, 0, Math.PI / 2]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.brick} metalness={0.1} roughness={0.8} side={THREE.DoubleSide} />
+      {/* Nave peaked roof */}
+      <mesh position={[0, naveHeight + 5, -naveLength/2]}>
+        <extrudeGeometry args={[naveRoofShape, { depth: naveLength, bevelEnabled: false }]} />
+        <meshStandardMaterial color={ABBEY_COLORS.roof} side={THREE.DoubleSide} />
       </mesh>
-      <lineSegments position={[9, 4, 0]}>
-        <edgesGeometry args={[new THREE.CylinderGeometry(3, 3, 8, curvedCornerSegments, 1, false, 0, Math.PI / 2)]} />
-        <lineBasicMaterial color={COLORS.wireframe} />
-      </lineSegments>
 
-      {/* === HIP ROOF === */}
-      {/* Main roof - trapezoidal prism approximated with box + cones */}
-      <mesh position={[0, 9, 0]}>
-        <boxGeometry args={[16, 1.5, 5]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.roof} metalness={0.3} roughness={0.7} />
-      </mesh>
-      <lineSegments position={[0, 9, 0]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(16, 1.5, 5)]} />
-        <lineBasicMaterial color={COLORS.wireframe} />
-      </lineSegments>
+      {/* === FLYING BUTTRESSES === */}
+      {[...Array(bayCount - 2)].map((_, i) => {
+        const zPos = -naveLength/2 + bayWidth/2 + (i + 1) * bayWidth + bayWidth * 0.35;
+        return [-1, 1].map(side => {
+          const outerPierH = naveHeight * 0.7;
+          return (
+            <group key={`fly-${i}-${side}`}>
+              {/* Outer pier */}
+              <mesh position={[side * (naveWidth/2 + 6), outerPierH/2, zPos]}>
+                <boxGeometry args={[2, outerPierH, 2]} />
+                <meshStandardMaterial color={ABBEY_COLORS.stoneDark} metalness={0.3} roughness={0.7} />
+              </mesh>
+              <lineSegments position={[side * (naveWidth/2 + 6), outerPierH/2, zPos]}>
+                <edgesGeometry args={[new THREE.BoxGeometry(2, outerPierH, 2)]} />
+                <lineBasicMaterial color={COLORS.wireframe} />
+              </lineSegments>
 
-      {/* Roof ridge */}
-      <mesh position={[0, 10, 0]}>
-        <boxGeometry args={[14, 1, 3]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.roofTile} metalness={0.3} roughness={0.7} />
-      </mesh>
-      <lineSegments position={[0, 10, 0]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(14, 1, 3)]} />
-        <lineBasicMaterial color={COLORS.wireframe} />
-      </lineSegments>
+              {/* Pinnacle on outer pier */}
+              <mesh position={[side * (naveWidth/2 + 6), outerPierH + 2, zPos]}>
+                <coneGeometry args={[0.7, 4, 4]} />
+                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+              </mesh>
 
-      {/* Chimney - offset toward center-right */}
-      <mesh position={[3, 11.5, 0]}>
-        <boxGeometry args={[1.2, 2.5, 1]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.brickDark} metalness={0.2} roughness={0.8} />
-      </mesh>
-      <lineSegments position={[3, 11.5, 0]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(1.2, 2.5, 1)]} />
-        <lineBasicMaterial color={COLORS.wireframe} />
-      </lineSegments>
+              {/* Flying arch (upper) */}
+              <mesh position={[side * (naveWidth/2 + 3.5), outerPierH * 0.85, zPos]} rotation={[0, 0, side * -0.3]}>
+                <boxGeometry args={[1, 1.5, 5]} />
+                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+              </mesh>
 
-      {/* === GROUND FLOOR WINDOWS (4 large panels) === */}
-      {[-6, -2, 2, 6].map((xPos, i) => (
-        <group key={`gf-window-${i}`} position={[xPos, 2.5, 3.05]}>
-          {/* Window frame - slight extrusion */}
-          <mesh>
-            <boxGeometry args={[2.5, 3.5, 0.15]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.windowFrame} metalness={0.4} roughness={0.6} />
+              {/* Lower flying arch */}
+              <mesh position={[side * (naveWidth/2 + 3.5), outerPierH * 0.5, zPos]} rotation={[0, 0, side * -0.2]}>
+                <boxGeometry args={[1, 1, 5]} />
+                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+              </mesh>
+            </group>
+          );
+        });
+      })}
+
+      {/* === TRANSEPTS === */}
+      {[-1, 1].map(side => (
+        <group key={`transept-${side}`}>
+          {/* Main transept body */}
+          <mesh position={[side * (transeptLength/2 + naveWidth/2 - 2), transeptHeight/2, transeptZ]}>
+            <boxGeometry args={[transeptLength, transeptHeight, 10]} />
+            <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
           </mesh>
-          {/* Window glass */}
-          <mesh position={[0, 0, 0.1]}>
-            <planeGeometry args={[2.2, 3.2]} />
-            <meshStandardMaterial
-              color={BREWHOUSE_COLORS.window}
-              emissive={BREWHOUSE_COLORS.window}
-              emissiveIntensity={0.2}
-              transparent
-              opacity={0.6}
-              metalness={0.1}
-              roughness={0.1}
-            />
-          </mesh>
-          <lineSegments>
-            <edgesGeometry args={[new THREE.BoxGeometry(2.5, 3.5, 0.15)]} />
+          <lineSegments position={[side * (transeptLength/2 + naveWidth/2 - 2), transeptHeight/2, transeptZ]}>
+            <edgesGeometry args={[new THREE.BoxGeometry(transeptLength, transeptHeight, 10)]} />
             <lineBasicMaterial color={COLORS.wireframe} />
           </lineSegments>
+
+          {/* Transept windows */}
+          {[0, 1, 2].map(w => (
+            <mesh key={`t-win-${side}-${w}`} position={[side * (naveWidth/2 + 4 + w * 6), transeptHeight * 0.5, transeptZ + 5]}>
+              <boxGeometry args={[3, transeptHeight * 0.5, 0.5]} />
+              <meshStandardMaterial color={ABBEY_COLORS.window} />
+            </mesh>
+          ))}
+
+          {/* Rose window on transept end */}
+          <mesh position={[side * (transeptLength + naveWidth/2 - 2), transeptHeight * 0.6, transeptZ]} rotation={[0, 0, Math.PI/2]}>
+            <cylinderGeometry args={[4, 4, 0.5, 16]} />
+            <meshStandardMaterial color={ABBEY_COLORS.window} />
+          </mesh>
+
+          {/* Transept roof */}
+          <mesh
+            position={[side === 1 ? naveWidth/2 - 2 : -naveWidth/2 + 2, transeptHeight, transeptZ]}
+            rotation={[0, side === 1 ? -Math.PI/2 : Math.PI/2, 0]}
+          >
+            <extrudeGeometry args={[transeptRoofShape, { depth: transeptLength, bevelEnabled: false }]} />
+            <meshStandardMaterial color={ABBEY_COLORS.roof} side={THREE.DoubleSide} />
+          </mesh>
+
+          {/* Transept buttresses */}
+          {[0, 1].map(b => (
+            <group key={`t-butt-${side}-${b}`}>
+              <mesh position={[side * (naveWidth/2 + 5 + b * 10), transeptHeight/2, transeptZ + 5.5]}>
+                <boxGeometry args={[1.5, transeptHeight, 2]} />
+                <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+              </mesh>
+              <lineSegments position={[side * (naveWidth/2 + 5 + b * 10), transeptHeight/2, transeptZ + 5.5]}>
+                <edgesGeometry args={[new THREE.BoxGeometry(1.5, transeptHeight, 2)]} />
+                <lineBasicMaterial color={COLORS.wireframe} />
+              </lineSegments>
+            </group>
+          ))}
         </group>
       ))}
 
-      {/* === UPPER FLOOR WINDOWS (6 smaller) === */}
-      {[-7, -4.2, -1.4, 1.4, 4.2, 7].map((xPos, i) => (
-        <group key={`uf-window-${i}`} position={[xPos, 6, 3.05]}>
-          {/* Window frame */}
-          <mesh>
-            <boxGeometry args={[1.8, 2, 0.12]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.windowFrame} metalness={0.4} roughness={0.6} />
-          </mesh>
-          {/* Window glass */}
-          <mesh position={[0, 0, 0.08]}>
-            <planeGeometry args={[1.5, 1.7]} />
-            <meshStandardMaterial
-              color={BREWHOUSE_COLORS.window}
-              emissive={BREWHOUSE_COLORS.window}
-              emissiveIntensity={0.15}
-              transparent
-              opacity={0.6}
-            />
-          </mesh>
-          <lineSegments>
-            <edgesGeometry args={[new THREE.BoxGeometry(1.8, 2, 0.12)]} />
-            <lineBasicMaterial color={COLORS.wireframe} />
-          </lineSegments>
-        </group>
-      ))}
+      {/* === CENTRAL TOWER (Lantern) === */}
+      {(() => {
+        const towerSize = 10, towerHeight = 32;
+        return (
+          <group>
+            <mesh position={[0, towerHeight/2, transeptZ]}>
+              <boxGeometry args={[towerSize, towerHeight, towerSize]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+            </mesh>
+            <lineSegments position={[0, towerHeight/2, transeptZ]}>
+              <edgesGeometry args={[new THREE.BoxGeometry(towerSize, towerHeight, towerSize)]} />
+              <lineBasicMaterial color={COLORS.wireframe} />
+            </lineSegments>
 
-      {/* === ARCHED DOORWAYS (2x) === */}
-      {[-4.5, 4.5].map((xPos, i) => (
-        <group key={`door-${i}`} position={[xPos, 1.8, 3.1]}>
-          {/* Door frame rectangle */}
-          <mesh position={[0, -0.3, 0]}>
-            <boxGeometry args={[2, 2.6, 0.2]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.windowFrame} metalness={0.3} roughness={0.7} />
-          </mesh>
-          {/* Arch top - half cylinder */}
-          <mesh position={[0, 1, 0]} rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[1, 1, 0.2, 16, 1, false, 0, Math.PI]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.windowFrame} metalness={0.3} roughness={0.7} side={THREE.DoubleSide} />
-          </mesh>
-          <lineSegments position={[0, -0.3, 0]}>
-            <edgesGeometry args={[new THREE.BoxGeometry(2, 2.6, 0.2)]} />
-            <lineBasicMaterial color={COLORS.wireframe} />
-          </lineSegments>
-        </group>
-      ))}
+            {/* Tower windows (4 sides) */}
+            {[0, 1, 2, 3].map(i => {
+              const angle = i * Math.PI / 2;
+              return (
+                <mesh
+                  key={`tower-win-${i}`}
+                  position={[Math.sin(angle) * (towerSize/2 + 0.2), towerHeight * 0.7, transeptZ + Math.cos(angle) * (towerSize/2 + 0.2)]}
+                  rotation={[0, angle, 0]}
+                >
+                  <boxGeometry args={[3, 8, 0.5]} />
+                  <meshStandardMaterial color={ABBEY_COLORS.window} />
+                </mesh>
+              );
+            })}
 
-      {/* === SIGNAGE BAND === */}
-      <mesh position={[0, 4.5, 3.1]}>
-        <boxGeometry args={[16, 0.8, 0.15]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.signage} metalness={0.2} roughness={0.8} />
+            {/* Tower corner pinnacles */}
+            {[[-1,-1], [-1,1], [1,-1], [1,1]].map(([x, z], i) => (
+              <mesh key={`tower-pinn-${i}`} position={[x * towerSize/2, towerHeight + 2.5, transeptZ + z * towerSize/2]}>
+                <coneGeometry args={[0.8, 5, 4]} />
+                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+              </mesh>
+            ))}
+
+            {/* Pyramid cap */}
+            <mesh position={[0, towerHeight + 2, transeptZ]} rotation={[0, Math.PI/4, 0]}>
+              <coneGeometry args={[towerSize * 0.6, 4, 4]} />
+              <meshStandardMaterial color={ABBEY_COLORS.roof} />
+            </mesh>
+          </group>
+        );
+      })()}
+
+      {/* === TWIN WESTERN TOWERS === */}
+      {(() => {
+        const wtHeight = 45, wtWidth = 7;
+        return [-1, 1].map(side => (
+          <group key={`west-tower-${side}`}>
+            {/* Tower in 3 stages */}
+            {[0, 1, 2].map(stage => {
+              const stageH = wtHeight / 3;
+              const stageW = wtWidth - stage * 0.8;
+              return (
+                <group key={`stage-${stage}`}>
+                  <mesh position={[side * (naveWidth/2 + 1), stageH/2 + stage * stageH, -naveLength/2 - 2]}>
+                    <boxGeometry args={[stageW, stageH, stageW]} />
+                    <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+                  </mesh>
+                  <lineSegments position={[side * (naveWidth/2 + 1), stageH/2 + stage * stageH, -naveLength/2 - 2]}>
+                    <edgesGeometry args={[new THREE.BoxGeometry(stageW, stageH, stageW)]} />
+                    <lineBasicMaterial color={COLORS.wireframe} />
+                  </lineSegments>
+
+                  {/* Windows on each stage */}
+                  {stage < 2 && (
+                    <mesh position={[side * (naveWidth/2 + 1), stageH * 0.6 + stage * stageH, -naveLength/2 - 2 - stageW/2]}>
+                      <boxGeometry args={[2, stageH * 0.5, 0.5]} />
+                      <meshStandardMaterial color={ABBEY_COLORS.window} />
+                    </mesh>
+                  )}
+                </group>
+              );
+            })}
+
+            {/* Corner pinnacles */}
+            {[[-1,-1], [-1,1], [1,-1], [1,1]].map(([x, z], i) => (
+              <mesh
+                key={`wt-pinn-${side}-${i}`}
+                position={[side * (naveWidth/2 + 1) + x * 2.5, wtHeight + 2, -naveLength/2 - 2 + z * 2.5]}
+              >
+                <coneGeometry args={[0.8, 4, 4]} />
+                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+              </mesh>
+            ))}
+
+            {/* Central pinnacle */}
+            <mesh position={[side * (naveWidth/2 + 1), wtHeight + 3, -naveLength/2 - 2]}>
+              <coneGeometry args={[1.5, 6, 4]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} />
+            </mesh>
+          </group>
+        ));
+      })()}
+
+      {/* Great West Door */}
+      <mesh position={[0, 6, -naveLength/2 - 2]}>
+        <boxGeometry args={[8, 12, 2]} />
+        <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
       </mesh>
-      <lineSegments position={[0, 4.5, 3.1]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(16, 0.8, 0.15)]} />
+      <lineSegments position={[0, 6, -naveLength/2 - 2]}>
+        <edgesGeometry args={[new THREE.BoxGeometry(8, 12, 2)]} />
         <lineBasicMaterial color={COLORS.wireframe} />
       </lineSegments>
 
-      {/* === OUTDOOR DECK === */}
-      {/* Deck platform */}
-      <mesh position={[0, 0.15, 6]}>
-        <boxGeometry args={[20, 0.3, 5]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.wood} metalness={0.1} roughness={0.9} />
+      {/* West window */}
+      <mesh position={[0, 17, -naveLength/2 - 1]}>
+        <boxGeometry args={[6, 10, 0.5]} />
+        <meshStandardMaterial color={ABBEY_COLORS.window} />
       </mesh>
-      <lineSegments position={[0, 0.15, 6]}>
-        <edgesGeometry args={[new THREE.BoxGeometry(20, 0.3, 5)]} />
-        <lineBasicMaterial color={COLORS.wireframe} />
-      </lineSegments>
 
-      {/* Tables with umbrellas */}
-      {[-6, -2, 2, 6].map((xPos, i) => (
-        <group key={`table-${i}`} position={[xPos, 0.3, 6]}>
-          {/* Table top */}
-          <mesh position={[0, 0.8, 0]}>
-            <boxGeometry args={[1.5, 0.1, 1.5]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.wood} metalness={0.2} roughness={0.8} />
-          </mesh>
-          {/* Table leg */}
-          <mesh position={[0, 0.4, 0]}>
-            <cylinderGeometry args={[0.1, 0.1, 0.8, 8]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.metal} metalness={0.6} roughness={0.4} />
-          </mesh>
-          {/* Umbrella pole */}
-          <mesh position={[0, 2, 0]}>
-            <cylinderGeometry args={[0.06, 0.06, 2.4, 6]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.metal} metalness={0.6} roughness={0.4} />
-          </mesh>
-          {/* Umbrella canopy - cone */}
-          <mesh position={[0, 3.2, 0]}>
-            <coneGeometry args={[1.5, 0.8, 8]} />
-            <meshStandardMaterial color={i % 2 === 0 ? BREWHOUSE_COLORS.umbrella : '#2B6CB0'} metalness={0.1} roughness={0.7} />
-          </mesh>
-          <lineSegments position={[0, 3.2, 0]}>
-            <edgesGeometry args={[new THREE.ConeGeometry(1.5, 0.8, 8)]} />
-            <lineBasicMaterial color={COLORS.wireframe} />
-          </lineSegments>
-          {/* Benches (2 per table) */}
-          <mesh position={[0, 0.45, 1]}>
-            <boxGeometry args={[1.2, 0.1, 0.4]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.wood} />
-          </mesh>
-          <mesh position={[0, 0.45, -1]}>
-            <boxGeometry args={[1.2, 0.1, 0.4]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.wood} />
-          </mesh>
-        </group>
-      ))}
+      {/* === CHAPTER HOUSE (Octagonal) === */}
+      {(() => {
+        const chapterRadius = 8, chapterHeight = 15;
+        return (
+          <group>
+            {/* Octagonal base */}
+            <mesh position={[22, chapterHeight/2, 2]}>
+              <cylinderGeometry args={[chapterRadius, chapterRadius, chapterHeight, 8]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+            </mesh>
+            <lineSegments position={[22, chapterHeight/2, 2]}>
+              <edgesGeometry args={[new THREE.CylinderGeometry(chapterRadius, chapterRadius, chapterHeight, 8)]} />
+              <lineBasicMaterial color={COLORS.wireframe} />
+            </lineSegments>
 
-      {/* === ROOFTOP PLANTERS === */}
-      {[-7, -3.5, 0, 3.5, 7].map((xPos, i) => (
-        <group key={`planter-${i}`} position={[xPos, 8.8, -2.5]}>
-          {/* Planter box */}
-          <mesh position={[0, 0.3, 0]}>
-            <boxGeometry args={[1.5, 0.6, 0.8]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.brickDark} metalness={0.1} roughness={0.9} />
-          </mesh>
-          {/* Foliage - simple sphere billboards */}
-          <mesh position={[0, 0.9, 0]}>
-            <sphereGeometry args={[0.6, 8, 6]} />
-            <meshStandardMaterial color={BREWHOUSE_COLORS.foliage} metalness={0.0} roughness={0.9} />
-          </mesh>
-        </group>
-      ))}
+            {/* Buttresses on each face */}
+            {[...Array(8)].map((_, i) => {
+              const angle = (i / 8) * Math.PI * 2 + Math.PI / 8;
+              const buttH = chapterHeight + 3;
+              return (
+                <group key={`ch-butt-${i}`}>
+                  <mesh
+                    position={[22 + Math.cos(angle) * (chapterRadius + 0.5), buttH/2, 2 + Math.sin(angle) * (chapterRadius + 0.5)]}
+                    rotation={[0, -angle, 0]}
+                  >
+                    <boxGeometry args={[1.5, buttH, 2]} />
+                    <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+                  </mesh>
 
-      {/* === FENCE along deck edge === */}
-      {/* Fence posts */}
-      {[-9, -6, -3, 0, 3, 6, 9].map((xPos, i) => (
-        <mesh key={`fence-post-${i}`} position={[xPos, 0.7, 8.3]}>
-          <cylinderGeometry args={[0.08, 0.08, 1.1, 6]} />
-          <meshStandardMaterial color={BREWHOUSE_COLORS.metal} metalness={0.5} roughness={0.5} />
-        </mesh>
-      ))}
-      {/* Fence horizontal rails */}
-      <mesh position={[0, 0.5, 8.3]}>
-        <boxGeometry args={[18.5, 0.06, 0.06]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.metal} metalness={0.5} roughness={0.5} />
-      </mesh>
-      <mesh position={[0, 0.9, 8.3]}>
-        <boxGeometry args={[18.5, 0.06, 0.06]} />
-        <meshStandardMaterial color={BREWHOUSE_COLORS.metal} metalness={0.5} roughness={0.5} />
-      </mesh>
+                  {/* Pinnacle */}
+                  <mesh position={[22 + Math.cos(angle) * (chapterRadius + 0.5), buttH + 1.5, 2 + Math.sin(angle) * (chapterRadius + 0.5)]}>
+                    <coneGeometry args={[0.6, 3, 4]} />
+                    <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                  </mesh>
+
+                  {/* Windows between buttresses */}
+                  {(() => {
+                    const winAngle = angle + Math.PI / 8;
+                    return (
+                      <mesh
+                        position={[22 + Math.cos(winAngle) * (chapterRadius - 0.2), chapterHeight * 0.5, 2 + Math.sin(winAngle) * (chapterRadius - 0.2)]}
+                        rotation={[0, -winAngle, 0]}
+                      >
+                        <boxGeometry args={[0.5, chapterHeight * 0.6, 3]} />
+                        <meshStandardMaterial color={ABBEY_COLORS.window} />
+                      </mesh>
+                    );
+                  })()}
+                </group>
+              );
+            })}
+
+            {/* Conical roof */}
+            <mesh position={[22, chapterHeight + 4, 2]}>
+              <coneGeometry args={[chapterRadius + 1, 8, 8]} />
+              <meshStandardMaterial color={ABBEY_COLORS.roof} />
+            </mesh>
+            <lineSegments position={[22, chapterHeight + 4, 2]}>
+              <edgesGeometry args={[new THREE.ConeGeometry(chapterRadius + 1, 8, 8)]} />
+              <lineBasicMaterial color={COLORS.wireframe} />
+            </lineSegments>
+
+            {/* Connecting cloister */}
+            <mesh position={[14, 3, 2]}>
+              <boxGeometry args={[8, 6, 12]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} />
+            </mesh>
+            <lineSegments position={[14, 3, 2]}>
+              <edgesGeometry args={[new THREE.BoxGeometry(8, 6, 12)]} />
+              <lineBasicMaterial color={COLORS.wireframe} />
+            </lineSegments>
+          </group>
+        );
+      })()}
+
+      {/* === HENRY VII LADY CHAPEL (East End) === */}
+      {(() => {
+        const ladyLength = 22, ladyWidth = 14, ladyHeight = 20;
+        return (
+          <group>
+            {/* Main body */}
+            <mesh position={[0, ladyHeight/2, naveLength/2 + ladyLength/2]}>
+              <boxGeometry args={[ladyWidth, ladyHeight, ladyLength]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+            </mesh>
+            <lineSegments position={[0, ladyHeight/2, naveLength/2 + ladyLength/2]}>
+              <edgesGeometry args={[new THREE.BoxGeometry(ladyWidth, ladyHeight, ladyLength)]} />
+              <lineBasicMaterial color={COLORS.wireframe} />
+            </lineSegments>
+
+            {/* Apse (rounded east end) */}
+            <mesh position={[0, ladyHeight/2, naveLength/2 + ladyLength]} rotation={[Math.PI/2, Math.PI/2, 0]}>
+              <cylinderGeometry args={[ladyWidth/2, ladyWidth/2, ladyHeight, 8, 1, false, 0, Math.PI]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+            </mesh>
+
+            {/* Lady chapel buttresses with pinnacles */}
+            {[...Array(5)].map((_, i) => {
+              const zPos = naveLength/2 + 3 + i * 4.5;
+              return [-1, 1].map(side => {
+                const buttH = ladyHeight + 2;
+                return (
+                  <group key={`lady-butt-${i}-${side}`}>
+                    <mesh position={[side * (ladyWidth/2 + 0.5), buttH/2, zPos]}>
+                      <boxGeometry args={[2, buttH, 1.5]} />
+                      <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+                    </mesh>
+                    <lineSegments position={[side * (ladyWidth/2 + 0.5), buttH/2, zPos]}>
+                      <edgesGeometry args={[new THREE.BoxGeometry(2, buttH, 1.5)]} />
+                      <lineBasicMaterial color={COLORS.wireframe} />
+                    </lineSegments>
+
+                    {/* Tall pinnacle (Tudor Gothic) */}
+                    <mesh position={[side * (ladyWidth/2 + 0.5), buttH + 3, zPos]}>
+                      <coneGeometry args={[0.6, 6, 4]} />
+                      <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                    </mesh>
+
+                    {/* Flying buttress to lady chapel */}
+                    {i > 0 && i < 4 && (
+                      <group>
+                        <mesh position={[side * (ladyWidth/2 + 5), ladyHeight * 0.25, zPos]}>
+                          <boxGeometry args={[1.5, ladyHeight * 0.5, 1.5]} />
+                          <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+                        </mesh>
+                        <mesh position={[side * (ladyWidth/2 + 2.8), ladyHeight * 0.4, zPos]} rotation={[0, 0, side * -0.25]}>
+                          <boxGeometry args={[0.8, 1, 4]} />
+                          <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                        </mesh>
+                      </group>
+                    )}
+                  </group>
+                );
+              });
+            })}
+
+            {/* Lady chapel windows */}
+            {[...Array(4)].map((_, i) => {
+              const zPos = naveLength/2 + 5 + i * 4.5;
+              return [-1, 1].map(side => (
+                <mesh key={`lady-win-${i}-${side}`} position={[side * (ladyWidth/2 - 0.2), ladyHeight * 0.5, zPos]}>
+                  <boxGeometry args={[0.5, ladyHeight * 0.65, 3]} />
+                  <meshStandardMaterial color={ABBEY_COLORS.window} />
+                </mesh>
+              ));
+            })}
+
+            {/* Lady chapel copper roof */}
+            <mesh position={[0, ladyHeight, naveLength/2 - 1]}>
+              <extrudeGeometry args={[ladyRoofShape, { depth: ladyLength + 2, bevelEnabled: false }]} />
+              <meshStandardMaterial color={ABBEY_COLORS.copper} side={THREE.DoubleSide} />
+            </mesh>
+          </group>
+        );
+      })()}
+
+      {/* === CHOIR === */}
+      {(() => {
+        const choirLength = 18;
+        return (
+          <group>
+            <mesh position={[0, naveHeight/2, transeptZ + choirLength/2 + 5]}>
+              <boxGeometry args={[naveWidth + 2, naveHeight, choirLength]} />
+              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+            </mesh>
+            <lineSegments position={[0, naveHeight/2, transeptZ + choirLength/2 + 5]}>
+              <edgesGeometry args={[new THREE.BoxGeometry(naveWidth + 2, naveHeight, choirLength)]} />
+              <lineBasicMaterial color={COLORS.wireframe} />
+            </lineSegments>
+          </group>
+        );
+      })()}
     </group>
   );
 }

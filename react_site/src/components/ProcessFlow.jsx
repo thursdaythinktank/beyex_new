@@ -110,10 +110,6 @@ function ProcessStep({ step, index, inView }) {
           <Icon className="w-10 h-10 text-apple-blue-500" />
         </motion.div>
 
-        {/* Step number badge */}
-        <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-apple-blue-500 flex items-center justify-center">
-          <span className="text-xs font-bold text-white">{step.number}</span>
-        </div>
       </div>
 
       {/* Text */}

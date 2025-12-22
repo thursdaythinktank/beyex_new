@@ -20,8 +20,8 @@ export function HotAirBalloons() {
   //
   // Balloons positioned to be visible in frustum, on the right side
   const balloons = useMemo(() => [
-    { position: [12, 38, 40], scale: 4.0, color: '#7AB8E8' },   // Sky blue - right of view center
-    { position: [18, 42, 35], scale: 3.5, color: '#6BA3E0' },   // Lighter blue - closer, more right
+    { position: [22, 36, 40], scale: 1.0, color: '#7AB8E8' },   // Sky blue - right side, smaller
+    { position: [25, 40, 35], scale: 0.8, color: '#6BA3E0' },   // Lighter blue - right side, smaller
   ], []);
 
   return (

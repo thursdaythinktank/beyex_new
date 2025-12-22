@@ -36,7 +36,7 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            className="text-xl sm:text-2xl text-apple-gray-500 max-w-2xl mx-auto mb-8"
+            className="text-xl sm:text-2xl text-apple-gray-500 max-w-2xl mx-auto mb-8 md:bg-transparent md:backdrop-blur-none md:border-0 md:px-0 md:py-0 md:rounded-none bg-white/60 backdrop-blur-md border border-white/40 px-6 py-4 rounded-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
