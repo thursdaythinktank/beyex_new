@@ -317,35 +317,101 @@ function LondonEye({ position, scale = 1 }) {
           <lineBasicMaterial color={COLORS.wireframe} />
         </lineSegments>
 
-        {/* Crisscross cables between the two rims */}
+        {/* Middle rim - between outer rim and hub */}
+        <mesh position={[0, 0, rimSpacing / 2]}>
+          <torusGeometry args={[wheelRadius * 0.8, 0.12, 8, 64]} />
+          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+        </mesh>
+        <lineSegments position={[0, 0, rimSpacing / 2]}>
+          <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius * 0.8, 0.12, 8, 64)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+        <mesh position={[0, 0, -rimSpacing / 2]}>
+          <torusGeometry args={[wheelRadius * 0.8, 0.12, 8, 64]} />
+          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+        </mesh>
+        <lineSegments position={[0, 0, -rimSpacing / 2]}>
+          <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius * 0.8, 0.12, 8, 64)]} />
+          <lineBasicMaterial color={COLORS.wireframe} />
+        </lineSegments>
+
+        {/* Zig-zag cross lines between outer rim and middle rim - diamond mesh pattern */}
         {Array.from({ length: 64 }).map((_, i) => {
           const angle1 = (i / 64) * Math.PI * 2;
           const angle2 = ((i + 1) / 64) * Math.PI * 2;
-          const x1 = Math.cos(angle1) * wheelRadius;
-          const y1 = Math.sin(angle1) * wheelRadius;
-          const x2 = Math.cos(angle2) * wheelRadius;
-          const y2 = Math.sin(angle2) * wheelRadius;
+          const angle0 = ((i - 1 + 64) / 64) * Math.PI * 2; // Previous angle
 
-          // Calculate diagonal cable position and rotation
-          const midX = (x1 + x2) / 2;
-          const midY = (y1 + y2) / 2;
-          const dx = x2 - x1;
-          const dy = y2 - y1;
-          const segmentLength = Math.sqrt(dx * dx + dy * dy + rimSpacing * rimSpacing);
-          const angleXY = Math.atan2(dy, dx);
-          const angleZ = Math.atan2(rimSpacing, Math.sqrt(dx * dx + dy * dy));
+          // Points on outer and middle rims
+          const outerX1 = Math.cos(angle1) * wheelRadius;
+          const outerY1 = Math.sin(angle1) * wheelRadius;
+          const middleX1 = Math.cos(angle1) * (wheelRadius * 0.8);
+          const middleY1 = Math.sin(angle1) * (wheelRadius * 0.8);
+          const outerX2 = Math.cos(angle2) * wheelRadius;
+          const outerY2 = Math.sin(angle2) * wheelRadius;
+          const middleX0 = Math.cos(angle0) * (wheelRadius * 0.8);
+          const middleY0 = Math.sin(angle0) * (wheelRadius * 0.8);
+
+          // Line from middle[i] to outer[i+1] (diagonal forward)
+          const mid2X = (middleX1 + outerX2) / 2;
+          const mid2Y = (middleY1 + outerY2) / 2;
+          const len2 = Math.sqrt((outerX2 - middleX1) ** 2 + (outerY2 - middleY1) ** 2);
+          const rot2 = Math.atan2(outerY2 - middleY1, outerX2 - middleX1);
+
+          // Line from outer[i] to middle[i-1] (diagonal backward) - complementary pattern
+          const mid3X = (outerX1 + middleX0) / 2;
+          const mid3Y = (outerY1 + middleY0) / 2;
+          const len3 = Math.sqrt((outerX1 - middleX0) ** 2 + (outerY1 - middleY0) ** 2);
+          const rot3 = Math.atan2(outerY1 - middleY0, outerX1 - middleX0);
 
           return (
-            <group key={`cross-${i}`}>
-              {/* Diagonal cable from front-i to back-(i+1) */}
-              <mesh
-                position={[midX, midY, 0]}
-                rotation={[angleZ, 0, angleXY]}
-              >
-                <cylinderGeometry args={[0.04, 0.04, segmentLength, 4]} />
+            <group key={`zigzag-${i}`}>
+              {/* Line from middle to next outer (diagonal forward) */}
+              <mesh position={[mid2X, mid2Y, 0]} rotation={[0, 0, rot2]}>
+                <boxGeometry args={[len2, 0.05, 0.05]} />
+                <meshStandardMaterial color={COLORS.secondary} />
+              </mesh>
+              {/* Line from outer to previous middle (diagonal backward) - creates X pattern */}
+              <mesh position={[mid3X, mid3Y, 0]} rotation={[0, 0, rot3]}>
+                <boxGeometry args={[len3, 0.05, 0.05]} />
                 <meshStandardMaterial color={COLORS.secondary} />
               </mesh>
             </group>
+          );
+        })}
+
+        {/* Straight scaffolding bars connecting front and back rims at outer edge */}
+        {Array.from({ length: 64 }).map((_, i) => {
+          const angle = (i / 64) * Math.PI * 2;
+          const x = Math.cos(angle) * wheelRadius;
+          const y = Math.sin(angle) * wheelRadius;
+
+          return (
+            <mesh
+              key={`bar-${i}`}
+              position={[x, y, 0]}
+              rotation={[Math.PI / 2, 0, 0]}
+            >
+              <cylinderGeometry args={[0.06, 0.06, rimSpacing, 6]} />
+              <meshStandardMaterial color={COLORS.secondary} />
+            </mesh>
+          );
+        })}
+
+        {/* Scaffolding bars connecting front and back middle rims */}
+        {Array.from({ length: 32 }).map((_, i) => {
+          const angle = (i / 32) * Math.PI * 2;
+          const x = Math.cos(angle) * (wheelRadius * 0.8);
+          const y = Math.sin(angle) * (wheelRadius * 0.8);
+
+          return (
+            <mesh
+              key={`mid-bar-${i}`}
+              position={[x, y, 0]}
+              rotation={[Math.PI / 2, 0, 0]}
+            >
+              <cylinderGeometry args={[0.05, 0.05, rimSpacing, 6]} />
+              <meshStandardMaterial color={COLORS.secondary} />
+            </mesh>
           );
         })}
 
@@ -696,9 +762,9 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
  * Palace of Westminster + Big Ben
  * Long horizontal Gothic building with jagged roofline + clock tower
  */
-function PalaceOfWestminster({ position, rotation = [0, 0, 0] }) {
+function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
   return (
-    <group position={position} rotation={rotation}>
+    <group position={position} rotation={rotation} scale={scale}>
       {/* Main Palace building - long horizontal block */}
       <mesh position={[0, 4, 0]}>
         <boxGeometry args={[35, 8, 10]} />
@@ -766,13 +832,13 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0] }) {
                 side={THREE.DoubleSide}
               />
             </mesh>
-            {/* Clock hands - hour */}
-            <mesh position={[0, 0.3, 0.02]} rotation={[0, 0, Math.PI / 6]}>
+            {/* Clock hands - hour (centered) */}
+            <mesh position={[0, 0, 0.02]} rotation={[0, 0, Math.PI / 6]}>
               <boxGeometry args={[0.08, 0.8, 0.02]} />
               <meshStandardMaterial color={COLORS.clockDetail} />
             </mesh>
-            {/* Clock hands - minute */}
-            <mesh position={[0, 0.4, 0.02]} rotation={[0, 0, -Math.PI / 3]}>
+            {/* Clock hands - minute (centered) */}
+            <mesh position={[0, 0, 0.02]} rotation={[0, 0, -Math.PI / 3]}>
               <boxGeometry args={[0.06, 1.1, 0.02]} />
               <meshStandardMaterial color={COLORS.clockDetail} />
             </mesh>

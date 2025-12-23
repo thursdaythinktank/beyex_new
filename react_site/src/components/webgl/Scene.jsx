@@ -198,8 +198,8 @@ export function Scene({ scrollData }) {
 
   return (
     <>
-      {/* Exponential fog for depth atmosphere - reduced for better visibility */}
-      <fogExp2 attach="fog" color={COLORS.fog} density={0.008} />
+      {/* Exponential fog for depth atmosphere */}
+      <fogExp2 attach="fog" color={COLORS.fog} density={0.005} />
 
       {/* Ambient lighting - increased for better visibility */}
       <ambientLight intensity={0.8} color={COLORS.ambient} />
@@ -233,25 +233,16 @@ export function Scene({ scrollData }) {
       {/* Speed lines - velocity feedback */}
       <SpeedLines velocity={velocity} />
 
-      {/* Post-processing effects with atmospheric blur */}
+      {/* Post-processing effects */}
       <EffectComposer>
         <Bloom
-          intensity={0.7}
-          luminanceThreshold={0.25}
+          intensity={0.6}
+          luminanceThreshold={0.3}
           luminanceSmoothing={0.9}
           mipmapBlur
         />
-
-        {/* Tilt-shift for miniature/toy camera effect */}
-        <TiltShift2
-          blur={1.0}
-          taper={0.6}
-          start={[0.5, 0.28]}
-          end={[0.5, 0.72]}
-          samples={8}
-        />
-
-        <Vignette offset={0.4} darkness={0.5} />
+        <Vignette offset={0.4} darkness={0.4} />
+        <TiltShift2 blur={0.15} taper={0.5} />
       </EffectComposer>
     </>
   );

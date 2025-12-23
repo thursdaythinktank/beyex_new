@@ -62,9 +62,9 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Featured Tour Showcase - Live Matterport Preview - aligned right */}
+        {/* Featured Tour Showcase - Live Matterport Preview - centered */}
         <motion.div
-          className="relative cursor-pointer group ml-auto"
+          className="relative cursor-pointer group mx-auto"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
