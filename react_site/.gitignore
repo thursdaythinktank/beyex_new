@@ -1,0 +1,6 @@
+
+# Debug screenshots
+*.png
+!public/*.png
+!dist/*.png
+!src/**/*.png
