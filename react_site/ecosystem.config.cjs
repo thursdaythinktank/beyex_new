@@ -49,5 +49,22 @@ module.exports = {
       max_restarts: 10,
       restart_delay: 1000,
     },
+
+    // API server - handles contact form emails via Resend
+    {
+      name: 'beyex-api',
+      script: 'server/index.js',
+      cwd: '/home/beyex/beyex/react_site',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3002,
+      },
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '200M',
+      max_restarts: 10,
+      restart_delay: 1000,
+    },
   ],
 };

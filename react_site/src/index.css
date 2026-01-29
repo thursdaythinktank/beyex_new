@@ -179,3 +179,25 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 }
+
+/* Calendly Modal - Fix positioning issues caused by #root perspective */
+.calendly-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: none !important;
+  z-index: 9998 !important;
+}
+
+.calendly-popup {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  max-height: 90vh !important;
+  max-width: 90vw !important;
+}
