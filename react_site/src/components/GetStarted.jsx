@@ -141,7 +141,7 @@ export function GetStarted() {
   };
 
   return (
-    <section id="get-started" className="py-24 bg-apple-gray-50">
+    <section id="get-started" className="py-24 bg-white/[0.65] backdrop-blur-xl border-t border-white/30">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           ref={ref}
@@ -165,7 +165,7 @@ export function GetStarted() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-apple-gray-100">
+            <div className="bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-white/40">
               <h3 className="text-xl font-semibold text-apple-gray-900 mb-2">
                 Get Your Quote
               </h3>
@@ -207,14 +207,16 @@ export function GetStarted() {
                     />
 
                     <div>
-                      <label className="block text-sm font-medium text-apple-gray-700 mb-2">
+                      <label htmlFor="floors-select" className="block text-sm font-medium text-apple-gray-700 mb-2">
                         Number of Floors
                       </label>
                       <select
+                        id="floors-select"
                         name="floors"
                         value={formData.floors}
                         onChange={handleChange}
                         required
+                        aria-label="Number of floors"
                         className="w-full px-4 py-3 rounded-xl border border-apple-gray-200 bg-white text-apple-gray-900 focus:outline-none focus:ring-2 focus:ring-apple-blue-500 focus:border-transparent transition-all"
                       >
                         <option value="">Select...</option>
@@ -319,7 +321,7 @@ export function GetStarted() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="bg-gradient-to-br from-apple-blue-500 to-apple-blue-600 p-8 rounded-2xl shadow-lg text-white h-full flex flex-col">
+            <div className="bg-gradient-to-br from-apple-blue-500/80 to-apple-blue-600/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-apple-blue-400/30 text-white h-full flex flex-col">
               <h3 className="text-xl font-semibold mb-2">
                 Prefer to Talk?
               </h3>

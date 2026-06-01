@@ -1,7 +1,7 @@
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useScrollSync } from '../../hooks/useScrollSync';
-import { EffectComposer, Bloom, Vignette, TiltShift2 } from '@react-three/postprocessing';
+
 import * as THREE from 'three';
 import { SpeedLines } from './SpeedLines';
 import { Buildings } from './Buildings';
@@ -233,17 +233,7 @@ export function Scene({ scrollData }) {
       {/* Speed lines - velocity feedback */}
       <SpeedLines velocity={velocity} />
 
-      {/* Post-processing effects */}
-      <EffectComposer>
-        <Bloom
-          intensity={0.6}
-          luminanceThreshold={0.3}
-          luminanceSmoothing={0.9}
-          mipmapBlur
-        />
-        <Vignette offset={0.4} darkness={0.4} />
-        <TiltShift2 blur={0.15} taper={0.5} />
-      </EffectComposer>
+      {/* Post-processing removed for performance */}
     </>
   );
 }

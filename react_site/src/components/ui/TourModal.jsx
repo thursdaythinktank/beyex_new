@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 
@@ -8,6 +8,15 @@ import { createPortal } from 'react-dom';
  * Uses portal to render at document body level for proper centering
  */
 export function TourModal({ isOpen, onClose, tourUrl, title }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Reset loading state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setIsLoading(true);
+    }
+  }, [isOpen]);
+
   // Close on ESC key
   useEffect(() => {
     const handleEsc = (e) => {
@@ -33,9 +42,9 @@ export function TourModal({ isOpen, onClose, tourUrl, title }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {/* Backdrop */}
+          {/* Backdrop - blur effect to keep website visible */}
           <div
-            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/30 backdrop-blur-md"
             onClick={onClose}
           />
 
@@ -57,15 +66,30 @@ export function TourModal({ isOpen, onClose, tourUrl, title }) {
               </svg>
             </button>
 
+            {/* Loading Animation */}
+            {isLoading && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-apple-gray-900 to-apple-gray-800">
+                {/* Spinning loader */}
+                <div className="relative w-16 h-16 mb-6">
+                  <div className="absolute inset-0 border-4 border-apple-blue-500/20 rounded-full"></div>
+                  <div className="absolute inset-0 border-4 border-transparent border-t-apple-blue-500 rounded-full animate-spin"></div>
+                </div>
+                {/* Loading text */}
+                <p className="text-white/80 text-lg font-medium">Loading virtual tour...</p>
+                <p className="text-white/50 text-sm mt-2">This may take a few seconds</p>
+              </div>
+            )}
+
             {/* Iframe */}
             {tourUrl && (
               <iframe
                 src={tourUrl}
                 title={title}
-                className="w-full h-full"
+                className={`w-full h-full transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
                 frameBorder="0"
                 allowFullScreen
                 allow="xr-spatial-tracking"
+                onLoad={() => setIsLoading(false)}
               />
             )}
           </motion.div>

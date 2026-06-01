@@ -14,9 +14,22 @@ export function SectorShowcase() {
 
   const sectors = [
     {
-      category: 'Real Estate',
-      title: 'Sell properties faster',
-      description: 'Immersive property tours that showcase every detail. Buyers can explore at their own pace, from anywhere in the world.',
+      category: 'Hospitality',
+      title: 'Book with confidence',
+      description: 'Give guests and event planners the confidence to book without visiting. Immersive 3D tours of rooms, suites, and event spaces that drive direct bookings.',
+      features: [
+        'Room and suite virtual walkthroughs',
+        'Conference and event space planning',
+        'Increase direct booking conversion',
+        'Reduce pre-visit site inspections',
+      ],
+      tourUrl: 'https://my.matterport.com/show/?m=bav7aPMSaUb',
+      thumbnail: '/blackwell-grange-card.webp',
+    },
+    {
+      category: 'Real Estate & Commercial',
+      title: 'Sell and lease faster',
+      description: 'Immersive property tours that showcase every detail. Buyers and tenants explore at their own pace, from anywhere in the world.',
       features: [
         'Accurate measurements and floor plans',
         'Virtual staging capabilities',
@@ -24,20 +37,7 @@ export function SectorShowcase() {
         'International buyer access',
       ],
       tourUrl: 'https://my.matterport.com/show/?m=eMkANY4WhdJ',
-      thumbnail: '/tour-thumbnails/real-estate.svg',
-    },
-    {
-      category: 'Venues & Hospitality',
-      title: 'Book more events',
-      description: 'Give event planners the confidence to book without visiting. Showcase your venue\'s full potential with interactive 3D tours.',
-      features: [
-        'Multiple room configurations',
-        'Capacity and layout planning',
-        'Décor and amenity highlights',
-        'Reduce site visit requests',
-      ],
-      tourUrl: 'https://my.matterport.com/show/?m=eStYzywQFMG',
-      thumbnail: '/tour-thumbnails/venues.svg',
+      thumbnail: '/home-card.webp',
     },
     {
       category: 'Restaurants & Retail',
@@ -50,7 +50,7 @@ export function SectorShowcase() {
         'Differentiate from competitors',
       ],
       tourUrl: 'https://my.matterport.com/show/?m=8jrsKsP2cyY',
-      thumbnail: '/tour-thumbnails/restaurants.svg',
+      thumbnail: '/dosakitchen-card.webp',
     },
   ];
 
@@ -93,7 +93,7 @@ function SectorCard({ sector, index, onTourClick }) {
       ref={ref}
       className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${
         !isEven ? 'lg:grid-flow-dense' : ''
-      }`}
+      } p-8 rounded-3xl bg-blue-50/40 backdrop-blur-xl border border-blue-100/50 shadow-sm`}
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: 0.2 }}
@@ -106,7 +106,7 @@ function SectorCard({ sector, index, onTourClick }) {
           {sector.title}
         </h3>
 
-        <p className="text-lg text-apple-gray-600 leading-relaxed">
+        <p className="text-lg text-apple-gray-700 leading-relaxed">
           {sector.description}
         </p>
 
@@ -114,7 +114,7 @@ function SectorCard({ sector, index, onTourClick }) {
           {sector.features.map((feature, idx) => (
             <li key={idx} className="flex items-start gap-3">
               <CheckIcon />
-              <span className="text-base text-apple-gray-700">{feature}</span>
+              <span className="text-base text-apple-gray-800">{feature}</span>
             </li>
           ))}
         </ul>

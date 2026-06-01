@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
 import { TourModal } from './ui/TourModal';
+import { MatterportPreloader } from './ui/MatterportPreloader';
+
+const TOUR_URL = "https://my.matterport.com/show/?m=eStYzywQFMG";
 
 /**
  * Hero section - Experience First approach
@@ -9,6 +12,24 @@ import { TourModal } from './ui/TourModal';
  */
 export function Hero() {
   const [showTour, setShowTour] = useState(false);
+  const [shouldPreload, setShouldPreload] = useState(false);
+
+  // Auto-preload after page is idle (5 seconds after load)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => setShouldPreload(true), { timeout: 5000 });
+      } else {
+        setShouldPreload(true);
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Start preloading immediately on user intent (hover/focus)
+  const handlePreloadStart = useCallback(() => {
+    setShouldPreload(true);
+  }, []);
 
   const scrollToProcess = () => {
     document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
@@ -22,13 +43,13 @@ export function Hero() {
           className="text-center mb-12 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
         >
           <motion.h1
             className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-apple-gray-900 leading-tight mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0 }}
           >
             Step Inside Any Space.
             <br />
@@ -39,7 +60,7 @@ export function Hero() {
             className="text-xl sm:text-2xl text-apple-gray-500 max-w-2xl mx-auto mb-8 md:bg-transparent md:backdrop-blur-none md:border-0 md:px-0 md:py-0 md:rounded-none bg-white/60 backdrop-blur-md border border-white/40 px-6 py-4 rounded-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
           >
             We capture real places and transform them into immersive digital twins you can explore from anywhere in the world.
           </motion.p>
@@ -48,9 +69,14 @@ export function Hero() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <Button size="lg" onClick={() => setShowTour(true)}>
+            <Button
+              size="lg"
+              onClick={() => setShowTour(true)}
+              onMouseEnter={handlePreloadStart}
+              onFocus={handlePreloadStart}
+            >
               <span className="flex items-center gap-2">
                 <PlayIcon className="w-5 h-5" />
                 Explore a Space
@@ -67,20 +93,29 @@ export function Hero() {
           className="relative cursor-pointer group mx-auto"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
         >
           <div className="relative aspect-[2/1] max-h-[500px] max-w-[800px] rounded-3xl overflow-hidden shadow-2xl bg-apple-gray-900">
             {/* Brewhouse building image */}
-            <img
-              src="/brewhouse.png"
-              alt="Brewhouse Building"
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source media="(max-width: 768px)" srcSet="/brewhouse-sm.webp" type="image/webp" />
+              <source srcSet="/brewhouse.webp" type="image/webp" />
+              <img
+                src="/brewhouse.webp"
+                alt="Brewhouse Building"
+                className="w-full h-full object-cover"
+                width="800"
+                height="400"
+                loading="eager"
+                fetchPriority="high"
+              />
+            </picture>
 
             {/* Clickable overlay to open full modal - positioned on the right side */}
             <div
               className="absolute top-0 right-0 bottom-0 w-1/3 cursor-pointer bg-gradient-to-l from-black/40 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
               onClick={() => setShowTour(true)}
+              onMouseEnter={handlePreloadStart}
             >
               <motion.div
                 className="flex flex-col items-center gap-4"
@@ -108,11 +143,14 @@ export function Hero() {
         </motion.div>
       </div>
 
+      {/* Background preloader - loads after 3s idle or on hover intent */}
+      {shouldPreload && <MatterportPreloader tourUrl={TOUR_URL} delay={0} />}
+
       {/* Tour Modal */}
       <TourModal
         isOpen={showTour}
         onClose={() => setShowTour(false)}
-        tourUrl="https://my.matterport.com/show/?m=eStYzywQFMG"
+        tourUrl={TOUR_URL}
         title="Commercial Venue"
       />
     </section>

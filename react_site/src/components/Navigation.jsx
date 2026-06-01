@@ -35,7 +35,7 @@ export function Navigation() {
           className="flex items-center"
           whileHover={{ scale: 1.02 }}
         >
-          <img src="/logo.png" alt="Beyex" className="h-8" />
+          <img src="/logo.png" alt="Beyex" className="h-8" width="77" height="32" />
         </motion.a>
 
         <div className="hidden md:flex items-center gap-8">

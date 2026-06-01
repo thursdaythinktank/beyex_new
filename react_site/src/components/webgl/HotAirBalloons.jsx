@@ -6,22 +6,16 @@ import * as THREE from 'three';
  * Visible during hero section for whimsical atmosphere
  */
 export function HotAirBalloons() {
-  // Camera: (20, 45, -20) looks at Eye (-25, 28.5, 110)
-  // View direction: (-45, -16.5, 130) - pointing LEFT and FORWARD
+  // Camera starts at (5, 55, 0) looking at (-15, 0, 110) — steeply downward.
+  // "Left" in screen space ≈ +X world direction.
+  // "Bottom" in screen space ≈ -Y (below the look line).
   //
-  // To appear on RIGHT side of screen, balloons must be:
-  // - In the camera's view frustum (along the view direction)
-  // - Offset RIGHT of the camera-to-Eye line
-  //
-  // At Z=40, the camera-to-Eye line passes through approximately:
-  //   X = 20 + ((-25-20) * (40-(-20)) / (110-(-20))) = 20 + (-45 * 60/130) ≈ 20 - 20.8 ≈ -1
-  // So at Z=40, center of view is around X=-1
-  // RIGHT side = higher X values, so X=10 to X=20 should be visible on right
-  //
-  // Balloons positioned to be visible in frustum, on the right side
+  // Balloons positioned at BOTTOM-LEFT of the starting view:
+  // - High enough X to appear on left side of screen
+  // - Low enough Y to appear near bottom edge (just tops peeking in)
   const balloons = useMemo(() => [
-    { position: [22, 36, 40], scale: 1.0, color: '#7AB8E8' },   // Sky blue - right side, smaller
-    { position: [25, 40, 35], scale: 0.8, color: '#6BA3E0' },   // Lighter blue - right side, smaller
+    { position: [20, 15, 15], scale: 1.0, color: '#7AB8E8' },   // Sky blue - bottom-left, just top visible
+    { position: [17, 20, 12], scale: 0.8, color: '#6BA3E0' },   // Lighter blue - slightly higher, both peek in
   ], []);
 
   return (

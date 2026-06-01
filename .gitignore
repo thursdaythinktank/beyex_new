@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Build output (rebuilt on deploy)
+react_site/dist/
+
+# Environment variables (contain secrets)
+.env
+.env.local
+.env.production
+
+# Debug screenshots
+*.png
+!react_site/public/*.png
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code artifacts
+.claude/plans/
+.claude/settings.local.json
+
+# Lighthouse
+lighthouse-*.json
+react_site/lighthouse-*.json
+react_site/public/lighthouse-*.json
+
+# PM2 logs
+logs/
+*.log
+
+# Vite cache
+react_site/node_modules/.vite/
+
+# Legacy site data
+wp_site_data/
+spa/
+new_site/

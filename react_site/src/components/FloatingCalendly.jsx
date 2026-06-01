@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CalendlyModal } from './calendly/CalendlyModal';
 
@@ -9,7 +10,19 @@ import { CalendlyModal } from './calendly/CalendlyModal';
 export function FloatingCalendly() {
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [portalContainer, setPortalContainer] = useState(null);
   const ticking = useRef(false);
+
+  // Create portal container outside #root to fix position:fixed with perspective
+  useEffect(() => {
+    let container = document.getElementById('floating-buttons-portal');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'floating-buttons-portal';
+      document.body.appendChild(container);
+    }
+    setPortalContainer(container);
+  }, []);
 
   const checkVisibility = useCallback(() => {
     const getStartedSection = document.getElementById('get-started');
@@ -42,35 +55,38 @@ export function FloatingCalendly() {
 
   return (
     <>
-      <AnimatePresence>
-        {isVisible && (
-          <motion.button
-            onClick={() => setIsModalOpen(true)}
-            className="fixed bottom-6 left-6 z-50 group"
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            aria-label="Book a call"
-          >
-            {/* Tooltip */}
-            <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-apple-gray-800 text-sm font-medium px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-              Book a call
-            </span>
+      {portalContainer && createPortal(
+        <AnimatePresence>
+          {isVisible && (
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="fixed bottom-6 left-6 z-50 group"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              aria-label="Book a call"
+            >
+              {/* Tooltip */}
+              <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-apple-gray-800 text-sm font-medium px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Book a call
+              </span>
 
-            {/* Button */}
-            <div className="relative">
-              {/* Subtle pulse ring */}
-              <span className="absolute inset-0 rounded-full bg-apple-blue-500/20 animate-ping" style={{ animationDuration: '3s' }} />
+              {/* Button */}
+              <div className="relative">
+                {/* Subtle pulse ring */}
+                <span className="absolute inset-0 rounded-full bg-apple-blue-500/20 animate-ping" style={{ animationDuration: '3s' }} />
 
-              {/* Main button */}
-              <div className="relative w-14 h-14 bg-apple-blue-500 hover:bg-apple-blue-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center">
-                <CalendarIcon className="w-7 h-7 text-white" />
+                {/* Main button */}
+                <div className="relative w-14 h-14 bg-apple-blue-500 hover:bg-apple-blue-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center">
+                  <CalendarIcon className="w-7 h-7 text-white" />
+                </div>
               </div>
-            </div>
-          </motion.button>
-        )}
-      </AnimatePresence>
+            </motion.button>
+          )}
+        </AnimatePresence>,
+        portalContainer
+      )}
 
       {/* Calendly Modal */}
       <CalendlyModal

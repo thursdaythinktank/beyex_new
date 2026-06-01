@@ -18,7 +18,7 @@ export function Button({
 
   const variants = {
     primary: 'bg-apple-blue-500 text-white hover:bg-apple-blue-600 active:scale-95',
-    secondary: 'bg-transparent text-apple-gray-900 border border-apple-gray-300 hover:border-apple-gray-400 hover:bg-apple-gray-50 active:scale-95',
+    secondary: 'bg-white text-apple-gray-900 border border-apple-gray-300 hover:border-apple-gray-400 hover:bg-apple-gray-50 active:scale-95',
   };
 
   const sizes = {

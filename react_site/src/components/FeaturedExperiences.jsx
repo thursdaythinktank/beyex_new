@@ -16,21 +16,24 @@ export function FeaturedExperiences() {
       description: 'Walk through every room, examine details, feel the space',
       badge: '4,200 sq ft captured',
       tourUrl: 'https://my.matterport.com/show/?m=eMkANY4WhdJ',
-      image: '/home-card.png',
+      image: '/home-card.webp',
+      imageSm: '/home-card-sm.webp',
     },
     {
       title: 'Commercial Venue',
       description: 'Experience event spaces and plan layouts virtually',
       badge: '360° dollhouse view',
       tourUrl: 'https://my.matterport.com/show/?m=eStYzywQFMG',
-      image: '/brewhouse-card.png',
+      image: '/brewhouse-card.webp',
+      imageSm: '/brewhouse-card-sm.webp',
     },
     {
       title: 'Restaurant & Retail',
       description: 'Showcase ambience and atmosphere before the visit',
       badge: 'Street-level access',
       tourUrl: 'https://my.matterport.com/show/?m=8jrsKsP2cyY',
-      image: '/dosakitchen-card.png',
+      image: '/dosakitchen-card.webp',
+      imageSm: '/dosakitchen-card-sm.webp',
     },
   ];
 
@@ -104,8 +107,13 @@ function ExperienceCard({ experience, index, onClick }) {
         {/* Static image preview */}
         <img
           src={experience.image}
+          srcSet={`${experience.imageSm} 400w, ${experience.image} 800w`}
           alt={experience.title}
           className="w-full h-full object-cover"
+          width="400"
+          height="300"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          loading="lazy"
         />
 
         {/* Hover overlay */}

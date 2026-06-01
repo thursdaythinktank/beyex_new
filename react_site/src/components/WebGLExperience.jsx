@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Component } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Scene } from './webgl/Scene';
 import { useLenis } from '../hooks/useLenis';
@@ -6,22 +6,90 @@ import { useWebGLCapability } from '../hooks/useWebGLCapability';
 import { StaticBackground } from './StaticBackground';
 
 /**
+ * Error Boundary to catch WebGL/Three.js crashes
+ * Falls back to static background when errors occur
+ */
+class WebGLErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Log error for debugging (could send to error tracking service)
+    console.warn('WebGL crashed, falling back to static background:', error.message);
+
+    // Notify parent component
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+/**
  * WebGL Experience wrapper
  * Canvas stops above GetStarted section, buildings partially visible
- * Falls back to static SVG on mobile/low-capability devices
+ * Falls back to static SVG on mobile/low-capability devices or on crash
  */
 export function WebGLExperience({ children }) {
   const { checked, shouldUseFallback } = useWebGLCapability();
   const [scrollData, setScrollData] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState('100vh');
+  const [hasCrashed, setHasCrashed] = useState(false);
   const containerRef = useRef(null);
+  const canvasRef = useRef(null);
 
-  // Initialize Lenis smooth scroll (only when not using fallback)
+  // Handle WebGL errors and crashes
+  const handleWebGLError = (error) => {
+    console.warn('WebGL error detected:', error?.message || error);
+    setHasCrashed(true);
+  };
+
+  // Initialize Lenis smooth scroll (only when not using fallback and not crashed)
   useLenis((data) => {
-    if (!shouldUseFallback) {
+    if (!shouldUseFallback && !hasCrashed) {
       setScrollData(data);
     }
   });
+
+  // Listen for WebGL context loss (GPU crash, memory issues, etc.)
+  useEffect(() => {
+    if (shouldUseFallback || hasCrashed) return;
+
+    const handleContextLost = (event) => {
+      event.preventDefault();
+      console.warn('WebGL context lost, falling back to static background');
+      setHasCrashed(true);
+    };
+
+    const handleContextError = () => {
+      console.warn('WebGL context creation error');
+      setHasCrashed(true);
+    };
+
+    // Find canvas element and attach listeners
+    const canvas = canvasRef.current?.querySelector('canvas');
+    if (canvas) {
+      canvas.addEventListener('webglcontextlost', handleContextLost);
+      canvas.addEventListener('webglcontextcreationerror', handleContextError);
+
+      return () => {
+        canvas.removeEventListener('webglcontextlost', handleContextLost);
+        canvas.removeEventListener('webglcontextcreationerror', handleContextError);
+      };
+    }
+  }, [shouldUseFallback, hasCrashed]);
 
   // Calculate canvas height to stop above #get-started section
   useEffect(() => {
@@ -60,8 +128,8 @@ export function WebGLExperience({ children }) {
     );
   }
 
-  // Use static SVG fallback for mobile/low-capability devices
-  if (shouldUseFallback) {
+  // Use static SVG fallback for mobile/low-capability devices or after crash
+  if (shouldUseFallback || hasCrashed) {
     return (
       <div className="min-h-screen" ref={containerRef}>
         <StaticBackground />
@@ -78,25 +146,47 @@ export function WebGLExperience({ children }) {
 
       {/* WebGL Canvas - renders on top of background, below content */}
       <div
+        ref={canvasRef}
         className="fixed top-0 left-0 right-0 z-[2] pointer-events-none overflow-hidden"
         style={{ height: canvasHeight }}
       >
-        <Canvas
-          camera={{
-            position: [0, 15, -30],  // Start high up for 45-degree angle approach
-            fov: 110,
-            near: 0.1,
-            far: 300,  // Extended for curved approach path
-          }}
-          gl={{
-            antialias: true,
-            alpha: true,
-            powerPreference: 'high-performance',
-          }}
-          dpr={[1, 2]}
+        <WebGLErrorBoundary
+          onError={handleWebGLError}
+          fallback={<StaticBackground />}
         >
-          <Scene scrollData={scrollData} />
-        </Canvas>
+          <Canvas
+            camera={{
+              position: [0, 15, -30],  // Start high up for 45-degree angle approach
+              fov: 70,
+              near: 0.1,
+              far: 300,  // Extended for curved approach path
+            }}
+            gl={{
+              antialias: true,
+              alpha: true,
+              powerPreference: 'high-performance',
+              failIfMajorPerformanceCaveat: true, // Fail early if GPU is too weak
+            }}
+            onCreated={({ gl, scene }) => {
+              // Only cap DPR if canvas would exceed GPU max texture size
+              const maxSize = gl.capabilities.maxTextureSize || 4096;
+              const canvas = gl.domElement;
+              const maxDpr = maxSize / Math.max(canvas.clientWidth, canvas.clientHeight);
+              if (window.devicePixelRatio > maxDpr) {
+                gl.setPixelRatio(maxDpr);
+              }
+
+              // Additional runtime error handling
+              gl.domElement.addEventListener('webglcontextlost', (e) => {
+                e.preventDefault();
+                handleWebGLError(new Error('WebGL context lost'));
+              });
+            }}
+            dpr={[1, 2]}
+          >
+            <Scene scrollData={scrollData} />
+          </Canvas>
+        </WebGLErrorBoundary>
 
         {/* Fade out gradient at the bottom of canvas */}
         <div

@@ -832,14 +832,15 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
                 side={THREE.DoubleSide}
               />
             </mesh>
-            {/* Clock hands - hour (centered) */}
-            <mesh position={[0, 0, 0.02]} rotation={[0, 0, Math.PI / 6]}>
-              <boxGeometry args={[0.08, 0.8, 0.02]} />
+            {/* Clock hands - 10:10 position (V shape) */}
+            {/* Hour hand pointing to 10 */}
+            <mesh position={[0, 0.3, 0.02]} rotation={[0, 0, Math.PI / 3]}>
+              <boxGeometry args={[0.08, 0.7, 0.02]} />
               <meshStandardMaterial color={COLORS.clockDetail} />
             </mesh>
-            {/* Clock hands - minute (centered) */}
-            <mesh position={[0, 0, 0.02]} rotation={[0, 0, -Math.PI / 3]}>
-              <boxGeometry args={[0.06, 1.1, 0.02]} />
+            {/* Minute hand pointing to 2 */}
+            <mesh position={[0, 0.4, 0.02]} rotation={[0, 0, -Math.PI / 3]}>
+              <boxGeometry args={[0.06, 1.0, 0.02]} />
               <meshStandardMaterial color={COLORS.clockDetail} />
             </mesh>
             {/* Clock rim */}

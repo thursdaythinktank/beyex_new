@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /**
@@ -7,7 +8,19 @@ import { motion, AnimatePresence } from 'framer-motion';
  */
 export function FloatingWhatsApp() {
   const [isVisible, setIsVisible] = useState(false);
+  const [portalContainer, setPortalContainer] = useState(null);
   const ticking = useRef(false);
+
+  // Create portal container outside #root to fix position:fixed with perspective
+  useEffect(() => {
+    let container = document.getElementById('floating-buttons-portal');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'floating-buttons-portal';
+      document.body.appendChild(container);
+    }
+    setPortalContainer(container);
+  }, []);
 
   const checkVisibility = useCallback(() => {
     const getStartedSection = document.getElementById('get-started');
@@ -38,7 +51,9 @@ export function FloatingWhatsApp() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [checkVisibility]);
 
-  return (
+  if (!portalContainer) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isVisible && (
         <motion.a
@@ -70,6 +85,7 @@ export function FloatingWhatsApp() {
           </div>
         </motion.a>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    portalContainer
   );
 }
