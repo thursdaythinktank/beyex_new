@@ -53,6 +53,7 @@ export default function AIVideoShipMaintenance() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Have a training problem like this one?', description: 'Talk to us about turning your facility into training-ready 3D and AI video.', buttonLabel: 'Get Your Free Quote' }}
     >
       {/* The Challenge */}
       <ContentSection>

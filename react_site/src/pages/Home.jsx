@@ -1,11 +1,9 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Navigation } from '../components/Navigation';
 import { Hero } from '../components/Hero';
-import { SectorShowcase } from '../components/SectorShowcase';
-import { SectorGrid } from '../components/SectorGrid';
-import { RecentProjects } from '../components/RecentProjects';
+import { EvidenceWall } from '../components/EvidenceWall';
+import { ProofBySector } from '../components/ProofBySector';
 import { ProcessFlow } from '../components/ProcessFlow';
-import { UseCases } from '../components/UseCases';
 import { GetStarted } from '../components/GetStarted';
 import { Footer } from '../components/Footer';
 import { SEOHead } from '../components/SEOHead';
@@ -86,14 +84,11 @@ export default function Home() {
         <Navigation />
         <main>
           <Hero />
-          {/* Named-client tour grid (owns the #experiences anchor).
-              FeaturedExperiences was retired: all three of its tours
-              duplicated the hero or SectorShowcase captures. */}
-          <RecentProjects />
-          <SectorShowcase />
-          <SectorGrid />
+          {/* Evidence Wall: every published capture, filterable (#experiences) */}
+          <EvidenceWall />
+          {/* Proof by Sector: case-anchored rows + dark industries band (#sectors) */}
+          <ProofBySector />
           <ProcessFlow />
-          <UseCases />
           <GetStarted />
         </main>
         <Footer />

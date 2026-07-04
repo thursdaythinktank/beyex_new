@@ -14,8 +14,15 @@ export function ContentPageLayout({
   lastUpdated,
   breadcrumbs = [],
   seoProps = {},
+  cta = {},
   children,
 }) {
+  const {
+    title: ctaTitle = 'Ready to create your digital twin?',
+    description: ctaDescription = 'Get a free, no-obligation quote for your space. Our team will guide you through the entire process.',
+    buttonLabel: ctaButtonLabel = 'Get Your Free Quote',
+  } = cta;
+
   return (
     <div className="min-h-screen bg-white">
       <SEOHead {...seoProps} />
@@ -93,17 +100,17 @@ export function ContentPageLayout({
             {children}
           </article>
 
-          {/* CTA Section */}
+          {/* CTA Section — sector-specific via the `cta` prop */}
           <section className="mt-20 py-16 px-8 bg-apple-blue-600 rounded-2xl text-center">
             <h2 className="text-3xl font-semibold text-white mb-4">
-              Ready to create your digital twin?
+              {ctaTitle}
             </h2>
             <p className="text-blue-200 mb-8 max-w-xl mx-auto text-lg">
-              Get a free, no-obligation quote for your space. Our team will guide you through the entire process.
+              {ctaDescription}
             </p>
             <Link to="/#get-started">
               <Button variant="secondary" size="lg" className="bg-white text-apple-gray-900 hover:bg-apple-gray-100 border-white">
-                Get Your Free Quote
+                {ctaButtonLabel}
               </Button>
             </Link>
           </section>

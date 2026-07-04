@@ -52,6 +52,7 @@ export default function DigitalTwinsSolarEnergy() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Put your site in the browser, not on the road.', description: 'Talk to us about a digital twin for your solar or energy facility.', buttonLabel: 'Get Your Free Quote' }}
     >
       {/* What Is a Digital Twin */}
       <ContentSection>

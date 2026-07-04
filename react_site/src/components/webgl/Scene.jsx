@@ -1,5 +1,5 @@
-import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useRef, useMemo, useEffect } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useScrollSync } from '../../hooks/useScrollSync';
 import { scrollStore } from '../../hooks/scrollStore';
 
@@ -83,6 +83,28 @@ function FloatingParticles() {
 }
 
 /**
+ * Viewport-aware field of view. The camera path was tuned on wide
+ * screens; on portrait phones a 70° horizontal-ish fov crops the
+ * landmarks out of frame, so widen it as the aspect ratio narrows.
+ */
+function ResponsiveCamera() {
+  const camera = useThree((state) => state.camera);
+  const size = useThree((state) => state.size);
+
+  useEffect(() => {
+    const aspect = size.width / size.height;
+    // 70° on landscape, easing up to 95° on narrow portrait
+    const fov = aspect >= 1 ? 70 : Math.min(95, 70 + (1 - aspect) * 35);
+    if (camera.fov !== fov) {
+      camera.fov = fov;
+      camera.updateProjectionMatrix();
+    }
+  }, [camera, size]);
+
+  return null;
+}
+
+/**
  * Key light that follows the camera along its Z path.
  * Position is updated in the frame loop from the transient scroll store,
  * so it needs no React re-renders.
@@ -118,6 +140,9 @@ export function Scene() {
 
   return (
     <>
+      {/* Wider fov on portrait screens so landmarks stay in frame */}
+      <ResponsiveCamera />
+
       {/* Exponential fog for depth atmosphere */}
       <fogExp2 attach="fog" color={COLORS.fog} density={0.005} />
 

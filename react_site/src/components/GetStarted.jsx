@@ -145,33 +145,14 @@ export function GetStarted() {
           >
             <div className="bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-white/40">
               <h3 className="text-xl font-semibold text-apple-gray-900 mb-2">
-                Get Your Quote
+                See Your Price
               </h3>
               <p className="text-apple-gray-500 mb-6">
-                Tell us about your space for an instant estimate.
+                Start with your space — the estimate appears instantly, before we ask for anything else.
               </p>
 
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <Input
-                    label="Email"
-                    name="email"
-                    type="email"
-                    placeholder="you@company.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-
-                  <Input
-                    label="Phone (optional)"
-                    name="phone"
-                    type="tel"
-                    placeholder="+44 7XXX XXXXXX"
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Input
@@ -223,7 +204,10 @@ export function GetStarted() {
                           <PriceTagIcon className="w-5 h-5 text-apple-blue-600" />
                           <span className="text-sm font-medium text-apple-blue-800">Estimated Price Range</span>
                         </div>
-                        <p className="text-2xl font-semibold text-apple-blue-600">
+                        <p
+                          className="text-3xl font-semibold text-apple-blue-600"
+                          style={{ fontVariantNumeric: 'tabular-nums' }}
+                        >
                           £{priceRange.minPriceGBP.toLocaleString()} – £{priceRange.maxPriceGBP.toLocaleString()}
                         </p>
                         <p className="text-xs text-apple-blue-600/70 mt-1">
@@ -232,6 +216,25 @@ export function GetStarted() {
                       </motion.div>
                     )}
                   </AnimatePresence>
+
+                  <Input
+                    label="Email"
+                    name="email"
+                    type="email"
+                    placeholder="you@company.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+
+                  <Input
+                    label="Phone (optional)"
+                    name="phone"
+                    type="tel"
+                    placeholder="+44 7XXX XXXXXX"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
 
                   <Textarea
                     label="Additional details (optional)"
@@ -317,14 +320,24 @@ export function GetStarted() {
                   </li>
                 </ul>
 
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="w-full bg-white text-apple-blue-600 hover:bg-apple-gray-50"
-                  onClick={() => setIsCalendlyOpen(true)}
-                >
-                  Book a Free Call
-                </Button>
+                <div className="space-y-3">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    className="w-full bg-white text-apple-blue-600 hover:bg-apple-gray-50"
+                    onClick={() => setIsCalendlyOpen(true)}
+                  >
+                    Book a Free Call
+                  </Button>
+                  <a
+                    href="https://wa.me/447836405319?text=Hi%2C%20I'm%20interested%20in%20your%203D%20virtual%20tour%20services."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center text-white/90 hover:text-white text-sm font-medium underline-offset-4 hover:underline"
+                  >
+                    or message us on WhatsApp
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>

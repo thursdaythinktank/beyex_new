@@ -15,19 +15,22 @@ export function ProcessFlow() {
     {
       number: '01',
       title: 'Capture',
-      description: 'We visit your space and capture everything',
+      description:
+        'A technician scans your space with professional 3D cameras — typically a few hours on site, no disruption to your business.',
       icon: CameraIcon,
     },
     {
       number: '02',
       title: 'Process',
-      description: 'Our team creates the digital twin',
+      description:
+        'We assemble the scans into a measurable digital twin: walkthrough, dollhouse view and floor plan included.',
       icon: ProcessIcon,
     },
     {
       number: '03',
-      title: 'Experience',
-      description: 'Your space is now explorable anywhere',
+      title: 'Publish',
+      description:
+        'Your tour goes live on a link you can embed on your website or listings — it runs in any browser, no app required.',
       icon: GlobeIcon,
     },
   ];
@@ -74,8 +77,32 @@ export function ProcessFlow() {
             ))}
           </div>
         </div>
+
+        {/* Spec strip — concrete facts, not adjectives */}
+        <motion.div
+          className="mt-16 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <dl className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-apple-gray-200 bg-apple-gray-200">
+            <SpecCell term="On-site capture" detail="Typically 2–4 hours" />
+            <SpecCell term="Tour delivered" detail="Within days of capture" />
+            <SpecCell term="Works on" detail="Any browser — no app" />
+            <SpecCell term="You receive" detail="Walkthrough, dollhouse view & floor plan" />
+          </dl>
+        </motion.div>
       </div>
     </section>
+  );
+}
+
+function SpecCell({ term, detail }) {
+  return (
+    <div className="bg-white/80 backdrop-blur-sm px-5 py-4 text-center">
+      <dt className="text-xs uppercase tracking-wider text-apple-gray-400 mb-1">{term}</dt>
+      <dd className="text-sm font-semibold text-apple-gray-900">{detail}</dd>
+    </div>
   );
 }
 

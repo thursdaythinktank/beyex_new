@@ -60,6 +60,7 @@ export default function DigitalTwinsIndustries() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Run your facility the way Padocare does.', description: 'Talk to us about a digital twin with live data for your plant or facility.', buttonLabel: 'Get Your Free Quote' }}
     >
       {/* What Is an Industrial Digital Twin */}
       <ContentSection>

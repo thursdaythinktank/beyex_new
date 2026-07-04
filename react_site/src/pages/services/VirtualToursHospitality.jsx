@@ -60,6 +60,7 @@ export default function VirtualToursHospitality() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Show your rooms the way Crowne Plaza does.', description: 'A free, no-obligation quote for your hotel, apartments or event space — see your price instantly.', buttonLabel: 'See Your Price' }}
     >
       {/* Why Virtual Tours for Hospitality */}
       <ContentSection>

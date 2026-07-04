@@ -60,6 +60,7 @@ export default function VirtualToursCommercial() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Let buyers walk your property today.', description: 'A free, no-obligation quote for your listing, office or venue — see your price instantly.', buttonLabel: 'See Your Price' }}
     >
       {/* Why Commercial Venues Need Virtual Tours */}
       <ContentSection>

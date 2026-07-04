@@ -44,35 +44,31 @@ function HotAirBalloon({ position, scale = 1, color = '#007AFF', index }) {
       {/* Balloon envelope (main balloon part) - large sphere */}
       <mesh position={[0, 3, 0]}>
         <sphereGeometry args={[2.5, 16, 12]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color={color}
           emissive={color}
           emissiveIntensity={0.2}
           transparent
           opacity={0.85}
-          metalness={0.2}
-          roughness={0.5}
         />
       </mesh>
 
       {/* Balloon bottom taper - cone that overlaps into sphere for realistic shape */}
       <mesh position={[0, 0.8, 0]} rotation={[Math.PI, 0, 0]}>
         <coneGeometry args={[1.2, 2, 12]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color={color}
           emissive={color}
           emissiveIntensity={0.15}
           transparent
           opacity={0.8}
-          metalness={0.2}
-          roughness={0.5}
         />
       </mesh>
 
       {/* Decorative stripes on balloon */}
       <mesh position={[0, 3, 0]} rotation={[0, Math.PI / 4, 0]}>
         <torusGeometry args={[2.2, 0.08, 4, 12]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color="#FFFFFF"
           transparent
           opacity={0.5}
@@ -80,7 +76,7 @@ function HotAirBalloon({ position, scale = 1, color = '#007AFF', index }) {
       </mesh>
       <mesh position={[0, 3.8, 0]} rotation={[0, 0, 0]}>
         <torusGeometry args={[1.8, 0.06, 4, 12]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color="#FFFFFF"
           transparent
           opacity={0.4}
@@ -91,7 +87,7 @@ function HotAirBalloon({ position, scale = 1, color = '#007AFF', index }) {
       {[[-0.3, 0, -0.3], [0.3, 0, -0.3], [-0.3, 0, 0.3], [0.3, 0, 0.3]].map((offset, i) => (
         <mesh key={i} position={[offset[0], -0.8, offset[2]]}>
           <cylinderGeometry args={[0.03, 0.03, 1.4, 4]} />
-          <meshStandardMaterial
+          <meshLambertMaterial
             color={color}
             transparent
             opacity={0.6}
@@ -102,19 +98,17 @@ function HotAirBalloon({ position, scale = 1, color = '#007AFF', index }) {
       {/* Basket */}
       <mesh position={[0, -1.6, 0]}>
         <boxGeometry args={[0.5, 0.3, 0.5]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color={color}
           transparent
           opacity={0.55}
-          metalness={0.5}
-          roughness={0.3}
         />
       </mesh>
 
       {/* Basket rim */}
       <mesh position={[0, -1.42, 0]}>
         <boxGeometry args={[0.55, 0.08, 0.55]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color="#FFFFFF"
           transparent
           opacity={0.4}

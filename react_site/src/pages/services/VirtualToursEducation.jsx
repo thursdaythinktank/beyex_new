@@ -60,6 +60,7 @@ export default function VirtualToursEducation() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Give applicants a campus visit they can take tonight.', description: 'A free, no-obligation quote for your campus, department or accommodation.', buttonLabel: 'See Your Price' }}
     >
       <ContentSection>
         <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Why Campuses Need Virtual Tours</h2>

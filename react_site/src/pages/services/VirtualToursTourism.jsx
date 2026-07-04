@@ -60,6 +60,7 @@ export default function VirtualToursTourism() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Open your attraction to the world.', description: 'A free, no-obligation quote for your museum, heritage site or visitor centre.', buttonLabel: 'See Your Price' }}
     >
       {/* Why Virtual Tours for Tourism */}
       <ContentSection>

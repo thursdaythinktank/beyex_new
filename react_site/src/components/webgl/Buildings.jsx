@@ -100,12 +100,10 @@ function RiverThames() {
     <group position={[0, -0.5, 75]} rotation={[-Math.PI / 2, 0, 0.15]}>
       {/* River surface - very light blue, bright and visible */}
       <mesh geometry={riverGeometry}>
-        <meshStandardMaterial
+        <meshLambertMaterial
           color={COLORS.water}
           emissive={COLORS.water}
           emissiveIntensity={0.15}
-          metalness={0.2}
-          roughness={0.4}
           transparent
           opacity={0.9}
           side={THREE.DoubleSide}
@@ -147,7 +145,7 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
       {/* Hull - main body */}
       <mesh position={[0, 0, 0]}>
         <boxGeometry args={[3.5, 0.8, 1.4]} />
-        <meshStandardMaterial color={COLORS.building} metalness={0.4} roughness={0.6} />
+        <meshLambertMaterial color={COLORS.building} />
       </mesh>
       <lineSegments position={[0, 0, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(3.5, 0.8, 1.4)]} />
@@ -157,7 +155,7 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
       {/* Bow (front) - pointed section */}
       <mesh position={[2.1, 0, 0]} rotation={[0, 0, Math.PI / 4]}>
         <boxGeometry args={[0.8, 0.8, 1.2]} />
-        <meshStandardMaterial color={COLORS.building} metalness={0.4} roughness={0.6} />
+        <meshLambertMaterial color={COLORS.building} />
       </mesh>
       <lineSegments position={[2.1, 0, 0]} rotation={[0, 0, Math.PI / 4]}>
         <edgesGeometry args={[new THREE.BoxGeometry(0.8, 0.8, 1.2)]} />
@@ -167,7 +165,7 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
       {/* Stern (back) */}
       <mesh position={[-1.9, 0.1, 0]}>
         <boxGeometry args={[0.4, 0.6, 1.3]} />
-        <meshStandardMaterial color={COLORS.buildingAlt} metalness={0.4} roughness={0.6} />
+        <meshLambertMaterial color={COLORS.buildingAlt} />
       </mesh>
       <lineSegments position={[-1.9, 0.1, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(0.4, 0.6, 1.3)]} />
@@ -178,7 +176,7 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
       <group position={[-0.3, 0.7, 0]}>
         <mesh>
           <boxGeometry args={[1.8, 0.9, 1.0]} />
-          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
         <lineSegments>
           <edgesGeometry args={[new THREE.BoxGeometry(1.8, 0.9, 1.0)]} />
@@ -188,7 +186,7 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
         {/* Cabin windows - transparent glass */}
         <mesh position={[0, 0, 0.51]}>
           <planeGeometry args={[1.2, 0.4]} />
-          <meshStandardMaterial
+          <meshLambertMaterial
             color={COLORS.glass}
             emissive={COLORS.glassEmissive}
             emissiveIntensity={0.4}
@@ -198,7 +196,7 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
         </mesh>
         <mesh position={[0, 0, -0.51]} rotation={[0, Math.PI, 0]}>
           <planeGeometry args={[1.2, 0.4]} />
-          <meshStandardMaterial
+          <meshLambertMaterial
             color={COLORS.glass}
             emissive={COLORS.glassEmissive}
             emissiveIntensity={0.4}
@@ -212,7 +210,7 @@ function ThamesBoat({ position = [5, 0.3, 72], rotation = [0, 0.3, 0] }) {
       <group position={[-1.0, 1.0, 0]}>
         <mesh>
           <cylinderGeometry args={[0.12, 0.15, 0.5, 6]} />
-          <meshStandardMaterial color={COLORS.buildingAlt} metalness={0.6} roughness={0.4} />
+          <meshLambertMaterial color={COLORS.buildingAlt} />
         </mesh>
         <lineSegments>
           <edgesGeometry args={[new THREE.CylinderGeometry(0.12, 0.15, 0.5, 6)]} />
@@ -262,7 +260,7 @@ function LondonEye({ position, scale = 1 }) {
       {/* Left leg - starts wide at bottom, angles inward to hub */}
       <mesh position={[-3, 10, 0]} rotation={[0, 0, -0.18]}>
         <boxGeometry args={[0.6, 22, 0.6]} />
-        <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.primary} />
       </mesh>
       <lineSegments position={[-3, 10, 0]} rotation={[0, 0, -0.18]}>
         <edgesGeometry args={[new THREE.BoxGeometry(0.6, 22, 0.6)]} />
@@ -272,7 +270,7 @@ function LondonEye({ position, scale = 1 }) {
       {/* Right leg - mirrors left, angles inward */}
       <mesh position={[3, 10, 0]} rotation={[0, 0, 0.18]}>
         <boxGeometry args={[0.6, 22, 0.6]} />
-        <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.primary} />
       </mesh>
       <lineSegments position={[3, 10, 0]} rotation={[0, 0, 0.18]}>
         <edgesGeometry args={[new THREE.BoxGeometry(0.6, 22, 0.6)]} />
@@ -282,13 +280,13 @@ function LondonEye({ position, scale = 1 }) {
       {/* Horizontal brace between A-frame legs */}
       <mesh position={[0, 8, 0]}>
         <boxGeometry args={[5, 0.3, 0.3]} />
-        <meshStandardMaterial color={COLORS.primary} />
+        <meshLambertMaterial color={COLORS.primary} />
       </mesh>
 
       {/* Central hub - small */}
       <mesh position={[0, 19.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[1, 1, rimSpacing + 0.5, 16]} />
-        <meshStandardMaterial color={COLORS.primary} metalness={0.6} roughness={0.4} />
+        <meshLambertMaterial color={COLORS.primary} />
       </mesh>
       <lineSegments position={[0, 19.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <edgesGeometry args={[new THREE.CylinderGeometry(1, 1, rimSpacing + 0.5, 16)]} />
@@ -300,7 +298,7 @@ function LondonEye({ position, scale = 1 }) {
         {/* Front rim */}
         <mesh position={[0, 0, rimSpacing / 2]}>
           <torusGeometry args={[wheelRadius, 0.15, 8, 64]} />
-          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
         <lineSegments position={[0, 0, rimSpacing / 2]}>
           <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius, 0.15, 8, 64)]} />
@@ -310,7 +308,7 @@ function LondonEye({ position, scale = 1 }) {
         {/* Back rim */}
         <mesh position={[0, 0, -rimSpacing / 2]}>
           <torusGeometry args={[wheelRadius, 0.15, 8, 64]} />
-          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
         <lineSegments position={[0, 0, -rimSpacing / 2]}>
           <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius, 0.15, 8, 64)]} />
@@ -320,7 +318,7 @@ function LondonEye({ position, scale = 1 }) {
         {/* Middle rim - between outer rim and hub */}
         <mesh position={[0, 0, rimSpacing / 2]}>
           <torusGeometry args={[wheelRadius * 0.8, 0.12, 8, 64]} />
-          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
         <lineSegments position={[0, 0, rimSpacing / 2]}>
           <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius * 0.8, 0.12, 8, 64)]} />
@@ -328,7 +326,7 @@ function LondonEye({ position, scale = 1 }) {
         </lineSegments>
         <mesh position={[0, 0, -rimSpacing / 2]}>
           <torusGeometry args={[wheelRadius * 0.8, 0.12, 8, 64]} />
-          <meshStandardMaterial color={COLORS.primary} metalness={0.5} roughness={0.5} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
         <lineSegments position={[0, 0, -rimSpacing / 2]}>
           <edgesGeometry args={[new THREE.TorusGeometry(wheelRadius * 0.8, 0.12, 8, 64)]} />
@@ -368,12 +366,12 @@ function LondonEye({ position, scale = 1 }) {
               {/* Line from middle to next outer (diagonal forward) */}
               <mesh position={[mid2X, mid2Y, 0]} rotation={[0, 0, rot2]}>
                 <boxGeometry args={[len2, 0.05, 0.05]} />
-                <meshStandardMaterial color={COLORS.secondary} />
+                <meshLambertMaterial color={COLORS.secondary} />
               </mesh>
               {/* Line from outer to previous middle (diagonal backward) - creates X pattern */}
               <mesh position={[mid3X, mid3Y, 0]} rotation={[0, 0, rot3]}>
                 <boxGeometry args={[len3, 0.05, 0.05]} />
-                <meshStandardMaterial color={COLORS.secondary} />
+                <meshLambertMaterial color={COLORS.secondary} />
               </mesh>
             </group>
           );
@@ -392,7 +390,7 @@ function LondonEye({ position, scale = 1 }) {
               rotation={[Math.PI / 2, 0, 0]}
             >
               <cylinderGeometry args={[0.06, 0.06, rimSpacing, 6]} />
-              <meshStandardMaterial color={COLORS.secondary} />
+              <meshLambertMaterial color={COLORS.secondary} />
             </mesh>
           );
         })}
@@ -410,7 +408,7 @@ function LondonEye({ position, scale = 1 }) {
               rotation={[Math.PI / 2, 0, 0]}
             >
               <cylinderGeometry args={[0.05, 0.05, rimSpacing, 6]} />
-              <meshStandardMaterial color={COLORS.secondary} />
+              <meshLambertMaterial color={COLORS.secondary} />
             </mesh>
           );
         })}
@@ -425,12 +423,12 @@ function LondonEye({ position, scale = 1 }) {
               {/* Front spoke */}
               <mesh position={[x, y, rimSpacing / 4]} rotation={[0, 0, angle + Math.PI / 2]}>
                 <boxGeometry args={[0.05, wheelRadius - 1, 0.05]} />
-                <meshStandardMaterial color={COLORS.secondary} />
+                <meshLambertMaterial color={COLORS.secondary} />
               </mesh>
               {/* Back spoke */}
               <mesh position={[x, y, -rimSpacing / 4]} rotation={[0, 0, angle + Math.PI / 2]}>
                 <boxGeometry args={[0.05, wheelRadius - 1, 0.05]} />
-                <meshStandardMaterial color={COLORS.secondary} />
+                <meshLambertMaterial color={COLORS.secondary} />
               </mesh>
             </group>
           );
@@ -448,12 +446,10 @@ function LondonEye({ position, scale = 1 }) {
               {/* Horizontal oval capsule (wider than tall) */}
               <mesh scale={[1.5, 0.9, 1.1]} rotation={[0, 0, 0]}>
                 <sphereGeometry args={[1.1, 16, 12]} />
-                <meshStandardMaterial
+                <meshLambertMaterial
                   color={COLORS.glass}
                   emissive={COLORS.glassEmissive}
                   emissiveIntensity={0.3}
-                  metalness={0.1}
-                  roughness={0.2}
                   transparent
                   opacity={0.85}
                 />
@@ -461,7 +457,7 @@ function LondonEye({ position, scale = 1 }) {
               {/* Capsule mounting bracket */}
               <mesh position={[0, 1.2, 0]}>
                 <boxGeometry args={[0.2, 0.8, 0.2]} />
-                <meshStandardMaterial color={COLORS.primary} />
+                <meshLambertMaterial color={COLORS.primary} />
               </mesh>
             </group>
           );
@@ -471,7 +467,7 @@ function LondonEye({ position, scale = 1 }) {
       {/* Base platform */}
       <mesh position={[0, 0.3, 0]}>
         <boxGeometry args={[10, 0.5, 5]} />
-        <meshStandardMaterial color={COLORS.buildingAlt} />
+        <meshLambertMaterial color={COLORS.buildingAlt} />
       </mesh>
       <lineSegments position={[0, 0.3, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(10, 0.5, 5)]} />
@@ -505,7 +501,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
       {/* Main tower body - lower section */}
       <mesh position={[0, towerHeight / 2, 0]}>
         <boxGeometry args={[towerWidth, towerHeight, towerDepth]} />
-        <meshStandardMaterial color={towerColor} metalness={0.3} roughness={0.7} />
+        <meshLambertMaterial color={towerColor} />
       </mesh>
       <lineSegments position={[0, towerHeight / 2, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(towerWidth, towerHeight, towerDepth)]} />
@@ -515,7 +511,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
       {/* Pointed roof */}
       <mesh position={[0, towerHeight + 3, 0]}>
         <coneGeometry args={[towerWidth / 2 + 0.5, 6, 4]} />
-        <meshStandardMaterial color={towerDark} />
+        <meshLambertMaterial color={towerDark} />
       </mesh>
       <lineSegments position={[0, towerHeight + 3, 0]}>
         <edgesGeometry args={[new THREE.ConeGeometry(towerWidth / 2 + 0.5, 6, 4)]} />
@@ -528,12 +524,12 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
           {/* Turret body */}
           <mesh position={[0, towerHeight / 2 + 2, 0]}>
             <cylinderGeometry args={[0.8, 0.8, towerHeight + 4, 8]} />
-            <meshStandardMaterial color={towerColor} />
+            <meshLambertMaterial color={towerColor} />
           </mesh>
           {/* Turret cap */}
           <mesh position={[0, towerHeight + 5.5, 0]}>
             <coneGeometry args={[1, 3, 8]} />
-            <meshStandardMaterial color={towerDark} />
+            <meshLambertMaterial color={towerDark} />
           </mesh>
         </group>
       ))}
@@ -544,13 +540,13 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
           {/* Large arched window */}
           <mesh position={[0, walkwayHeight - 2, side * (towerDepth / 2 + 0.1)]}>
             <boxGeometry args={[3, 6, 0.3]} />
-            <meshStandardMaterial color={COLORS.glass} transparent opacity={0.6} />
+            <meshLambertMaterial color={COLORS.glass} transparent opacity={0.6} />
           </mesh>
           {/* Lower windows */}
           {[8, 14].map((y, j) => (
             <mesh key={`win-${j}`} position={[0, y, side * (towerDepth / 2 + 0.1)]}>
               <boxGeometry args={[2, 3, 0.3]} />
-              <meshStandardMaterial color={COLORS.glass} transparent opacity={0.5} />
+              <meshLambertMaterial color={COLORS.glass} transparent opacity={0.5} />
             </mesh>
           ))}
         </group>
@@ -559,7 +555,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
       {/* Horizontal band detail */}
       <mesh position={[0, walkwayHeight - 6, 0]}>
         <boxGeometry args={[towerWidth + 0.5, 1, towerDepth + 0.5]} />
-        <meshStandardMaterial color={towerDark} />
+        <meshLambertMaterial color={towerDark} />
       </mesh>
     </group>
   );
@@ -577,7 +573,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         <group key={`walkway-${i}`}>
           <mesh position={[0, walkwayHeight, zOffset]}>
             <boxGeometry args={[towerSpacing - towerWidth, 1, 2]} />
-            <meshStandardMaterial color={walkwayColor} metalness={0.4} roughness={0.6} />
+            <meshLambertMaterial color={walkwayColor} />
           </mesh>
           <lineSegments position={[0, walkwayHeight, zOffset]}>
             <edgesGeometry args={[new THREE.BoxGeometry(towerSpacing - towerWidth, 1, 2)]} />
@@ -587,7 +583,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
           {/* Walkway windows/railings */}
           <mesh position={[0, walkwayHeight + 1, zOffset]}>
             <boxGeometry args={[towerSpacing - towerWidth - 1, 1.5, 0.3]} />
-            <meshStandardMaterial color={COLORS.glass} transparent opacity={0.4} />
+            <meshLambertMaterial color={COLORS.glass} transparent opacity={0.4} />
           </mesh>
         </group>
       ))}
@@ -595,13 +591,13 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
       {/* Walkway roof */}
       <mesh position={[0, walkwayHeight + 2.5, 0]}>
         <boxGeometry args={[towerSpacing - towerWidth + 1, 0.5, 5]} />
-        <meshStandardMaterial color={towerDark} />
+        <meshLambertMaterial color={towerDark} />
       </mesh>
 
       {/* Center Bascule Span (the drawbridge deck) */}
       <mesh position={[0, deckHeight, 0]}>
         <boxGeometry args={[towerSpacing - towerWidth + 2, 0.8, 5]} />
-        <meshStandardMaterial color={deckColor} metalness={0.3} roughness={0.7} />
+        <meshLambertMaterial color={deckColor} />
       </mesh>
       <lineSegments position={[0, deckHeight, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(towerSpacing - towerWidth + 2, 0.8, 5)]} />
@@ -613,7 +609,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Deck */}
         <mesh position={[0, deckHeight, 0]}>
           <boxGeometry args={[16, 0.8, 4.5]} />
-          <meshStandardMaterial color={deckColor} />
+          <meshLambertMaterial color={deckColor} />
         </mesh>
         <lineSegments position={[0, deckHeight, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(16, 0.8, 4.5)]} />
@@ -625,11 +621,11 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
           <group key={`cable-l-${i}`}>
             <mesh position={[x, deckHeight + 5, 1.8]}>
               <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
-              <meshStandardMaterial color={COLORS.accent} />
+              <meshLambertMaterial color={COLORS.accent} />
             </mesh>
             <mesh position={[x, deckHeight + 5, -1.8]}>
               <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
-              <meshStandardMaterial color={COLORS.accent} />
+              <meshLambertMaterial color={COLORS.accent} />
             </mesh>
           </group>
         ))}
@@ -637,7 +633,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Support pier */}
         <mesh position={[-6, deckHeight / 2, 0]}>
           <boxGeometry args={[2, deckHeight + 1, 5]} />
-          <meshStandardMaterial color={towerDark} />
+          <meshLambertMaterial color={towerDark} />
         </mesh>
       </group>
 
@@ -646,7 +642,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Deck */}
         <mesh position={[0, deckHeight, 0]}>
           <boxGeometry args={[16, 0.8, 4.5]} />
-          <meshStandardMaterial color={deckColor} />
+          <meshLambertMaterial color={deckColor} />
         </mesh>
         <lineSegments position={[0, deckHeight, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(16, 0.8, 4.5)]} />
@@ -658,11 +654,11 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
           <group key={`cable-r-${i}`}>
             <mesh position={[x, deckHeight + 5, 1.8]}>
               <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
-              <meshStandardMaterial color={COLORS.accent} />
+              <meshLambertMaterial color={COLORS.accent} />
             </mesh>
             <mesh position={[x, deckHeight + 5, -1.8]}>
               <cylinderGeometry args={[0.08, 0.08, 10, 6]} />
-              <meshStandardMaterial color={COLORS.accent} />
+              <meshLambertMaterial color={COLORS.accent} />
             </mesh>
           </group>
         ))}
@@ -670,18 +666,18 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Support pier */}
         <mesh position={[6, deckHeight / 2, 0]}>
           <boxGeometry args={[2, deckHeight + 1, 5]} />
-          <meshStandardMaterial color={towerDark} />
+          <meshLambertMaterial color={towerDark} />
         </mesh>
       </group>
 
       {/* Railings on deck */}
       <mesh position={[0, deckHeight + 0.8, 2.3]}>
         <boxGeometry args={[50, 0.5, 0.1]} />
-        <meshStandardMaterial color={COLORS.primary} />
+        <meshLambertMaterial color={COLORS.primary} />
       </mesh>
       <mesh position={[0, deckHeight + 0.8, -2.3]}>
         <boxGeometry args={[50, 0.5, 0.1]} />
-        <meshStandardMaterial color={COLORS.primary} />
+        <meshLambertMaterial color={COLORS.primary} />
       </mesh>
 
       {/* Car on the bridge - centered on deck */}
@@ -689,7 +685,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Car body */}
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[3, 1, 1.5]} />
-          <meshStandardMaterial color={COLORS.buildingAlt} metalness={0.5} roughness={0.4} />
+          <meshLambertMaterial color={COLORS.buildingAlt} />
         </mesh>
         <lineSegments position={[0, 0, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(3, 1, 1.5)]} />
@@ -698,7 +694,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Car cabin */}
         <mesh position={[0, 0.7, 0]}>
           <boxGeometry args={[1.8, 0.8, 1.3]} />
-          <meshStandardMaterial color={COLORS.glass} transparent opacity={0.6} />
+          <meshLambertMaterial color={COLORS.glass} transparent opacity={0.6} />
         </mesh>
         <lineSegments position={[0, 0.7, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(1.8, 0.8, 1.3)]} />
@@ -708,7 +704,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {[[-1, -0.6], [-1, 0.6], [1, -0.6], [1, 0.6]].map(([x, z], i) => (
           <mesh key={`wheel-${i}`} position={[x, -0.4, z]} rotation={[Math.PI / 2, 0, 0]}>
             <cylinderGeometry args={[0.3, 0.3, 0.2, 8]} />
-            <meshStandardMaterial color={COLORS.buildingAlt} />
+            <meshLambertMaterial color={COLORS.buildingAlt} />
           </mesh>
         ))}
       </group>
@@ -717,7 +713,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
       <group position={[-towerSpacing / 2 - 33, 0, 0]}>
         <mesh position={[0, deckHeight - 0.5, 0]}>
           <boxGeometry args={[35, 0.8, 4.5]} />
-          <meshStandardMaterial color={deckColor} />
+          <meshLambertMaterial color={deckColor} />
         </mesh>
         <lineSegments position={[0, deckHeight - 0.5, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(35, 0.8, 4.5)]} />
@@ -726,11 +722,11 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Road railings */}
         <mesh position={[0, deckHeight + 0.3, 2.3]}>
           <boxGeometry args={[35, 0.5, 0.1]} />
-          <meshStandardMaterial color={COLORS.primary} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
         <mesh position={[0, deckHeight + 0.3, -2.3]}>
           <boxGeometry args={[35, 0.5, 0.1]} />
-          <meshStandardMaterial color={COLORS.primary} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
       </group>
 
@@ -738,7 +734,7 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
       <group position={[towerSpacing / 2 + 33, 0, 0]}>
         <mesh position={[0, deckHeight - 0.5, 0]}>
           <boxGeometry args={[35, 0.8, 4.5]} />
-          <meshStandardMaterial color={deckColor} />
+          <meshLambertMaterial color={deckColor} />
         </mesh>
         <lineSegments position={[0, deckHeight - 0.5, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(35, 0.8, 4.5)]} />
@@ -747,11 +743,11 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
         {/* Road railings */}
         <mesh position={[0, deckHeight + 0.3, 2.3]}>
           <boxGeometry args={[35, 0.5, 0.1]} />
-          <meshStandardMaterial color={COLORS.primary} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
         <mesh position={[0, deckHeight + 0.3, -2.3]}>
           <boxGeometry args={[35, 0.5, 0.1]} />
-          <meshStandardMaterial color={COLORS.primary} />
+          <meshLambertMaterial color={COLORS.primary} />
         </mesh>
       </group>
     </group>
@@ -775,7 +771,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
       {/* Main Palace building - long horizontal block */}
       <mesh position={[0, 4, 0]}>
         <boxGeometry args={[35, 8, 10]} />
-        <meshStandardMaterial color={COLORS.building} metalness={0.3} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.building} />
       </mesh>
       <lineSegments position={[0, 4, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(35, 8, 10)]} />
@@ -789,7 +785,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
           <group key={`peak-${i}`} position={[xPos, 8, 0]}>
             <mesh>
               <coneGeometry args={[1.2, height, 4]} />
-              <meshStandardMaterial color={COLORS.buildingAlt} />
+              <meshLambertMaterial color={COLORS.buildingAlt} />
             </mesh>
             <lineSegments>
               <edgesGeometry args={[new THREE.ConeGeometry(1.2, height, 4)]} />
@@ -804,7 +800,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
         {/* Tower base */}
         <mesh position={[0, 10, 0]}>
           <boxGeometry args={[4, 20, 4]} />
-          <meshStandardMaterial color={COLORS.building} metalness={0.4} roughness={0.6} />
+          <meshLambertMaterial color={COLORS.building} />
         </mesh>
         <lineSegments position={[0, 10, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(4, 20, 4)]} />
@@ -814,7 +810,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
         {/* Clock face section */}
         <mesh position={[0, 18, 0]}>
           <boxGeometry args={[4.5, 4, 4.5]} />
-          <meshStandardMaterial color={COLORS.secondary} metalness={0.5} roughness={0.5} />
+          <meshLambertMaterial color={COLORS.secondary} />
         </mesh>
         <lineSegments position={[0, 18, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(4.5, 4, 4.5)]} />
@@ -831,7 +827,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
             {/* Clock face - very light blue */}
             <mesh>
               <circleGeometry args={[1.5, 24]} />
-              <meshStandardMaterial
+              <meshLambertMaterial
                 color={COLORS.clockFace}
                 emissive={COLORS.clockFace}
                 emissiveIntensity={0.3}
@@ -842,17 +838,17 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
             {/* Hour hand pointing to 10 */}
             <mesh position={[0, 0.3, 0.02]} rotation={[0, 0, Math.PI / 3]}>
               <boxGeometry args={[0.08, 0.7, 0.02]} />
-              <meshStandardMaterial color={COLORS.clockDetail} />
+              <meshLambertMaterial color={COLORS.clockDetail} />
             </mesh>
             {/* Minute hand pointing to 2 */}
             <mesh position={[0, 0.4, 0.02]} rotation={[0, 0, -Math.PI / 3]}>
               <boxGeometry args={[0.06, 1.0, 0.02]} />
-              <meshStandardMaterial color={COLORS.clockDetail} />
+              <meshLambertMaterial color={COLORS.clockDetail} />
             </mesh>
             {/* Clock rim */}
             <mesh>
               <torusGeometry args={[1.5, 0.1, 8, 24]} />
-              <meshStandardMaterial color={COLORS.secondary} />
+              <meshLambertMaterial color={COLORS.secondary} />
             </mesh>
           </group>
         ))}
@@ -860,7 +856,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
         {/* Pointed spire */}
         <mesh position={[0, 23, 0]}>
           <coneGeometry args={[2, 6, 4]} />
-          <meshStandardMaterial color={COLORS.buildingAlt} />
+          <meshLambertMaterial color={COLORS.buildingAlt} />
         </mesh>
         <lineSegments position={[0, 23, 0]}>
           <edgesGeometry args={[new THREE.ConeGeometry(2, 6, 4)]} />
@@ -872,7 +868,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
       <group position={[15, 0, 0]}>
         <mesh position={[0, 8, 0]}>
           <boxGeometry args={[5, 16, 5]} />
-          <meshStandardMaterial color={COLORS.building} />
+          <meshLambertMaterial color={COLORS.building} />
         </mesh>
         <lineSegments position={[0, 8, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(5, 16, 5)]} />
@@ -882,7 +878,7 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
         {/* Spire */}
         <mesh position={[0, 18, 0]}>
           <coneGeometry args={[2.5, 5, 4]} />
-          <meshStandardMaterial color={COLORS.buildingAlt} />
+          <meshLambertMaterial color={COLORS.buildingAlt} />
         </mesh>
       </group>
     </group>
@@ -957,7 +953,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {/* Wall section */}
             <mesh position={[0, naveHeight/2, zPos]}>
               <boxGeometry args={[naveWidth, naveHeight, bayWidth * 0.7]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
             <lineSegments position={[0, naveHeight/2, zPos]}>
               <edgesGeometry args={[new THREE.BoxGeometry(naveWidth, naveHeight, bayWidth * 0.7)]} />
@@ -971,7 +967,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                 <group key={`pier-${i}-${side}`}>
                   <mesh position={[side * (naveWidth/2 + 0.5), pierH/2, zPos + bayWidth * 0.35]}>
                     <boxGeometry args={[2, pierH, 1.5]} />
-                    <meshStandardMaterial color={ABBEY_COLORS.stoneDark} metalness={0.3} roughness={0.7} />
+                    <meshLambertMaterial color={ABBEY_COLORS.stoneDark} />
                   </mesh>
                   <lineSegments position={[side * (naveWidth/2 + 0.5), pierH/2, zPos + bayWidth * 0.35]}>
                     <edgesGeometry args={[new THREE.BoxGeometry(2, pierH, 1.5)]} />
@@ -981,7 +977,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                   {/* Pinnacle on pier */}
                   <mesh position={[side * (naveWidth/2 + 0.5), pierH + 1.5, zPos + bayWidth * 0.35]}>
                     <coneGeometry args={[0.5, 3, 4]} />
-                    <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                    <meshLambertMaterial color={ABBEY_COLORS.stone} />
                   </mesh>
                 </group>
               );
@@ -991,7 +987,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {[-1, 1].map(side => (
               <mesh key={`win-${i}-${side}`} position={[side * (naveWidth/2 - 0.2), naveHeight * 0.55, zPos]}>
                 <boxGeometry args={[0.5, naveHeight * 0.6, bayWidth * 0.5]} />
-                <meshStandardMaterial color={ABBEY_COLORS.window} />
+                <meshLambertMaterial color={ABBEY_COLORS.window} />
               </mesh>
             ))}
           </group>
@@ -1001,7 +997,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
       {/* Clerestory (upper nave) */}
       <mesh position={[0, naveHeight + 2.5, 0]}>
         <boxGeometry args={[naveWidth * 0.7, 5, naveLength]} />
-        <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+        <meshLambertMaterial color={ABBEY_COLORS.stone} />
       </mesh>
       <lineSegments position={[0, naveHeight + 2.5, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(naveWidth * 0.7, 5, naveLength)]} />
@@ -1011,7 +1007,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
       {/* Nave peaked roof */}
       <mesh position={[0, naveHeight + 5, -naveLength/2]}>
         <extrudeGeometry args={[naveRoofShape, { depth: naveLength, bevelEnabled: false }]} />
-        <meshStandardMaterial color={ABBEY_COLORS.roof} side={THREE.DoubleSide} />
+        <meshLambertMaterial color={ABBEY_COLORS.roof} side={THREE.DoubleSide} />
       </mesh>
 
       {/* === FLYING BUTTRESSES === */}
@@ -1024,7 +1020,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
               {/* Outer pier */}
               <mesh position={[side * (naveWidth/2 + 6), outerPierH/2, zPos]}>
                 <boxGeometry args={[2, outerPierH, 2]} />
-                <meshStandardMaterial color={ABBEY_COLORS.stoneDark} metalness={0.3} roughness={0.7} />
+                <meshLambertMaterial color={ABBEY_COLORS.stoneDark} />
               </mesh>
               <lineSegments position={[side * (naveWidth/2 + 6), outerPierH/2, zPos]}>
                 <edgesGeometry args={[new THREE.BoxGeometry(2, outerPierH, 2)]} />
@@ -1034,19 +1030,19 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
               {/* Pinnacle on outer pier */}
               <mesh position={[side * (naveWidth/2 + 6), outerPierH + 2, zPos]}>
                 <coneGeometry args={[0.7, 4, 4]} />
-                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                <meshLambertMaterial color={ABBEY_COLORS.stone} />
               </mesh>
 
               {/* Flying arch (upper) */}
               <mesh position={[side * (naveWidth/2 + 3.5), outerPierH * 0.85, zPos]} rotation={[0, 0, side * -0.3]}>
                 <boxGeometry args={[1, 1.5, 5]} />
-                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                <meshLambertMaterial color={ABBEY_COLORS.stone} />
               </mesh>
 
               {/* Lower flying arch */}
               <mesh position={[side * (naveWidth/2 + 3.5), outerPierH * 0.5, zPos]} rotation={[0, 0, side * -0.2]}>
                 <boxGeometry args={[1, 1, 5]} />
-                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                <meshLambertMaterial color={ABBEY_COLORS.stone} />
               </mesh>
             </group>
           );
@@ -1059,7 +1055,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
           {/* Main transept body */}
           <mesh position={[side * (transeptLength/2 + naveWidth/2 - 2), transeptHeight/2, transeptZ]}>
             <boxGeometry args={[transeptLength, transeptHeight, 10]} />
-            <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+            <meshLambertMaterial color={ABBEY_COLORS.stone} />
           </mesh>
           <lineSegments position={[side * (transeptLength/2 + naveWidth/2 - 2), transeptHeight/2, transeptZ]}>
             <edgesGeometry args={[new THREE.BoxGeometry(transeptLength, transeptHeight, 10)]} />
@@ -1070,14 +1066,14 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
           {[0, 1, 2].map(w => (
             <mesh key={`t-win-${side}-${w}`} position={[side * (naveWidth/2 + 4 + w * 6), transeptHeight * 0.5, transeptZ + 5]}>
               <boxGeometry args={[3, transeptHeight * 0.5, 0.5]} />
-              <meshStandardMaterial color={ABBEY_COLORS.window} />
+              <meshLambertMaterial color={ABBEY_COLORS.window} />
             </mesh>
           ))}
 
           {/* Rose window on transept end */}
           <mesh position={[side * (transeptLength + naveWidth/2 - 2), transeptHeight * 0.6, transeptZ]} rotation={[0, 0, Math.PI/2]}>
             <cylinderGeometry args={[4, 4, 0.5, 16]} />
-            <meshStandardMaterial color={ABBEY_COLORS.window} />
+            <meshLambertMaterial color={ABBEY_COLORS.window} />
           </mesh>
 
           {/* Transept roof */}
@@ -1086,7 +1082,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             rotation={[0, side === 1 ? -Math.PI/2 : Math.PI/2, 0]}
           >
             <extrudeGeometry args={[transeptRoofShape, { depth: transeptLength, bevelEnabled: false }]} />
-            <meshStandardMaterial color={ABBEY_COLORS.roof} side={THREE.DoubleSide} />
+            <meshLambertMaterial color={ABBEY_COLORS.roof} side={THREE.DoubleSide} />
           </mesh>
 
           {/* Transept buttresses */}
@@ -1094,7 +1090,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             <group key={`t-butt-${side}-${b}`}>
               <mesh position={[side * (naveWidth/2 + 5 + b * 10), transeptHeight/2, transeptZ + 5.5]}>
                 <boxGeometry args={[1.5, transeptHeight, 2]} />
-                <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+                <meshLambertMaterial color={ABBEY_COLORS.stoneDark} />
               </mesh>
               <lineSegments position={[side * (naveWidth/2 + 5 + b * 10), transeptHeight/2, transeptZ + 5.5]}>
                 <edgesGeometry args={[new THREE.BoxGeometry(1.5, transeptHeight, 2)]} />
@@ -1112,7 +1108,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
           <group>
             <mesh position={[0, towerHeight/2, transeptZ]}>
               <boxGeometry args={[towerSize, towerHeight, towerSize]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
             <lineSegments position={[0, towerHeight/2, transeptZ]}>
               <edgesGeometry args={[new THREE.BoxGeometry(towerSize, towerHeight, towerSize)]} />
@@ -1129,7 +1125,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                   rotation={[0, angle, 0]}
                 >
                   <boxGeometry args={[3, 8, 0.5]} />
-                  <meshStandardMaterial color={ABBEY_COLORS.window} />
+                  <meshLambertMaterial color={ABBEY_COLORS.window} />
                 </mesh>
               );
             })}
@@ -1138,14 +1134,14 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {[[-1,-1], [-1,1], [1,-1], [1,1]].map(([x, z], i) => (
               <mesh key={`tower-pinn-${i}`} position={[x * towerSize/2, towerHeight + 2.5, transeptZ + z * towerSize/2]}>
                 <coneGeometry args={[0.8, 5, 4]} />
-                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                <meshLambertMaterial color={ABBEY_COLORS.stone} />
               </mesh>
             ))}
 
             {/* Pyramid cap */}
             <mesh position={[0, towerHeight + 2, transeptZ]} rotation={[0, Math.PI/4, 0]}>
               <coneGeometry args={[towerSize * 0.6, 4, 4]} />
-              <meshStandardMaterial color={ABBEY_COLORS.roof} />
+              <meshLambertMaterial color={ABBEY_COLORS.roof} />
             </mesh>
           </group>
         );
@@ -1164,7 +1160,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                 <group key={`stage-${stage}`}>
                   <mesh position={[side * (naveWidth/2 + 1), stageH/2 + stage * stageH, -naveLength/2 - 2]}>
                     <boxGeometry args={[stageW, stageH, stageW]} />
-                    <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+                    <meshLambertMaterial color={ABBEY_COLORS.stone} />
                   </mesh>
                   <lineSegments position={[side * (naveWidth/2 + 1), stageH/2 + stage * stageH, -naveLength/2 - 2]}>
                     <edgesGeometry args={[new THREE.BoxGeometry(stageW, stageH, stageW)]} />
@@ -1175,7 +1171,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                   {stage < 2 && (
                     <mesh position={[side * (naveWidth/2 + 1), stageH * 0.6 + stage * stageH, -naveLength/2 - 2 - stageW/2]}>
                       <boxGeometry args={[2, stageH * 0.5, 0.5]} />
-                      <meshStandardMaterial color={ABBEY_COLORS.window} />
+                      <meshLambertMaterial color={ABBEY_COLORS.window} />
                     </mesh>
                   )}
                 </group>
@@ -1189,14 +1185,14 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                 position={[side * (naveWidth/2 + 1) + x * 2.5, wtHeight + 2, -naveLength/2 - 2 + z * 2.5]}
               >
                 <coneGeometry args={[0.8, 4, 4]} />
-                <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                <meshLambertMaterial color={ABBEY_COLORS.stone} />
               </mesh>
             ))}
 
             {/* Central pinnacle */}
             <mesh position={[side * (naveWidth/2 + 1), wtHeight + 3, -naveLength/2 - 2]}>
               <coneGeometry args={[1.5, 6, 4]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
           </group>
         ));
@@ -1205,7 +1201,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
       {/* Great West Door */}
       <mesh position={[0, 6, -naveLength/2 - 2]}>
         <boxGeometry args={[8, 12, 2]} />
-        <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+        <meshLambertMaterial color={ABBEY_COLORS.stoneDark} />
       </mesh>
       <lineSegments position={[0, 6, -naveLength/2 - 2]}>
         <edgesGeometry args={[new THREE.BoxGeometry(8, 12, 2)]} />
@@ -1215,7 +1211,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
       {/* West window */}
       <mesh position={[0, 17, -naveLength/2 - 1]}>
         <boxGeometry args={[6, 10, 0.5]} />
-        <meshStandardMaterial color={ABBEY_COLORS.window} />
+        <meshLambertMaterial color={ABBEY_COLORS.window} />
       </mesh>
 
       {/* === CHAPTER HOUSE (Octagonal) === */}
@@ -1226,7 +1222,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {/* Octagonal base */}
             <mesh position={[22, chapterHeight/2, 2]}>
               <cylinderGeometry args={[chapterRadius, chapterRadius, chapterHeight, 8]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
             <lineSegments position={[22, chapterHeight/2, 2]}>
               <edgesGeometry args={[new THREE.CylinderGeometry(chapterRadius, chapterRadius, chapterHeight, 8)]} />
@@ -1244,13 +1240,13 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                     rotation={[0, -angle, 0]}
                   >
                     <boxGeometry args={[1.5, buttH, 2]} />
-                    <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+                    <meshLambertMaterial color={ABBEY_COLORS.stoneDark} />
                   </mesh>
 
                   {/* Pinnacle */}
                   <mesh position={[22 + Math.cos(angle) * (chapterRadius + 0.5), buttH + 1.5, 2 + Math.sin(angle) * (chapterRadius + 0.5)]}>
                     <coneGeometry args={[0.6, 3, 4]} />
-                    <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                    <meshLambertMaterial color={ABBEY_COLORS.stone} />
                   </mesh>
 
                   {/* Windows between buttresses */}
@@ -1262,7 +1258,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                         rotation={[0, -winAngle, 0]}
                       >
                         <boxGeometry args={[0.5, chapterHeight * 0.6, 3]} />
-                        <meshStandardMaterial color={ABBEY_COLORS.window} />
+                        <meshLambertMaterial color={ABBEY_COLORS.window} />
                       </mesh>
                     );
                   })()}
@@ -1273,7 +1269,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {/* Conical roof */}
             <mesh position={[22, chapterHeight + 4, 2]}>
               <coneGeometry args={[chapterRadius + 1, 8, 8]} />
-              <meshStandardMaterial color={ABBEY_COLORS.roof} />
+              <meshLambertMaterial color={ABBEY_COLORS.roof} />
             </mesh>
             <lineSegments position={[22, chapterHeight + 4, 2]}>
               <edgesGeometry args={[new THREE.ConeGeometry(chapterRadius + 1, 8, 8)]} />
@@ -1283,7 +1279,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {/* Connecting cloister */}
             <mesh position={[14, 3, 2]}>
               <boxGeometry args={[8, 6, 12]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
             <lineSegments position={[14, 3, 2]}>
               <edgesGeometry args={[new THREE.BoxGeometry(8, 6, 12)]} />
@@ -1301,7 +1297,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {/* Main body */}
             <mesh position={[0, ladyHeight/2, naveLength/2 + ladyLength/2]}>
               <boxGeometry args={[ladyWidth, ladyHeight, ladyLength]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
             <lineSegments position={[0, ladyHeight/2, naveLength/2 + ladyLength/2]}>
               <edgesGeometry args={[new THREE.BoxGeometry(ladyWidth, ladyHeight, ladyLength)]} />
@@ -1311,7 +1307,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {/* Apse (rounded east end) */}
             <mesh position={[0, ladyHeight/2, naveLength/2 + ladyLength]} rotation={[Math.PI/2, Math.PI/2, 0]}>
               <cylinderGeometry args={[ladyWidth/2, ladyWidth/2, ladyHeight, 8, 1, false, 0, Math.PI]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
 
             {/* Lady chapel buttresses with pinnacles */}
@@ -1323,7 +1319,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                   <group key={`lady-butt-${i}-${side}`}>
                     <mesh position={[side * (ladyWidth/2 + 0.5), buttH/2, zPos]}>
                       <boxGeometry args={[2, buttH, 1.5]} />
-                      <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+                      <meshLambertMaterial color={ABBEY_COLORS.stoneDark} />
                     </mesh>
                     <lineSegments position={[side * (ladyWidth/2 + 0.5), buttH/2, zPos]}>
                       <edgesGeometry args={[new THREE.BoxGeometry(2, buttH, 1.5)]} />
@@ -1333,7 +1329,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                     {/* Tall pinnacle (Tudor Gothic) */}
                     <mesh position={[side * (ladyWidth/2 + 0.5), buttH + 3, zPos]}>
                       <coneGeometry args={[0.6, 6, 4]} />
-                      <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                      <meshLambertMaterial color={ABBEY_COLORS.stone} />
                     </mesh>
 
                     {/* Flying buttress to lady chapel */}
@@ -1341,11 +1337,11 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
                       <group>
                         <mesh position={[side * (ladyWidth/2 + 5), ladyHeight * 0.25, zPos]}>
                           <boxGeometry args={[1.5, ladyHeight * 0.5, 1.5]} />
-                          <meshStandardMaterial color={ABBEY_COLORS.stoneDark} />
+                          <meshLambertMaterial color={ABBEY_COLORS.stoneDark} />
                         </mesh>
                         <mesh position={[side * (ladyWidth/2 + 2.8), ladyHeight * 0.4, zPos]} rotation={[0, 0, side * -0.25]}>
                           <boxGeometry args={[0.8, 1, 4]} />
-                          <meshStandardMaterial color={ABBEY_COLORS.stone} />
+                          <meshLambertMaterial color={ABBEY_COLORS.stone} />
                         </mesh>
                       </group>
                     )}
@@ -1360,7 +1356,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
               return [-1, 1].map(side => (
                 <mesh key={`lady-win-${i}-${side}`} position={[side * (ladyWidth/2 - 0.2), ladyHeight * 0.5, zPos]}>
                   <boxGeometry args={[0.5, ladyHeight * 0.65, 3]} />
-                  <meshStandardMaterial color={ABBEY_COLORS.window} />
+                  <meshLambertMaterial color={ABBEY_COLORS.window} />
                 </mesh>
               ));
             })}
@@ -1368,7 +1364,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
             {/* Lady chapel copper roof */}
             <mesh position={[0, ladyHeight, naveLength/2 - 1]}>
               <extrudeGeometry args={[ladyRoofShape, { depth: ladyLength + 2, bevelEnabled: false }]} />
-              <meshStandardMaterial color={ABBEY_COLORS.copper} side={THREE.DoubleSide} />
+              <meshLambertMaterial color={ABBEY_COLORS.copper} side={THREE.DoubleSide} />
             </mesh>
           </group>
         );
@@ -1381,7 +1377,7 @@ function WestminsterAbbey({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 
           <group>
             <mesh position={[0, naveHeight/2, transeptZ + choirLength/2 + 5]}>
               <boxGeometry args={[naveWidth + 2, naveHeight, choirLength]} />
-              <meshStandardMaterial color={ABBEY_COLORS.stone} metalness={0.3} roughness={0.7} />
+              <meshLambertMaterial color={ABBEY_COLORS.stone} />
             </mesh>
             <lineSegments position={[0, naveHeight/2, transeptZ + choirLength/2 + 5]}>
               <edgesGeometry args={[new THREE.BoxGeometry(naveWidth + 2, naveHeight, choirLength)]} />
@@ -1430,10 +1426,8 @@ function BuildingCluster({ position, rotation = [0, 0, 0] }) {
           {/* Main building body */}
           <mesh position={[0, b.height / 2, 0]}>
             <boxGeometry args={[b.width, b.height, b.depth]} />
-            <meshStandardMaterial
+            <meshLambertMaterial
               color={b.hasGlassFacade ? COLORS.glass : b.color}
-              metalness={b.hasGlassFacade ? 0.2 : 0.3}
-              roughness={b.hasGlassFacade ? 0.1 : 0.7}
               transparent={b.hasGlassFacade}
               opacity={b.hasGlassFacade ? 0.5 : 1}
             />
@@ -1449,7 +1443,7 @@ function BuildingCluster({ position, rotation = [0, 0, 0] }) {
               {/* Scale cone to match building footprint: radius = diagonal/2 */}
               <mesh scale={[b.width / Math.sqrt(2), 1, b.depth / Math.sqrt(2)]}>
                 <coneGeometry args={[1, 2, 4]} />
-                <meshStandardMaterial color={COLORS.buildingAlt} />
+                <meshLambertMaterial color={COLORS.buildingAlt} />
               </mesh>
               <lineSegments scale={[b.width / Math.sqrt(2), 1, b.depth / Math.sqrt(2)]}>
                 <edgesGeometry args={[new THREE.ConeGeometry(1, 2, 4)]} />
@@ -1462,7 +1456,7 @@ function BuildingCluster({ position, rotation = [0, 0, 0] }) {
           {Array.from({ length: Math.floor(b.height / 2) }).map((_, floor) => (
             <mesh key={`window-${floor}`} position={[b.width / 2 + 0.01, floor * 2 + 1.5, 0]}>
               <planeGeometry args={[0.8, 0.6]} />
-              <meshStandardMaterial
+              <meshLambertMaterial
                 color={COLORS.glass}
                 emissive={COLORS.glassEmissive}
                 emissiveIntensity={0.3}
@@ -1476,7 +1470,7 @@ function BuildingCluster({ position, rotation = [0, 0, 0] }) {
           {b.hasGlassFacade && Array.from({ length: Math.floor(b.height / 2) }).map((_, floor) => (
             <mesh key={`window-back-${floor}`} position={[-b.width / 2 - 0.01, floor * 2 + 1.5, 0]} rotation={[0, Math.PI, 0]}>
               <planeGeometry args={[0.8, 0.6]} />
-              <meshStandardMaterial
+              <meshLambertMaterial
                 color={COLORS.glass}
                 emissive={COLORS.glassEmissive}
                 emissiveIntensity={0.3}

@@ -65,6 +65,7 @@ export default function DigitalTwinsManufacturing() {
         ogType: 'article',
         schema,
       }}
+      cta={{ title: 'Start your manufacturing digital twin.', description: 'A free, no-obligation conversation about scanning your plant.', buttonLabel: 'Get Your Free Quote' }}
     >
       {/* What Is a Digital Twin */}
       <ContentSection>
