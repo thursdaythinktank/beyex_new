@@ -18,6 +18,8 @@ const VirtualToursTourism = lazy(() => import('./pages/services/VirtualToursTour
 const DigitalTwinsIndustries = lazy(() => import('./pages/services/DigitalTwinsIndustries'));
 const AIVideoShipMaintenance = lazy(() => import('./pages/case-studies/AIVideoShipMaintenance'));
 const DigitalTwinsManufacturing = lazy(() => import('./pages/resources/DigitalTwinsManufacturing'));
+// Labs: private prototypes (noindex, unlinked)
+const ScanResolvePage = lazy(() => import('./pages/labs/ScanResolvePage'));
 
 /**
  * Main App component with routing
@@ -42,6 +44,8 @@ function App() {
           <Route path="/services/digital-twins-industries" element={<DigitalTwinsIndustries />} />
           <Route path="/case-studies/ai-video-ship-maintenance" element={<AIVideoShipMaintenance />} />
           <Route path="/resources/digital-twins-manufacturing" element={<DigitalTwinsManufacturing />} />
+          {/* Labs prototype — decision gate for the cityscape replacement */}
+          <Route path="/labs/scan-resolve" element={<ScanResolvePage />} />
         </Routes>
       </Suspense>
       {/* Floating buttons - appear when get-started section is visible */}
