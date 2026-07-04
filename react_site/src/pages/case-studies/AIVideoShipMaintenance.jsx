@@ -6,6 +6,8 @@ import {
   ProcessStep,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function AIVideoShipMaintenance() {
   const schema = [
@@ -136,6 +138,15 @@ export default function AIVideoShipMaintenance() {
         />
       </ContentSection>
 
+      {/* Live Tour */}
+      <ContentSection>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          This is a real Beyex 3D capture — the Week2Week serviced apartments. It shows the kind of navigable model the scanning process described above produces, before AI video generation is layered on top.
+        </p>
+        <LazyTourEmbed tour={TOURS.week2week} />
+      </ContentSection>
+
       {/* Results */}
       <ContentSection>
         <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Results</h2>
@@ -145,7 +156,7 @@ export default function AIVideoShipMaintenance() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard value="Up to 40%" label="Reduction in training costs by eliminating travel and reducing on-site training time" />
           <StatCard value="3x Faster" label="New crew familiarisation compared to traditional manual-based onboarding" />
-          <StatCard value="24/7 Access" label="Training materials available on demand, on any device, from any location" />
+          <StatCard value="On demand" label="Training materials available around the clock, on any device, from any location" />
           <StatCard value="Improved Safety" label="Crew can practise procedures virtually before performing them on live equipment" />
         </div>
       </ContentSection>

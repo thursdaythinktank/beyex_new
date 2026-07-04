@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { Badge } from './ui/Badge';
 import { TourCard } from './ui/TourCard';
 import { TourModal } from './ui/TourModal';
+import { TOURS } from '../data/tours';
 
 /**
  * Sector showcase with alternating layout
@@ -23,34 +24,34 @@ export function SectorShowcase() {
         'Increase direct booking conversion',
         'Reduce pre-visit site inspections',
       ],
-      tourUrl: 'https://my.matterport.com/show/?m=bav7aPMSaUb',
-      thumbnail: '/blackwell-grange-card.webp',
+      tourUrl: TOURS.blackwellGrange.url,
+      thumbnail: TOURS.blackwellGrange.image,
     },
     {
       category: 'Real Estate & Commercial',
       title: 'Sell and lease faster',
-      description: 'Immersive property tours that showcase every detail. Buyers and tenants explore at their own pace, from anywhere in the world.',
+      description: 'Immersive property tours that showcase every detail. Buyers and tenants explore at their own pace, on any device.',
       features: [
         'Accurate measurements and floor plans',
         'Virtual staging capabilities',
-        '24/7 open house availability',
+        'Always-open virtual viewings',
         'International buyer access',
       ],
-      tourUrl: 'https://my.matterport.com/show/?m=eMkANY4WhdJ',
-      thumbnail: '/home-card.webp',
+      tourUrl: TOURS.residential.url,
+      thumbnail: TOURS.residential.image,
     },
     {
       category: 'Restaurants & Retail',
       title: 'Drive foot traffic',
-      description: 'Entice customers before they arrive. Let them experience your atmosphere, layout, and style through immersive virtual tours.',
+      description: 'Let customers experience your atmosphere, layout, and style through an immersive virtual tour — and turn curiosity into visits.',
       features: [
         'Showcase ambience and design',
         'Highlight key features and zones',
         'Build anticipation and excitement',
         'Differentiate from competitors',
       ],
-      tourUrl: 'https://my.matterport.com/show/?m=8jrsKsP2cyY',
-      thumbnail: '/dosakitchen-card.webp',
+      tourUrl: TOURS.dosaKitchen.url,
+      thumbnail: TOURS.dosaKitchen.image,
     },
   ];
 

@@ -6,6 +6,8 @@ import {
   Callout,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function VirtualToursHospitality() {
   const schema = [
@@ -69,7 +71,7 @@ export default function VirtualToursHospitality() {
           There is a well-documented confidence gap in online hotel bookings. Guests worry about room sizes, layouts, and whether the property matches its marketing materials. This anxiety is particularly acute for international travellers who cannot visit beforehand and must commit to a booking based entirely on what they find online. A 3D virtual tour closes that gap by letting prospective guests walk through the property at their own pace, exploring rooms, communal areas, and facilities in genuine spatial detail.
         </p>
         <p className="text-apple-gray-700 leading-relaxed mb-4">
-          For operators, the commercial case is straightforward. Properties that offer virtual tours tend to see longer website dwell times, higher direct booking rates, and fewer post-arrival complaints. When a guest has already explored the room they are booking, expectations are set accurately before they arrive.
+          For operators, the commercial case is straightforward. Properties that offer virtual tours tend to see longer website dwell times, higher direct booking rates, and fewer post-arrival complaints. When a guest has already explored the room they are booking, expectations are set accurately long before check-in.
         </p>
         <p className="text-apple-gray-700 leading-relaxed mb-4">
           Beyond individual bookings, virtual tours serve as a versatile marketing asset. They can be embedded on booking platforms, shared in email campaigns, and used by sales teams during event enquiries — replacing the need for multiple site visits with a single, always-available digital walkthrough.
@@ -187,8 +189,17 @@ export default function VirtualToursHospitality() {
         </div>
       </ContentSection>
 
-      {/* Getting Started */}
+      {/* Live Tour */}
       <ContentSection shaded>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          This is the Crowne Plaza hotel, one of the hospitality projects mentioned above, captured by Beyex. Walk the corridors, open the event spaces, and see exactly what guests see before they book.
+        </p>
+        <LazyTourEmbed tour={TOURS.crownePlaza} />
+      </ContentSection>
+
+      {/* Getting Started */}
+      <ContentSection>
         <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Getting Started</h2>
         <p className="text-apple-gray-700 leading-relaxed mb-4">
           If you manage a hotel, serviced apartment, or event venue and want to explore how a 3D virtual tour could work for your property, we would be happy to talk through your options. Every property is different, and we tailor our approach to match your specific goals — whether that is increasing direct bookings, reducing site visits for event planners, or simply giving your online presence an edge over the competition. Get in touch for a free, no-obligation consultation.

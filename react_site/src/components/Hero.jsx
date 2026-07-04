@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
 import { TourModal } from './ui/TourModal';
 import { MatterportPreloader } from './ui/MatterportPreloader';
+import { TOURS } from '../data/tours';
 
-const TOUR_URL = "https://my.matterport.com/show/?m=eStYzywQFMG";
+const TOUR_URL = TOURS.brewhouse.url;
 
 /**
  * Hero section - Experience First approach
@@ -62,7 +63,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
           >
-            We capture real places and transform them into immersive digital twins you can explore from anywhere in the world.
+            We capture real places — hotels, homes, heritage sites and industrial facilities — and turn them into immersive digital twins you can walk through in your browser.
           </motion.p>
 
           <motion.div
@@ -86,16 +87,43 @@ export function Hero() {
               See How It Works
             </Button>
           </motion.div>
+
+          {/* Proof strip - real captured clients only */}
+          <motion.p
+            className="mt-8 text-sm text-apple-gray-500 text-shadow-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Recent captures:{' '}
+            <span className="font-medium text-apple-gray-900">Crowne Plaza</span> ·{' '}
+            <span className="font-medium text-apple-gray-900">Week2Week Serviced Apartments</span> ·{' '}
+            <span className="font-medium text-apple-gray-900">Blackwell Grange</span> ·{' '}
+            <span className="font-medium text-apple-gray-900">Padocare</span>
+          </motion.p>
         </motion.div>
 
-        {/* Featured Tour Showcase - Live Matterport Preview - centered */}
+        {/* Featured Tour Showcase - whole card opens the live tour */}
         <motion.div
           className="relative cursor-pointer group mx-auto"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.15 }}
+          role="button"
+          tabIndex={0}
+          aria-label="Open the Brewhouse virtual tour"
+          onClick={() => setShowTour(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setShowTour(true);
+            }
+          }}
+          onMouseEnter={handlePreloadStart}
+          onFocus={handlePreloadStart}
+          onTouchStart={handlePreloadStart}
         >
-          <div className="relative aspect-[2/1] max-h-[500px] max-w-[800px] rounded-3xl overflow-hidden shadow-2xl bg-apple-gray-900">
+          <div className="relative aspect-[2/1] max-h-[500px] max-w-[800px] rounded-3xl overflow-hidden shadow-2xl bg-apple-gray-900 group-focus-visible:ring-4 group-focus-visible:ring-apple-blue-500">
             {/* Brewhouse building image */}
             <picture>
               <source media="(max-width: 768px)" srcSet="/brewhouse-sm.webp" type="image/webp" />
@@ -111,33 +139,18 @@ export function Hero() {
               />
             </picture>
 
-            {/* Clickable overlay to open full modal - positioned on the right side */}
-            <div
-              className="absolute top-0 right-0 bottom-0 w-1/3 cursor-pointer bg-gradient-to-l from-black/40 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-              onClick={() => setShowTour(true)}
-              onMouseEnter={handlePreloadStart}
-            >
-              <motion.div
-                className="flex flex-col items-center gap-4"
-                initial={{ opacity: 0, x: 10 }}
-                whileHover={{ scale: 1.05 }}
-                animate={{ opacity: 1, x: 0 }}
-              >
-                <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 hover:bg-white/30 transition-colors">
-                  <ExpandIcon className="w-8 h-8 text-white" />
-                </div>
-                <span className="text-white text-lg font-medium drop-shadow-lg">Click for full experience</span>
-              </motion.div>
-            </div>
+            {/* Full-card hover dim (hover enhancement only, not the affordance) */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
 
             {/* Badge */}
             <div className="absolute top-6 left-6 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
               <span className="text-white text-sm font-medium">Brewhouse - Virtual Tour</span>
             </div>
 
-            {/* Instructions hint */}
-            <div className="absolute bottom-6 right-6 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
-              <span className="text-white/80 text-xs">Hover & click for full tour</span>
+            {/* Always-visible affordance - works for touch, no hover required */}
+            <div className="absolute bottom-6 right-6 flex items-center gap-2 px-4 py-2.5 rounded-full bg-black/50 backdrop-blur-md border border-white/25 group-hover:bg-apple-blue-500/80 transition-colors duration-300">
+              <ExpandIcon className="w-4 h-4 text-white" />
+              <span className="text-white text-sm font-medium">Tap to explore in 3D</span>
             </div>
           </div>
         </motion.div>

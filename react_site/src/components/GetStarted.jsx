@@ -6,11 +6,12 @@ import { Button } from './ui/Button';
 import { CalendlyModal } from './calendly/CalendlyModal';
 
 /**
- * Calculate price range based on square footage
- * Pricing tiers (USD):
- * - <3,000 sq. ft.: $0.15–$0.25 per sq. ft.
- * - 3,000–10,000 sq. ft.: $0.10–$0.15 per sq. ft.
- * - 10,000+ sq. ft.: $0.05–$0.10 per sq. ft.
+ * Calculate price range based on square footage.
+ * Pricing tiers in GBP per sq. ft. (native — no currency conversion):
+ * - <3,000 sq. ft.:        £0.11–£0.19
+ * - 3,000–10,000 sq. ft.:  £0.07–£0.11
+ * - 10,000+ sq. ft.:       £0.04–£0.07
+ * Results round to the nearest £10 — a quote, not raw arithmetic.
  */
 function calculatePriceRange(sqft) {
   if (!sqft || sqft <= 0) return null;
@@ -18,34 +19,21 @@ function calculatePriceRange(sqft) {
   let minRate, maxRate;
 
   if (sqft < 3000) {
-    minRate = 0.15;
-    maxRate = 0.25;
+    minRate = 0.11;
+    maxRate = 0.19;
   } else if (sqft <= 10000) {
-    minRate = 0.10;
-    maxRate = 0.15;
+    minRate = 0.07;
+    maxRate = 0.11;
   } else {
-    minRate = 0.05;
-    maxRate = 0.10;
+    minRate = 0.04;
+    maxRate = 0.07;
   }
 
-  const minPrice = Math.round(sqft * minRate);
-  const maxPrice = Math.round(sqft * maxRate);
+  const roundTo10 = (n) => Math.max(10, Math.round(n / 10) * 10);
+  const minPriceGBP = roundTo10(sqft * minRate);
+  const maxPriceGBP = roundTo10(sqft * maxRate);
 
-  // Convert to GBP ($1.35 = £1)
-  const usdToGbp = 1 / 1.35;
-  const minPriceGBP = Math.round(minPrice * usdToGbp);
-  const maxPriceGBP = Math.round(maxPrice * usdToGbp);
-
-  return { minPriceGBP, maxPriceGBP, minPrice, maxPrice };
-}
-
-/**
- * Validate UK postcode format
- */
-function isValidUKPostcode(postcode) {
-  if (!postcode) return true; // Optional field
-  const regex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i;
-  return regex.test(postcode.trim());
+  return { minPriceGBP, maxPriceGBP };
 }
 
 /**
@@ -62,7 +50,6 @@ export function GetStarted() {
     phone: '',
     squareFootage: '',
     floors: '',
-    postcode: '',
     message: '',
   });
 
@@ -82,19 +69,11 @@ export function GetStarted() {
     setIsLoading(true);
     setError(null);
 
-    // Validate postcode if provided
-    if (formData.postcode && !isValidUKPostcode(formData.postcode)) {
-      setError('Please enter a valid UK postcode (e.g., SW1A 1AA)');
-      setIsLoading(false);
-      return;
-    }
-
     try {
       // Build message with property details
       const propertyDetails = [
         `Square Footage: ${formData.squareFootage || 'Not specified'} sq. ft.`,
         `Number of Floors: ${formData.floors || 'Not specified'}`,
-        `Postcode: ${formData.postcode || 'Not provided'}`,
         priceRange ? `Estimated Price Range: £${priceRange.minPriceGBP} - £${priceRange.maxPriceGBP}` : '',
         '',
         formData.message ? `Additional Notes:\n${formData.message}` : '',
@@ -105,7 +84,6 @@ export function GetStarted() {
         phone: formData.phone,
         squareFootage: formData.squareFootage,
         floors: formData.floors,
-        postcode: formData.postcode,
         priceRange: priceRange ? `£${priceRange.minPriceGBP} - £${priceRange.maxPriceGBP}` : null,
         message: propertyDetails,
       };
@@ -154,7 +132,7 @@ export function GetStarted() {
             Ready to capture your space?
           </h2>
           <p className="text-xl text-apple-gray-500 max-w-2xl mx-auto">
-            Get an instant quote and we'll be in touch within 24 hours.
+            Get an instant estimate — we'll be in touch within one business day.
           </p>
         </motion.div>
 
@@ -195,27 +173,30 @@ export function GetStarted() {
                   />
 
                   <div className="grid grid-cols-2 gap-4">
-                    <Input
-                      label="Square Footage"
-                      name="squareFootage"
-                      type="number"
-                      placeholder="e.g., 2500"
-                      value={formData.squareFootage}
-                      onChange={handleChange}
-                      min="100"
-                      required
-                    />
+                    <div>
+                      <Input
+                        label="Square Footage (optional)"
+                        name="squareFootage"
+                        type="number"
+                        placeholder="e.g., 2500"
+                        value={formData.squareFootage}
+                        onChange={handleChange}
+                        min="100"
+                      />
+                      <p className="text-xs text-apple-gray-400 mt-1">
+                        Not sure? Leave blank — we'll estimate together.
+                      </p>
+                    </div>
 
                     <div>
                       <label htmlFor="floors-select" className="block text-sm font-medium text-apple-gray-700 mb-2">
-                        Number of Floors
+                        Floors (optional)
                       </label>
                       <select
                         id="floors-select"
                         name="floors"
                         value={formData.floors}
                         onChange={handleChange}
-                        required
                         aria-label="Number of floors"
                         className="w-full px-4 py-3 rounded-xl border border-apple-gray-200 bg-white text-apple-gray-900 focus:outline-none focus:ring-2 focus:ring-apple-blue-500 focus:border-transparent transition-all"
                       >
@@ -228,15 +209,6 @@ export function GetStarted() {
                       </select>
                     </div>
                   </div>
-
-                  <Input
-                    label="Postcode (optional)"
-                    name="postcode"
-                    type="text"
-                    placeholder="e.g., SW1A 1AA"
-                    value={formData.postcode}
-                    onChange={handleChange}
-                  />
 
                   {/* Instant Price Estimate */}
                   <AnimatePresence>
@@ -308,7 +280,7 @@ export function GetStarted() {
                     </p>
                   )}
                   <p className="text-apple-gray-500">
-                    We'll be in touch within 24 hours.
+                    We'll be in touch within one business day.
                   </p>
                 </motion.div>
               )}
@@ -372,7 +344,7 @@ export function GetStarted() {
           transition={{ duration: 0.6, delay: 0.5 }}
         >
           <p className="text-apple-gray-400 text-sm">
-            No commitment required · Free consultation included · Same-day response
+            No commitment required · Free consultation included
           </p>
         </motion.div>
       </div>

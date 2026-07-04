@@ -1,13 +1,14 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { scrollStore } from './scrollStore';
 
 /**
  * London Scene Camera Path
  *
  * POSITION: Arch path — starts high, dips to hub level, rises toward the Eye.
- *   Start: (20, 80, -100) — high aerial vantage, far behind scene
+ *   Start: (25, 120, -160) — high aerial vantage, far behind scene
  *   Lowest: ~Y=29 — at London Eye hub centre level (mid-journey)
- *   End: (-15, 45, 85) — risen back up, close to the Eye
+ *   End: (-15, 50, 85) — risen back up, close to the Eye
  *
  * PITCH: Linear -45° → 0° → +45° over scroll progress.
  *   Start: -45° — looking down at the cityscape
@@ -15,6 +16,10 @@ import { useFrame } from '@react-three/fiber';
  *   End: +45° — looking up at the London Eye towering above
  *
  * Three-phase speed: Fast descent → Moderate approach → Slow glide
+ *
+ * Scroll input comes from the transient scrollStore (never React state),
+ * so scrolling never re-renders the scene tree. This hook also writes
+ * velocity/cameraZ back into the store for other frame loops.
  */
 
 const PATH = {
@@ -89,19 +94,15 @@ function getLookAtTarget(progress, camPos) {
 }
 
 /**
- * Scroll-to-camera sync hook.
+ * Scroll-to-camera sync hook. Reads scroll progress from scrollStore
+ * inside the frame loop; involves no React state at all.
  */
-export function useScrollSync(scrollData) {
-  const targetProgress = useRef(0);
+export function useScrollSync() {
   const currentProgress = useRef(0);
   const velocity = useRef(0);
   const lastProgress = useRef(0);
   const introComplete = useRef(false);
   const introEndProgress = 0.08;
-
-  if (scrollData) {
-    targetProgress.current = scrollData.progress;
-  }
 
   useFrame((state) => {
     state.camera.up.set(0, 1, 0);
@@ -121,6 +122,8 @@ export function useScrollSync(scrollData) {
 
         currentProgress.current = p;
         lastProgress.current = p;
+        scrollStore.cameraZ = pos.z;
+        scrollStore.velocity = 0;
         return;
       }
       introComplete.current = true;
@@ -132,7 +135,7 @@ export function useScrollSync(scrollData) {
     lastProgress.current = currentProgress.current;
 
     const damping = 0.04 + Math.min(Math.abs(velocity.current) * 3, 0.02);
-    const effectiveTarget = Math.max(targetProgress.current, introEndProgress);
+    const effectiveTarget = Math.max(scrollStore.progress, introEndProgress);
     currentProgress.current += (effectiveTarget - currentProgress.current) * damping;
 
     // Position uses eased progress (three-phase), pitch uses raw progress (linear)
@@ -140,8 +143,9 @@ export function useScrollSync(scrollData) {
     state.camera.position.set(pos.x, pos.y, pos.z);
     const target = getLookAtTarget(currentProgress.current, pos);
     state.camera.lookAt(target.x, target.y, target.z);
-  });
 
-  const pos = getCameraPosition(currentProgress.current);
-  return { cameraZ: pos.z, velocity: velocity.current };
+    // Publish for other frame loops (scroll-following light, speed lines)
+    scrollStore.cameraZ = pos.z;
+    scrollStore.velocity = velocity.current;
+  });
 }

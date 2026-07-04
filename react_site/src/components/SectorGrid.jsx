@@ -4,14 +4,6 @@ import { useInView } from 'react-intersection-observer';
 
 // Icons — Heroicons outline style (24x24 viewBox, strokeWidth 1.5)
 
-function StorefrontIcon({ className }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016A3.001 3.001 0 0020.25 9.35m-16.5 0a3.003 3.003 0 00-.621-1.853L4.5 5.25A2.25 2.25 0 016.75 3h10.5a2.25 2.25 0 012.25 2.25l1.371 2.247a3.003 3.003 0 00-.621 1.853" />
-    </svg>
-  );
-}
-
 function BuildingIcon({ className }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -36,10 +28,18 @@ function HomeIcon({ className }) {
   );
 }
 
-function GlobeIcon({ className }) {
+function AcademicCapIcon({ className }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A8.966 8.966 0 013 12c0-1.264.26-2.467.73-3.559" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+    </svg>
+  );
+}
+
+function SunIcon({ className }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
     </svg>
   );
 }
@@ -52,12 +52,13 @@ function FactoryIcon({ className }) {
   );
 }
 
+// Each tile links to a distinct service page — never two tiles to the same URL
 const sectors = [
-  { name: 'Restaurants & Retail', tagline: 'Showcase ambience, drive visits', link: '/services/virtual-tours-commercial', icon: StorefrontIcon },
+  { name: 'Real Estate & Commercial', tagline: 'Sell and lease spaces faster', link: '/services/virtual-tours-commercial', icon: HomeIcon },
   { name: 'Hospitality', tagline: 'Room tours that convert bookings', link: '/services/virtual-tours-hospitality', icon: BuildingIcon },
-  { name: 'Heritage & Culture', tagline: 'Preserve and share spaces', link: '/services/virtual-tours-tourism', icon: MuseumIcon },
-  { name: 'Real Estate', tagline: 'Sell properties 24/7', link: '/services/virtual-tours-commercial', icon: HomeIcon },
-  { name: 'Tourism Attractions', tagline: 'Virtual previews for visitors', link: '/services/virtual-tours-tourism', icon: GlobeIcon },
+  { name: 'Tourism, Heritage & Culture', tagline: 'Preserve and share spaces', link: '/services/virtual-tours-tourism', icon: MuseumIcon },
+  { name: 'Education', tagline: 'Campus tours for recruitment', link: '/services/virtual-tours-education', icon: AcademicCapIcon },
+  { name: 'Energy & Solar', tagline: 'Digital twins for solar operations', link: '/services/digital-twins-solar-energy', icon: SunIcon },
   { name: 'Industries', tagline: 'Digital twins and AI video', link: '/services/digital-twins-industries', icon: FactoryIcon },
 ];
 

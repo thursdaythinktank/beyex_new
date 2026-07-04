@@ -30,7 +30,7 @@ export function Footer() {
               <img src="/logo.png" alt="Beyex" className="h-8" width="77" height="32" />
             </Link>
             <p className="text-sm text-apple-gray-600">
-              Digital twins that let anyone step inside your space, from anywhere.
+              Digital twins that let anyone step inside your space.
             </p>
             <p className="text-xs text-apple-gray-500 mb-1">VAT: 509 4886 54</p>
             <address className="text-xs text-apple-gray-500 not-italic">

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, Component } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Scene } from './webgl/Scene';
-import { useLenis } from '../hooks/useLenis';
+import { startScrollTracking } from '../hooks/scrollStore';
 import { StaticBackground } from './StaticBackground';
 
 /**
@@ -33,13 +33,20 @@ class WebGLErrorBoundary extends Component {
 }
 
 /**
- * WebGL Background - renders only the 3D canvas as a fixed background layer
- * Content is rendered separately in the parent (not as children)
+ * WebGL Background - renders only the 3D canvas as a fixed background layer.
+ *
+ * Scroll data flows through the transient scrollStore (a mutable module
+ * object read inside useFrame), NOT React state — so scrolling never
+ * re-renders the scene tree. The only scroll-driven state here is the
+ * rarely-flipping frameloop gate.
  */
 export default function WebGLBackground() {
-  const [scrollData, setScrollData] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState('100vh');
   const [hasCrashed, setHasCrashed] = useState(false);
+  // Render loop runs only while the canvas is actually in view; past the
+  // canvas end (the get-started section covers the viewport) it pauses.
+  const [frameloopActive, setFrameloopActive] = useState(true);
+  const canvasHeightPx = useRef(Infinity);
   const canvasRef = useRef(null);
 
   const handleWebGLError = (error) => {
@@ -47,12 +54,29 @@ export default function WebGLBackground() {
     setHasCrashed(true);
   };
 
-  // Initialize Lenis smooth scroll
-  useLenis((data) => {
-    if (!hasCrashed) {
-      setScrollData(data);
-    }
-  });
+  // Feed the transient scroll store + maintain the frameloop gate.
+  useEffect(() => {
+    const stopTracking = startScrollTracking();
+
+    const updateGate = () => {
+      // 100px hysteresis so the gate doesn't flap at the boundary
+      const y = window.scrollY;
+      setFrameloopActive((prev) => {
+        const limit = canvasHeightPx.current;
+        if (prev && y > limit + 100) return false;
+        if (!prev && y < limit - 100) return true;
+        return prev;
+      });
+    };
+
+    window.addEventListener('scroll', updateGate, { passive: true });
+    updateGate();
+
+    return () => {
+      stopTracking();
+      window.removeEventListener('scroll', updateGate);
+    };
+  }, []);
 
   // Listen for WebGL context loss
   useEffect(() => {
@@ -79,6 +103,7 @@ export default function WebGLBackground() {
         const rect = getStartedSection.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const sectionTop = rect.top + scrollTop;
+        canvasHeightPx.current = sectionTop - 100;
         setCanvasHeight(`${sectionTop - 100}px`);
       }
     };
@@ -114,6 +139,7 @@ export default function WebGLBackground() {
           fallback={<StaticBackground />}
         >
           <Canvas
+            frameloop={frameloopActive ? 'always' : 'never'}
             camera={{
               position: [25, 120, -160],
               fov: 70,
@@ -121,12 +147,14 @@ export default function WebGLBackground() {
               far: 300,
             }}
             gl={{
-              antialias: true,
+              // No MSAA: the scene is fog-softened and CSS-vignetted, so
+              // antialiasing a background layer is wasted fragment work
+              antialias: false,
               alpha: true,
               powerPreference: 'high-performance',
               failIfMajorPerformanceCaveat: true,
             }}
-            onCreated={({ gl, scene }) => {
+            onCreated={({ gl }) => {
               // Only cap DPR if canvas would exceed GPU max texture size
               const maxSize = gl.capabilities.maxTextureSize || 4096;
               const canvas = gl.domElement;
@@ -140,9 +168,9 @@ export default function WebGLBackground() {
                 handleWebGLError(new Error('WebGL context lost'));
               });
             }}
-            dpr={[1, 2]}
+            dpr={[1, 1.5]}
           >
-            <Scene scrollData={scrollData} />
+            <Scene />
           </Canvas>
         </WebGLErrorBoundary>
 

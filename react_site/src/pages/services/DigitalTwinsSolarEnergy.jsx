@@ -6,6 +6,8 @@ import {
   Callout,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function DigitalTwinsSolarEnergy() {
   const schema = [
@@ -141,6 +143,15 @@ export default function DigitalTwinsSolarEnergy() {
         <p className="text-apple-gray-700 leading-relaxed mb-4">
           With a digital twin, an engineer in London can navigate the plant, zoom into specific panels, check mounting hardware, and review the condition of cable runs and junction boxes. When combined with drone-captured thermal imagery overlaid on the 3D model, it becomes possible to spot hotspots and cell-level defects without ever visiting the site.
         </p>
+      </ContentSection>
+
+      {/* Live Tour */}
+      <ContentSection>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          This is a real Beyex digital twin capture — the Padocare operational facility. The same scanning process produces the navigable 3D models used for remote inspections of energy sites.
+        </p>
+        <LazyTourEmbed tour={TOURS.padocare} />
       </ContentSection>
 
       {/* Use Cases Across the Solar Lifecycle */}

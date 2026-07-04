@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
 
 /**
  * Use Cases - Outcome focused, audience self-selection
- * Visitors identify their use case, see outcomes not features
+ * Visitors identify their use case, see outcomes not features.
+ * Each card links to its real matching service page or showcase section.
  */
 export function UseCases() {
   const useCases = [
@@ -11,36 +13,36 @@ export function UseCases() {
       icon: HomeIcon,
       title: 'Sell Properties Faster',
       audience: 'Real estate professionals',
-      outcome: 'Qualified buyers explore properties 24/7 from anywhere. They arrive pre-sold, ready to make decisions.',
-      link: '#experiences',
+      outcome: 'Qualified buyers explore properties at their own pace and arrive pre-sold, ready to make decisions.',
+      link: '/services/virtual-tours-commercial',
     },
     {
       icon: BuildingIcon,
       title: 'Showcase Your Venue',
       audience: 'Hotels, event spaces, hospitality',
       outcome: 'Guests experience your space before booking. Event planners see layouts and plan with confidence.',
-      link: '#experiences',
+      link: '/services/virtual-tours-hospitality',
     },
     {
       icon: StoreIcon,
       title: 'Attract More Customers',
       audience: 'Restaurants, retail, showrooms',
-      outcome: 'Virtual foot traffic that converts to real visits. Stand out from competitors before they even arrive.',
-      link: '#experiences',
+      outcome: 'Virtual foot traffic that converts to real visits. Stand out from competitors with an atmosphere customers can step into.',
+      link: '#sectors',
     },
     {
       icon: GlobeIcon,
       title: 'Attract More Visitors',
       audience: 'Tourism boards, destinations',
       outcome: 'Virtual previews that drive real visits. Accessible to international tourists year-round, increasing reach without increasing staffing.',
-      link: '#experiences',
+      link: '/services/virtual-tours-tourism',
     },
     {
       icon: CogIcon,
       title: 'Optimise Operations',
       audience: 'Factory managers, facility operators',
       outcome: 'Digital twins with live data overlays. Predictive maintenance, remote monitoring, and operator training in a spatial context.',
-      link: '#experiences',
+      link: '/services/digital-twins-industries',
     },
   ];
 
@@ -72,6 +74,8 @@ export function UseCases() {
   );
 }
 
+const MotionLink = motion(Link);
+
 function UseCaseCard({ useCase, index }) {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -79,11 +83,15 @@ function UseCaseCard({ useCase, index }) {
   });
 
   const Icon = useCase.icon;
+  // Same-page anchors stay plain <a>; routes use client-side navigation
+  const isAnchor = useCase.link.startsWith('#');
+  const CardTag = isAnchor ? motion.a : MotionLink;
+  const linkProps = isAnchor ? { href: useCase.link } : { to: useCase.link };
 
   return (
-    <motion.a
+    <CardTag
       ref={ref}
-      href={useCase.link}
+      {...linkProps}
       className="block p-8 rounded-2xl bg-white border border-apple-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-apple-blue-200 group"
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -117,7 +125,7 @@ function UseCaseCard({ useCase, index }) {
         <span>See example</span>
         <ArrowIcon className="w-4 h-4" />
       </div>
-    </motion.a>
+    </CardTag>
   );
 }
 

@@ -38,7 +38,7 @@ const COLORS = {
   wireframeLight: '#E0F0FA', // Subtle blue-white wireframe
 };
 
-export function Buildings({ cameraZ = 0 }) {
+export function Buildings() {
   return (
     <group>
       {/* Hot air balloons are now rendered from HotAirBalloons.jsx in Scene.jsx */}
@@ -763,6 +763,13 @@ function TowerBridge({ position, rotation = [0, -0.3, 0], scale = 1 }) {
  * Long horizontal Gothic building with jagged roofline + clock tower
  */
 function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
+  // Peak heights frozen at mount — regenerating them on re-render rebuilds
+  // 24 cone geometries and visibly jitters the roofline
+  const peakHeights = useMemo(
+    () => Array.from({ length: 12 }, () => 2 + Math.random() * 1.5),
+    []
+  );
+
   return (
     <group position={position} rotation={rotation} scale={scale}>
       {/* Main Palace building - long horizontal block */}
@@ -776,9 +783,8 @@ function PalaceOfWestminster({ position, rotation = [0, 0, 0], scale = 1 }) {
       </lineSegments>
 
       {/* Jagged Gothic roofline - series of peaks */}
-      {Array.from({ length: 12 }).map((_, i) => {
+      {peakHeights.map((height, i) => {
         const xPos = (i - 5.5) * 2.8;
-        const height = 2 + Math.random() * 1.5;
         return (
           <group key={`peak-${i}`} position={[xPos, 8, 0]}>
             <mesh>

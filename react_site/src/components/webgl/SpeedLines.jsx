@@ -1,13 +1,15 @@
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { scrollStore } from '../../hooks/scrollStore';
 
 /**
  * Speed Lines - Velocity-reactive lines radiating from center
  * Creates "warp speed" effect when scrolling fast
- * Lines stretch and brighten based on scroll velocity
+ * Lines stretch and brighten based on scroll velocity,
+ * read from the transient scroll store inside the frame loop.
  */
-export function SpeedLines({ velocity = 0 }) {
+export function SpeedLines() {
   const groupRef = useRef();
   const linesRef = useRef();
   const lineCount = 150;
@@ -62,7 +64,7 @@ export function SpeedLines({ velocity = 0 }) {
     if (!linesRef.current || !groupRef.current) return;
 
     const posArray = linesRef.current.geometry.attributes.position.array;
-    const absVelocity = Math.abs(velocity);
+    const absVelocity = Math.abs(scrollStore.velocity);
 
     // Opacity scales with velocity
     const targetOpacity = Math.min(absVelocity * 2, 0.6);

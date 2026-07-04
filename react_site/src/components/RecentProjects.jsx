@@ -3,25 +3,26 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { TourCard } from './ui/TourCard';
 import { TourModal } from './ui/TourModal';
+import { TOURS } from '../data/tours';
 
 const projects = [
   {
-    name: 'Crowne Plaza Hotel',
-    badge: 'Hospitality',
-    tourUrl: 'https://my.matterport.com/show/?m=mFCax5W9jRC',
-    thumbnail: '/crowne-plaza-card.webp',
+    name: TOURS.crownePlaza.name,
+    badge: TOURS.crownePlaza.sector,
+    tourUrl: TOURS.crownePlaza.url,
+    thumbnail: TOURS.crownePlaza.image,
   },
   {
-    name: 'Week2Week Serviced Apartments',
-    badge: 'Hospitality',
-    tourUrl: 'https://my.matterport.com/show/?m=z5PMXpHT98k',
-    thumbnail: '/week2week-card.webp',
+    name: TOURS.week2week.name,
+    badge: TOURS.week2week.sector,
+    tourUrl: TOURS.week2week.url,
+    thumbnail: TOURS.week2week.image,
   },
   {
-    name: 'Padocare — 42 Factor AI',
-    badge: 'Healthcare Tech',
-    tourUrl: 'https://my.matterport.com/show/?m=KZtJ9Buye4f',
-    thumbnail: '/padocare-card.webp',
+    name: TOURS.padocare.name,
+    badge: TOURS.padocare.sector,
+    tourUrl: TOURS.padocare.url,
+    thumbnail: TOURS.padocare.image,
   },
 ];
 
@@ -30,7 +31,7 @@ export function RecentProjects() {
 
   return (
     <>
-      <section id="recent-projects" className="py-24">
+      <section id="experiences" className="py-24">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -40,10 +41,10 @@ export function RecentProjects() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl sm:text-5xl font-semibold text-apple-gray-900 mb-4">
-              Recent Projects
+              Explore real client spaces.
             </h2>
             <p className="text-xl text-apple-gray-500 max-w-2xl mx-auto">
-              Explore our latest 3D captures across different sectors.
+              Recent captures for real clients — click any space to step inside.
             </p>
           </motion.div>
 
@@ -101,9 +102,6 @@ function ProjectCard({ project, index, onClick }) {
         <h3 className="text-xl font-semibold text-apple-gray-900 group-hover:text-apple-blue-500 transition-colors">
           {project.name}
         </h3>
-        <span className="text-sm text-apple-gray-500">
-          {project.badge}
-        </span>
       </div>
     </motion.div>
   );

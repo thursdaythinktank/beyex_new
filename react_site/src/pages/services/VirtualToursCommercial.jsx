@@ -6,6 +6,8 @@ import {
   Callout,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function VirtualToursCommercial() {
   const schema = [
@@ -209,6 +211,15 @@ export default function VirtualToursCommercial() {
             'Commercial property listings',
           ]}
         />
+      </ContentSection>
+
+      {/* Live Tour */}
+      <ContentSection shaded>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          This is the Brewhouse, a commercial venue captured by Beyex. Walk through the space room by room — this is exactly what your customers would see embedded on your own website.
+        </p>
+        <LazyTourEmbed tour={TOURS.brewhouse} />
       </ContentSection>
     </ContentPageLayout>
   );

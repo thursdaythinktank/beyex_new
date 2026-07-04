@@ -1,7 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Navigation } from '../components/Navigation';
 import { Hero } from '../components/Hero';
-import { FeaturedExperiences } from '../components/FeaturedExperiences';
 import { SectorShowcase } from '../components/SectorShowcase';
 import { SectorGrid } from '../components/SectorGrid';
 import { RecentProjects } from '../components/RecentProjects';
@@ -87,10 +86,12 @@ export default function Home() {
         <Navigation />
         <main>
           <Hero />
-          <FeaturedExperiences />
+          {/* Named-client tour grid (owns the #experiences anchor).
+              FeaturedExperiences was retired: all three of its tours
+              duplicated the hero or SectorShowcase captures. */}
+          <RecentProjects />
           <SectorShowcase />
           <SectorGrid />
-          <RecentProjects />
           <ProcessFlow />
           <UseCases />
           <GetStarted />

@@ -6,6 +6,8 @@ import {
   Callout,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function DigitalTwinsManufacturing() {
   const schema = [
@@ -128,6 +130,15 @@ export default function DigitalTwinsManufacturing() {
         <p className="text-apple-gray-700 leading-relaxed mb-4">
           New operators can familiarise themselves with the facility layout, equipment locations, and standard operating procedures using the digital twin before stepping onto the factory floor. This accelerates onboarding and reduces the risk of errors during the learning period.
         </p>
+      </ContentSection>
+
+      {/* Live Tour */}
+      <ContentSection>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          This is the Brewhouse, a former industrial building captured by Beyex. Walk through it to see the level of spatial detail a 3D scan provides — the foundation layer of any digital twin.
+        </p>
+        <LazyTourEmbed tour={TOURS.brewhouse} />
       </ContentSection>
 
       {/* Implementation Roadmap */}

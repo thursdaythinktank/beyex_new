@@ -6,6 +6,8 @@ import {
   Callout,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function VirtualToursTourism() {
   const schema = [
@@ -93,6 +95,15 @@ export default function VirtualToursTourism() {
             'Multilingual tour potential, allowing international visitors to explore in their own language',
           ]}
         />
+      </ContentSection>
+
+      {/* Live Tour */}
+      <ContentSection>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          Blackwell Grange is a historic manor house captured by Beyex. Explore its period rooms and grand staircases to see how a heritage property translates into an interactive 3D walkthrough.
+        </p>
+        <LazyTourEmbed tour={TOURS.blackwellGrange} />
       </ContentSection>
 
       {/* Visitor Attractions and Experiences */}

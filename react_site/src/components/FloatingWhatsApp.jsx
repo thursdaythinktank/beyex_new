@@ -30,9 +30,13 @@ export function FloatingWhatsApp() {
     }
 
     const rect = getStartedSection.getBoundingClientRect();
-    // Show when the section is in view (top of section reaches 80% of viewport height)
-    const shouldShow = rect.top <= window.innerHeight * 0.8;
-    setIsVisible(shouldShow);
+    // Show once the visitor is browsing (past the hero), but hide while the
+    // contact section is on screen — its form/Calendly card must not compete
+    // with floating buttons at the same scroll position.
+    const pastHero = window.scrollY > window.innerHeight;
+    const contactOnScreen =
+      rect.top < window.innerHeight * 0.9 && rect.bottom > window.innerHeight * 0.25;
+    setIsVisible(pastHero && !contactOnScreen);
     ticking.current = false;
   }, []);
 

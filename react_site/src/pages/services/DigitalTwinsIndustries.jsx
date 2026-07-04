@@ -6,6 +6,8 @@ import {
   Callout,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function DigitalTwinsIndustries() {
   const schema = [
@@ -180,6 +182,15 @@ export default function DigitalTwinsIndustries() {
         <p className="text-apple-gray-700 leading-relaxed mb-4">
           This project illustrates an important point: digital capture is not limited to heavy industry. Any organisation whose physical environment is integral to its operations — whether that is a factory floor, a logistics hub, or a technology company's control centre — benefits from having a precise, navigable record of its space. The 3D model becomes a communication tool, a training asset, and a baseline for future facility planning.
         </p>
+      </ContentSection>
+
+      {/* Live Tour */}
+      <ContentSection>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          This is the Padocare facility from the case study above, captured by Beyex. Navigate the space yourself to see the spatial foundation on which an operational digital twin is built.
+        </p>
+        <LazyTourEmbed tour={TOURS.padocare} />
       </ContentSection>
 
       {/* Implementation Roadmap */}

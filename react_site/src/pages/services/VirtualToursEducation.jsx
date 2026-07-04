@@ -6,6 +6,8 @@ import {
   ProcessStep,
   ContentSection,
 } from '../../components/ui/ContentElements';
+import { LazyTourEmbed } from '../../components/ui/LazyTourEmbed';
+import { TOURS } from '../../data/tours';
 
 export default function VirtualToursEducation() {
   const schema = [
@@ -44,7 +46,7 @@ export default function VirtualToursEducation() {
   return (
     <ContentPageLayout
       title="3D Virtual Tours for Educational Institutions"
-      subtitle="Help prospective students explore your campus from anywhere in the world with immersive, interactive 3D virtual tours."
+      subtitle="Help prospective students explore your campus with immersive, interactive 3D virtual tours — wherever in the world they are applying from."
       author="Beyex Team"
       lastUpdated="March 2026"
       breadcrumbs={[
@@ -173,6 +175,15 @@ export default function VirtualToursEducation() {
             'Reception areas and administrative buildings',
           ]}
         />
+      </ContentSection>
+
+      {/* Live Tour */}
+      <ContentSection shaded>
+        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Step Inside a Real Capture</h2>
+        <p className="text-apple-gray-700 leading-relaxed mb-6">
+          This is a residential property captured by Beyex. The same capture process powers campus and student-accommodation tours — step inside to see how living spaces read in 3D.
+        </p>
+        <LazyTourEmbed tour={TOURS.residential} />
       </ContentSection>
     </ContentPageLayout>
   );
