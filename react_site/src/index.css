@@ -144,6 +144,12 @@
     z-index: 1;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .glass-specular::before {
+      animation: none;
+    }
+  }
+
   @keyframes specular-sweep {
     0%, 100% {
       transform: translateX(-100%) rotate(45deg);

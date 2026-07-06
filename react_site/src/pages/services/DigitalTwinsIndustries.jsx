@@ -61,6 +61,12 @@ export default function DigitalTwinsIndustries() {
         schema,
       }}
       cta={{ title: 'Run your facility the way Padocare does.', description: 'Talk to us about a digital twin with live data for your plant or facility.', buttonLabel: 'Get Your Free Quote' }}
+      leadFormSector="Industrial"
+      faqs={[
+        { q: 'How disruptive is the on-site capture?', a: 'Minimal. We scan around your operations, typically in a few hours for a facility, with larger multi-site estates planned in stages.' },
+        { q: 'Can the twin integrate with our existing systems?', a: 'Yes. The 3D model can be paired with SCADA, IoT sensor feeds, and analytics so it functions as an operational tool, not just a visualisation.' },
+        { q: 'Do we own the deliverables?', a: 'Yes. You retain ownership of your model and tour, with ongoing support and updates available as your facility changes.' },
+      ]}
     >
       {/* What Is an Industrial Digital Twin */}
       <ContentSection>

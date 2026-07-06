@@ -1,39 +1,19 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
 import { Navigation } from '../components/Navigation';
 import { Hero } from '../components/Hero';
 import { EvidenceWall } from '../components/EvidenceWall';
+import { HomeScanResolve } from '../components/HomeScanResolve';
 import { ProofBySector } from '../components/ProofBySector';
 import { ProcessFlow } from '../components/ProcessFlow';
 import { GetStarted } from '../components/GetStarted';
 import { Footer } from '../components/Footer';
 import { SEOHead } from '../components/SEOHead';
 import { StaticBackground } from '../components/StaticBackground';
-import { useWebGLCapability } from '../hooks/useWebGLCapability';
-
-// Lazy-load only the WebGL background layer (not the whole wrapper)
-const WebGLBackground = lazy(() => import('../components/WebGLBackground'));
+import { HeroGutterField } from '../components/HeroGutterField';
 
 /**
- * Home page with WebGL volumetric experience
- * Content is always mounted; only the background layer swaps between static and WebGL
+ * Home page — static background + drifting gutter point-cloud
  */
 export default function Home() {
-  const { checked, shouldUseFallback } = useWebGLCapability();
-  const [loadWebGL, setLoadWebGL] = useState(false);
-
-  // Only load WebGL after capability check confirms support, and after idle
-  useEffect(() => {
-    if (!checked || shouldUseFallback) return;
-
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(() => setLoadWebGL(true), { timeout: 3000 });
-      return () => window.cancelIdleCallback(id);
-    } else {
-      const timer = setTimeout(() => setLoadWebGL(true), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [checked, shouldUseFallback]);
-
   const homeSchema = [
     {
       '@context': 'https://schema.org',
@@ -70,14 +50,9 @@ export default function Home() {
         schema={homeSchema}
       />
 
-      {/* Background layer — static fallback or WebGL */}
-      {loadWebGL ? (
-        <Suspense fallback={<StaticBackground />}>
-          <WebGLBackground />
-        </Suspense>
-      ) : (
-        <StaticBackground />
-      )}
+      {/* Background layer — clean static base + drifting point-cloud gutters */}
+      <StaticBackground />
+      <HeroGutterField />
 
       {/* Content is always mounted — never unmounted/remounted */}
       <div className="relative z-10">
@@ -86,6 +61,8 @@ export default function Home() {
           <Hero />
           {/* Evidence Wall: every published capture, filterable (#experiences) */}
           <EvidenceWall />
+          {/* Scan Resolve set-piece — lazy-loads three.js only on capable devices when scrolled into view */}
+          <HomeScanResolve />
           {/* Proof by Sector: case-anchored rows + dark industries band (#sectors) */}
           <ProofBySector />
           <ProcessFlow />

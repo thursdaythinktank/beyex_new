@@ -222,7 +222,28 @@ export default function PrivacyPolicy() {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-apple-gray-900 mb-4">14. Contact Us</h2>
+        <h2 className="text-2xl font-semibold text-apple-gray-900 mb-4">14. 3D Capture, Imagery &amp; Tour Accuracy</h2>
+        <p className="text-apple-gray-700 mb-4">
+          When we capture a space to produce a 3D virtual tour or digital twin, our cameras may
+          incidentally record images of people, vehicles, or other identifying details (such as
+          vehicle number plates) present at the time. Where this occurs:
+        </p>
+        <ul className="list-disc pl-6 text-apple-gray-700 mb-4 space-y-2">
+          <li>We capture only what is necessary to document the client&apos;s premises and produce the agreed tour.</li>
+          <li>On request from our client or an identifiable individual, we will blur, redact, or remove incidental personal data from a tour where technically feasible.</li>
+          <li>Clients are responsible for ensuring they have a lawful basis to commission a capture of their premises and for informing staff or visitors where required.</li>
+        </ul>
+        <p className="text-apple-gray-700 mb-4">
+          <strong>Tour accuracy:</strong> in line with the Digital Markets, Competition and Consumers
+          Act 2024, we do not digitally alter tours in ways that would materially misrepresent a
+          space (for example, &quot;virtual defurnishing&quot; or edits that conceal defects) without
+          clearly labelling the tour as an edited visualisation. Our tours are intended to be a
+          faithful representation of the space as captured.
+        </p>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-apple-gray-900 mb-4">15. Contact Us</h2>
         <p className="text-apple-gray-700 mb-4">
           If you have any questions about this Privacy Policy or our data practices, please contact us:
         </p>

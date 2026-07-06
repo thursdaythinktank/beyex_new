@@ -61,6 +61,12 @@ export default function VirtualToursCommercial() {
         schema,
       }}
       cta={{ title: 'Let buyers walk your property today.', description: 'A free, no-obligation quote for your listing, office or venue — see your price instantly.', buttonLabel: 'See Your Price' }}
+      leadFormSector="Commercial"
+      faqs={[
+        { q: 'How long does a commercial scan take?', a: 'Most retail units and venues are captured in a few hours, scheduled around your opening hours to avoid disruption. Larger sites such as shopping centres may take a day.' },
+        { q: 'Do we own the finished tour?', a: 'Yes. You keep full ownership of your virtual tour. Hosting is included for six months and remains free of charge while you have an active service agreement.' },
+        { q: 'How soon is the tour ready?', a: 'Your interactive tour is typically delivered within 3 to 5 business days of the scan, with an embed code for your website and a shareable link.' },
+      ]}
     >
       {/* Why Commercial Venues Need Virtual Tours */}
       <ContentSection>

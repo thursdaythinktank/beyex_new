@@ -2,10 +2,20 @@ import { Link } from 'react-router-dom';
 import { Footer } from './Footer';
 import { SEOHead } from './SEOHead';
 import { Button } from './ui/Button';
+import { ServicesMenu } from './ServicesMenu';
+import { menuPages } from '../config/services';
+import { TourEmbed } from './ui/TourEmbed';
+import { SectorLeadForm } from './SectorLeadForm';
 
 /**
  * Layout for content/blog/service pages
  * Enhanced visual hierarchy matching the quality of Pricing/Contact pages
+ *
+ * Sector landing-page extras (all optional):
+ * - demoTour: { src, title } — embeds a Matterport demo near the top
+ * - faqs: [{ q, a }] — renders an FAQ block (pass matching FAQPage schema via seoProps)
+ * - leadFormSector: string — renders an on-page lead form posting to /api/contact
+ * - ctaTitle / ctaText — override the closing call-to-action copy
  */
 export function ContentPageLayout({
   title,
@@ -15,11 +25,17 @@ export function ContentPageLayout({
   breadcrumbs = [],
   seoProps = {},
   cta = {},
+  demoTour,
+  faqs = [],
+  leadFormSector,
+  ctaTitle,
+  ctaText,
   children,
 }) {
+  // Revamp `cta` object takes precedence; local ctaTitle/ctaText act as fallbacks.
   const {
-    title: ctaTitle = 'Ready to create your digital twin?',
-    description: ctaDescription = 'Get a free, no-obligation quote for your space. Our team will guide you through the entire process.',
+    title: ctaHeading = ctaTitle ?? 'Ready to create your digital twin?',
+    description: ctaDescription = ctaText ?? 'Get a free, no-obligation quote for your space. Our team will guide you through the entire process.',
     buttonLabel: ctaButtonLabel = 'Get Your Free Quote',
   } = cta;
 
@@ -33,12 +49,20 @@ export function ContentPageLayout({
           <Link to="/" className="flex items-center">
             <img src="/logo.png" alt="Beyex" className="h-8" width="77" height="32" />
           </Link>
-          <Link
-            to="/"
-            className="text-sm text-apple-gray-600 hover:text-apple-gray-900 transition-colors"
-          >
-            Back to Home
-          </Link>
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
+              <ServicesMenu label="Use Cases" items={menuPages} />
+              <Link to="/pricing" className="text-base text-apple-gray-600 hover:text-apple-gray-900 transition-colors">
+                Pricing
+              </Link>
+            </div>
+            <Link
+              to="/contact"
+              className="text-sm text-apple-gray-600 hover:text-apple-gray-900 transition-colors"
+            >
+              Contact
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -95,15 +119,48 @@ export function ContentPageLayout({
 
       <main className="py-16">
         <div className="max-w-4xl mx-auto px-6">
+          {/* Embedded demo tour */}
+          {demoTour && (
+            <section className="mb-14">
+              <h2 className="text-2xl font-semibold text-apple-gray-900 mb-5">See it in action</h2>
+              <TourEmbed src={demoTour.src} title={demoTour.title || 'Sample 3D virtual tour'} />
+            </section>
+          )}
+
           {/* Content */}
           <article>
             {children}
           </article>
 
-          {/* CTA Section — sector-specific via the `cta` prop */}
+          {/* FAQ */}
+          {faqs.length > 0 && (
+            <section className="mt-16">
+              <h2 className="text-3xl font-semibold text-apple-gray-900 mb-8">Frequently asked questions</h2>
+              <div className="space-y-4">
+                {faqs.map((faq, i) => (
+                  <details key={i} className="group rounded-xl border border-apple-gray-100 bg-white p-5">
+                    <summary className="cursor-pointer list-none font-medium text-apple-gray-900 flex items-center justify-between gap-4">
+                      {faq.q}
+                      <span className="text-apple-gray-400 group-open:rotate-180 transition-transform">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </span>
+                    </summary>
+                    <p className="mt-3 text-apple-gray-600 text-sm leading-relaxed">{faq.a}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* On-page lead form */}
+          {leadFormSector && <SectorLeadForm sector={leadFormSector} />}
+
+          {/* CTA Section */}
           <section className="mt-20 py-16 px-8 bg-apple-blue-600 rounded-2xl text-center">
             <h2 className="text-3xl font-semibold text-white mb-4">
-              {ctaTitle}
+              {ctaHeading}
             </h2>
             <p className="text-blue-200 mb-8 max-w-xl mx-auto text-lg">
               {ctaDescription}

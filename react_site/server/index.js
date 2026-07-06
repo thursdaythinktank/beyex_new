@@ -252,6 +252,49 @@ app.post('/api/calendly-webhook', async (req, res) => {
   }
 });
 
+// Newsletter signup endpoint — subscribes an email to a Mailchimp audience.
+// Requires MAILCHIMP_API_KEY and MAILCHIMP_AUDIENCE_ID in the environment.
+app.post('/api/subscribe', rateLimit, async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ error: 'Valid email is required' });
+    }
+
+    const apiKey = process.env.MAILCHIMP_API_KEY;
+    const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
+    if (!apiKey || !audienceId) {
+      console.error('Mailchimp not configured (missing MAILCHIMP_API_KEY / MAILCHIMP_AUDIENCE_ID)');
+      return res.status(503).json({ error: 'Newsletter is not available right now.' });
+    }
+
+    const dc = apiKey.split('-')[1]; // datacenter suffix, e.g. "us21"
+    const response = await fetch(`https://${dc}.api.mailchimp.com/3.0/lists/${audienceId}/members`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${Buffer.from(`any:${apiKey}`).toString('base64')}`,
+      },
+      body: JSON.stringify({ email_address: email.trim().slice(0, 254), status: 'subscribed' }),
+    });
+
+    if (response.status === 200 || response.status === 201) {
+      return res.json({ success: true });
+    }
+
+    const data = await response.json().catch(() => ({}));
+    if (data.title === 'Member Exists') {
+      return res.json({ success: true, already: true });
+    }
+
+    console.error('Mailchimp error:', data.title || response.status);
+    return res.status(502).json({ error: 'Could not subscribe. Please try again.' });
+  } catch (err) {
+    console.error('Subscribe error:', err);
+    return res.status(500).json({ error: 'Server error. Please try again later.' });
+  }
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });

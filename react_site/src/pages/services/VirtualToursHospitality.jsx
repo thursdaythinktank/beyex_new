@@ -61,6 +61,12 @@ export default function VirtualToursHospitality() {
         schema,
       }}
       cta={{ title: 'Show your rooms the way Crowne Plaza does.', description: 'A free, no-obligation quote for your hotel, apartments or event space — see your price instantly.', buttonLabel: 'See Your Price' }}
+      leadFormSector="Hospitality"
+      faqs={[
+        { q: 'Will scanning disrupt our guests?', a: 'No. We schedule the capture around your operations, typically in quiet hours, and most properties are scanned in a few hours.' },
+        { q: 'Do we own the finished tour?', a: 'Yes. You keep full ownership of your virtual tour. Hosting is included for six months and remains free of charge while you have an active service agreement.' },
+        { q: 'How soon is the tour ready?', a: 'Your interactive tour is typically delivered within 3 to 5 business days, ready to embed on your booking pages and share across channels.' },
+      ]}
     >
       {/* Why Virtual Tours for Hospitality */}
       <ContentSection>

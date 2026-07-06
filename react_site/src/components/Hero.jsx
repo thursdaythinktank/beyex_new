@@ -4,6 +4,7 @@ import { Button } from './ui/Button';
 import { TourModal } from './ui/TourModal';
 import { MatterportPreloader } from './ui/MatterportPreloader';
 import { TOURS } from '../data/tours';
+import { useSaveData } from '../hooks/useSaveData';
 
 const TOUR_URL = TOURS.brewhouse.url;
 
@@ -14,9 +15,13 @@ const TOUR_URL = TOURS.brewhouse.url;
 export function Hero() {
   const [showTour, setShowTour] = useState(false);
   const [shouldPreload, setShouldPreload] = useState(false);
+  const saveData = useSaveData();
 
-  // Auto-preload after page is idle (5 seconds after load)
+  // Auto-preload after page is idle (5 seconds after load).
+  // Skipped when the user has Data Saver enabled — explicit intent (hover/tap)
+  // still triggers preloading via handlePreloadStart.
   useEffect(() => {
+    if (saveData) return;
     const timer = setTimeout(() => {
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(() => setShouldPreload(true), { timeout: 5000 });
@@ -25,7 +30,7 @@ export function Hero() {
       }
     }, 5000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [saveData]);
 
   // Start preloading immediately on user intent (hover/focus)
   const handlePreloadStart = useCallback(() => {

@@ -53,6 +53,12 @@ export default function DigitalTwinsSolarEnergy() {
         schema,
       }}
       cta={{ title: 'Put your site in the browser, not on the road.', description: 'Talk to us about a digital twin for your solar or energy facility.', buttonLabel: 'Get Your Free Quote' }}
+      leadFormSector="Solar & Energy"
+      faqs={[
+        { q: 'What can a solar digital twin show us?', a: 'It pairs a 3D site model with SCADA and sensor data to surface underperforming panels, soiling patterns, and maintenance routes from a single view.' },
+        { q: 'Can you capture remote or large sites?', a: 'Yes. We capture installations of varying scale and can combine areas into one navigable model for remote inspection.' },
+        { q: 'Do we own the deliverables?', a: 'Yes. You retain ownership of your model, with ongoing support and updates available as the site changes.' },
+      ]}
     >
       {/* What Is a Digital Twin */}
       <ContentSection>

@@ -7,18 +7,22 @@ import { TOURS } from '../../data/tours';
  * Scan Resolve — the redesign's signature set-piece (PROTOTYPE).
  *
  * A pinned scroll section: a cloud of measured points knits itself into a
- * walkable space as you scroll, ends on "This is Brewhouse — walk it", and
- * hands off to the live Matterport tour (unmounting WebGL the moment the
- * iframe goes interactive).
+ * walkable space as you scroll (scatter → assembled room + CTA), then offers
+ * a clearly separate "walk a finished example" step that loads a real,
+ * already-public Matterport tour (unmounting WebGL the moment the iframe
+ * goes interactive).
  *
- * This prototype uses a PROCEDURAL stand-in room (a Brewhouse-style taproom)
- * sampled to ~19k points. Swapping in the real capture is a data change:
- * replace generateRoomPoints() with points parsed from the MatterPak export.
+ * IMPORTANT framing: the point cloud is ILLUSTRATIVE and generic. It is a
+ * PROCEDURAL room (~19k generated points), not a named client's scan, and is
+ * never labelled as one. The only real, named example is the walkthrough tour
+ * behind the CTA.
  *
  * Perf budget: 2 draw calls (one <points>, one <lineSegments>), no lights,
  * scroll progress via refs/uniforms only — React never re-renders on scroll.
  */
 
+// Real, already-public example tour — used ONLY at the "walk a finished
+// example" CTA, never attached to the illustrative point cloud above it.
 const WALK_TOUR = TOURS.brewhouse;
 
 // ---------------------------------------------------------------------------
@@ -229,18 +233,20 @@ function PointRoom({ progressRef }) {
   );
 
   useFrame(() => {
-    const p = progressRef.current;
-    uniforms.uProgress.value = p;
+    // Normalise so the room is fully assembled by ASSEMBLED_AT; the remaining
+    // scroll is a settled hold under the CTA overlay.
+    const a = Math.min(1, progressRef.current / ASSEMBLED_AT);
+    uniforms.uProgress.value = a;
 
     // Knit lines fade in during the settle phase
     if (linesMatRef.current) {
-      linesMatRef.current.opacity = THREE.MathUtils.smoothstep(p, 0.55, 0.85) * 0.5;
+      linesMatRef.current.opacity = THREE.MathUtils.smoothstep(a, 0.55, 0.9) * 0.5;
     }
 
     // Camera: slow orbit that settles into an interior three-quarter view
-    const angle = -0.9 + p * 0.75;
-    const radius = 16 - p * 6.5;
-    const height = 7.5 - p * 5.2;
+    const angle = -0.9 + a * 0.75;
+    const radius = 16 - a * 6.5;
+    const height = 7.5 - a * 5.2;
     camera.position.set(Math.sin(angle) * radius, height, Math.cos(angle) * radius);
     camera.lookAt(0, 1.1, -0.5);
   });
@@ -278,11 +284,10 @@ function PointRoom({ progressRef }) {
 // The pinned section
 // ---------------------------------------------------------------------------
 
-const PHASES = [
-  { at: 0.0, text: 'Every project starts as millions of measured points.' },
-  { at: 0.45, text: 'We knit them into a millimetre-accurate model of your space.' },
-  { at: 0.85, text: null }, // final overlay handled separately
-];
+// Two phases: (0) scatter — points fly in; (1) assembled room + CTA overlay.
+// A single caption carries phase 0; the CTA overlay handles phase 1.
+const SCATTER_CAPTION = 'From millions of measured points, into a space you can walk.';
+const ASSEMBLED_AT = 0.75; // scroll progress where the CTA overlay takes over
 
 export function ScanResolve() {
   const wrapperRef = useRef(null);
@@ -290,12 +295,13 @@ export function ScanResolve() {
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
   const progressRef = useRef(reducedMotion ? 1 : 0);
-  const [phase, setPhase] = useState(reducedMotion ? 2 : 0);
+  // phase 0 = scatter/assembling, phase 1 = assembled + CTA overlay
+  const [phase, setPhase] = useState(reducedMotion ? 1 : 0);
   const [canvasActive, setCanvasActive] = useState(false);
   const [walking, setWalking] = useState(false);
 
   // Scroll → progress ref (no React state per scroll; phase state only flips
-  // at thresholds, i.e. a handful of renders per full scrub)
+  // at the single threshold, i.e. a couple of renders per full scrub)
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -307,7 +313,7 @@ export function ScanResolve() {
       const p = THREE.MathUtils.clamp(-rect.top / Math.max(1, total), 0, 1);
       progressRef.current = p;
 
-      const next = p >= 0.85 ? 2 : p >= 0.45 ? 1 : 0;
+      const next = p >= ASSEMBLED_AT ? 1 : 0;
       setPhase((prev) => (prev === next ? prev : next));
     };
 
@@ -332,7 +338,7 @@ export function ScanResolve() {
     <section
       ref={wrapperRef}
       className="relative bg-[#0d1620]"
-      style={{ height: reducedMotion ? '100vh' : '300vh' }}
+      style={{ height: reducedMotion ? '100vh' : '200vh' }}
     >
       <div className="sticky top-0 h-screen overflow-hidden">
         {walking ? (
@@ -360,45 +366,45 @@ export function ScanResolve() {
               <PointRoom progressRef={progressRef} />
             </Canvas>
 
-            {/* Captions */}
+            {/* Scatter caption (phase 0) — describes the illustrative cloud,
+                no named client attached */}
             <div className="absolute inset-x-0 top-[12%] text-center px-6 pointer-events-none">
-              {PHASES.slice(0, 2).map((ph, i) => (
-                <p
-                  key={i}
-                  className={`absolute inset-x-0 text-xl sm:text-2xl font-medium text-white/85 transition-opacity duration-700 ${
-                    phase === i ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  {ph.text}
-                </p>
-              ))}
+              <p
+                className={`absolute inset-x-0 text-xl sm:text-2xl font-medium text-white/85 transition-opacity duration-700 ${
+                  phase === 0 ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                {SCATTER_CAPTION}
+              </p>
             </div>
 
-            {/* Final overlay */}
+            {/* Assembled overlay (phase 1) — the points are a generic space we
+                captured; the real, named example lives behind the CTA */}
             <div
               className={`absolute inset-x-0 bottom-[14%] text-center px-6 transition-opacity duration-700 ${
-                phase === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                phase === 1 ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
             >
               <h2 className="text-4xl sm:text-5xl font-semibold text-white mb-3">
-                This is {WALK_TOUR.name}.
+                A space you can walk.
               </h2>
               <p className="text-lg text-white/60 mb-8">
-                A real venue, captured by Beyex. Now it's yours to walk.
+                This is how we turn a captured space into a 3D model. Step into a
+                finished example next.
               </p>
               <button
                 type="button"
                 onClick={() => setWalking(true)}
                 className="px-8 py-4 rounded-full bg-white text-apple-gray-900 font-semibold text-lg hover:bg-apple-blue-50 transition-colors shadow-2xl focus-visible:ring-4 focus-visible:ring-apple-blue-500"
               >
-                Walk it — live 3D
+                Walk a finished space — {WALK_TOUR.name} →
               </button>
             </div>
 
             {/* Scroll hint */}
             <p
               className={`absolute inset-x-0 bottom-6 text-center text-white/40 text-sm transition-opacity duration-500 ${
-                phase === 2 || reducedMotion ? 'opacity-0' : 'opacity-100'
+                phase === 1 || reducedMotion ? 'opacity-0' : 'opacity-100'
               }`}
             >
               Keep scrolling

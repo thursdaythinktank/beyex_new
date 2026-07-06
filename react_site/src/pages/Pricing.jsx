@@ -211,6 +211,55 @@ export default function Pricing() {
         </p>
       </section>
 
+      {/* Comparison: owned tour vs platform subscription */}
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-semibold text-apple-gray-900 text-center mb-4">
+            Own your tour — no subscription
+          </h2>
+          <p className="text-apple-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            We capture with the same professional Matterport Pro3 technology as the big platforms —
+            but you keep your tour, with a one-off fee instead of recurring charges.
+          </p>
+          <div className="overflow-x-auto rounded-2xl border border-apple-gray-100">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-apple-gray-200 bg-apple-gray-50 text-apple-gray-900">
+                  <th className="py-4 px-5 font-semibold">&nbsp;</th>
+                  <th className="py-4 px-5 font-semibold">Beyex</th>
+                  <th className="py-4 px-5 font-semibold">Platform subscription</th>
+                </tr>
+              </thead>
+              <tbody className="text-apple-gray-700">
+                <tr className="border-b border-apple-gray-100">
+                  <td className="py-4 px-5 font-medium">Ownership</td>
+                  <td className="py-4 px-5">You own the finished tour</td>
+                  <td className="py-4 px-5">Access tied to an ongoing subscription</td>
+                </tr>
+                <tr className="border-b border-apple-gray-100">
+                  <td className="py-4 px-5 font-medium">Cost model</td>
+                  <td className="py-4 px-5">One-off capture fee, hosting included</td>
+                  <td className="py-4 px-5">Recurring monthly/annual fees</td>
+                </tr>
+                <tr className="border-b border-apple-gray-100">
+                  <td className="py-4 px-5 font-medium">Support</td>
+                  <td className="py-4 px-5">Local UK team, direct contact</td>
+                  <td className="py-4 px-5">Self-serve / platform support</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-5 font-medium">Capture quality</td>
+                  <td className="py-4 px-5">Matterport Pro3</td>
+                  <td className="py-4 px-5">Matterport Pro3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-center text-sm text-apple-gray-500 mt-6">
+            Read more: <Link to="/blog/matterport-vs-local-provider" className="text-apple-blue-600 hover:underline">Matterport vs a local provider</Link>
+          </p>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="bg-apple-gray-50 py-24 px-6">
         <div className="max-w-3xl mx-auto">

@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from './ui/Button';
+import { Newsletter } from './Newsletter';
 
 /**
  * Site footer: closing CTA band, balanced link columns, small-print bottom bar
@@ -133,8 +134,18 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-apple-gray-900">Company</h4>
             <ul className="space-y-2 text-sm text-apple-gray-600">
               <li>
+                <Link to="/about" className="hover:text-apple-gray-900 transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
                 <Link to="/pricing" className="hover:text-apple-gray-900 transition-colors">
                   Pricing
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="hover:text-apple-gray-900 transition-colors">
+                  Blog
                 </Link>
               </li>
               <li>
@@ -161,14 +172,20 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Newsletter */}
+        <div className="pt-8 border-t border-apple-gray-200 mb-8 max-w-md">
+          <Newsletter />
+        </div>
+
         {/* Small-print bottom bar */}
         <div className="pt-8 border-t border-apple-gray-200 flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
           <p className="text-xs text-apple-gray-500">
             © {currentYear} Beyex Ltd. All rights reserved.
           </p>
-          <p className="text-xs text-apple-gray-500">
-            VAT: 509 4886 54 · Beyex Ltd, 8 Kielder, Washington, United Kingdom, NE38 0NW
-          </p>
+          <div className="text-xs text-apple-gray-500 md:text-right">
+            <p>VAT: 509 4886 54 · Beyex Ltd, 8 Kielder, Washington, United Kingdom, NE38 0NW</p>
+            <p>CPV 71355100 — Photogrammetry services · CPV 71700000 — Monitoring and control services</p>
+          </div>
         </div>
       </div>
     </footer>

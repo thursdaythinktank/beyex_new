@@ -61,6 +61,12 @@ export default function VirtualToursEducation() {
         schema,
       }}
       cta={{ title: 'Give applicants a campus visit they can take tonight.', description: 'A free, no-obligation quote for your campus, department or accommodation.', buttonLabel: 'See Your Price' }}
+      leadFormSector="Education"
+      faqs={[
+        { q: 'Can you scan a whole campus?', a: 'Yes. We capture individual buildings or an entire campus and link the spaces into one navigable tour for prospective students.' },
+        { q: 'Do we own the finished tour?', a: 'Yes. You keep full ownership of your virtual tour. Hosting is included for six months and remains free of charge while you have an active service agreement.' },
+        { q: 'How soon is the tour ready?', a: 'Your interactive tour is typically delivered within 3 to 5 business days, ready to embed on your admissions and open-day pages.' },
+      ]}
     >
       <ContentSection>
         <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Why Campuses Need Virtual Tours</h2>

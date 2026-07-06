@@ -27,6 +27,8 @@ export function FloatingCalendly() {
   const checkVisibility = useCallback(() => {
     const getStartedSection = document.getElementById('get-started');
     if (!getStartedSection) {
+      // Pages without the home funnel (service/legal pages): always show.
+      setIsVisible(true);
       ticking.current = false;
       return;
     }

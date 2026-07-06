@@ -22,7 +22,7 @@ module.exports = {
       name: 'beyex-dev',
       script: 'npm',
       args: 'run dev',
-      cwd: '/home/beyex/beyex/react_site',
+      cwd: '/home/ubuntu/beyex/react_site',
       env: {
         NODE_ENV: 'development',
       },
@@ -38,7 +38,7 @@ module.exports = {
       name: 'beyex-preview',
       script: 'npm',
       args: 'run preview -- --host 0.0.0.0 --port 4173',
-      cwd: '/home/beyex/beyex/react_site',
+      cwd: '/home/ubuntu/beyex/react_site',
       env: {
         NODE_ENV: 'production',
       },
@@ -54,7 +54,7 @@ module.exports = {
     {
       name: 'beyex-api',
       script: 'server/index.js',
-      cwd: '/home/beyex/beyex/react_site',
+      cwd: '/home/ubuntu/beyex/react_site',
       env: {
         NODE_ENV: 'production',
         PORT: 3002,

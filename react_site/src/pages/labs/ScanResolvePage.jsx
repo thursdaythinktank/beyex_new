@@ -34,19 +34,21 @@ export default function ScanResolvePage() {
         </h1>
         <p className="mb-4">
           This is the proposed signature moment for the homepage redesign: scroll down and a
-          cloud of measured points knits itself into a walkable space, ending on the live tour.
+          cloud of measured points assembles into a walkable space, then offers a separate step
+          to walk a real finished example.
         </p>
         <p className="mb-4">
-          <strong className="text-white">What you're seeing is a stand-in.</strong> The room below
-          is procedural — a taproom built from ~19,000 generated points. The production version
-          replaces it with a real point cloud exported from your Matterport account (MatterPak),
-          which is a data swap, not a rebuild. Before that: confirm MatterPak export rights for
-          the Brewhouse capture.
+          <strong className="text-white">The point cloud is illustrative.</strong> The room below
+          is procedural — a generic space built from ~19,000 generated points to show the
+          "points becoming a room" moment. It is deliberately <em>not</em> presented as any
+          named client's scan. The only real, named capture on the page is the finished
+          walkthrough behind the CTA (an already-public Matterport tour).
         </p>
         <p className="mb-4">
           Perf: 2 draw calls, no lights, renders only while on screen, and the WebGL canvas is
           unmounted the instant the live tour loads. Under reduced-motion it shows a single
           static frame. Scroll-scrubbing runs through refs — no React renders while scrubbing.
+          Two phases over 200vh (scatter → assembled + CTA).
         </p>
         <p className="text-white/50 text-sm">
           The decision this demo informs: replace the London cityscape with this set-piece
@@ -58,8 +60,8 @@ export default function ScanResolvePage() {
 
       <div className="max-w-2xl mx-auto px-6 py-20 text-white/50 text-sm">
         <p>
-          End of prototype. If the motion feels right, the next steps are: MatterPak licensing
-          check → parse the real point cloud → pre-rendered frame-sequence variant for mobile →
+          End of prototype. If the motion feels right, the next steps are: keep the point cloud
+          generic (no client attribution) → pre-rendered frame-sequence variant for mobile →
           wire into the homepage and retire the cityscape.
         </p>
       </div>

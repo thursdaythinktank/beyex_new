@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from './ui/Button';
+import { ServicesMenu } from './ServicesMenu';
+import { menuPages } from '../config/services';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const NAV_LINKS = [
@@ -66,6 +68,8 @@ export function Navigation() {
               {link.label}
             </NavLink>
           ))}
+          <ServicesMenu label="Use Cases" items={menuPages} />
+          <NavLink href="/pricing" isScrolled={isScrolled}>Pricing</NavLink>
         </div>
 
         <div className="flex items-center gap-3">
@@ -107,6 +111,13 @@ export function Navigation() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href="/pricing"
+                className="py-3 text-lg font-medium text-apple-gray-900 border-b border-apple-gray-200/50 last:border-b-0"
+                onClick={() => setMobileOpen(false)}
+              >
+                Pricing
+              </a>
             </div>
           </motion.div>
         )}

@@ -61,6 +61,12 @@ export default function VirtualToursTourism() {
         schema,
       }}
       cta={{ title: 'Open your attraction to the world.', description: 'A free, no-obligation quote for your museum, heritage site or visitor centre.', buttonLabel: 'See Your Price' }}
+      leadFormSector="Tourism"
+      faqs={[
+        { q: 'Can you capture large or outdoor attractions?', a: 'Yes. We capture interiors, exhibits, and accessible outdoor areas, and can combine multiple spaces into a single guided tour.' },
+        { q: 'Do we own the finished tour?', a: 'Yes. You keep full ownership of your virtual tour. Hosting is included for six months and remains free of charge while you have an active service agreement.' },
+        { q: 'How soon is the tour ready?', a: 'Your interactive tour is typically delivered within 3 to 5 business days, ready to embed on your website and share with visitors.' },
+      ]}
     >
       {/* Why Virtual Tours for Tourism */}
       <ContentSection>
