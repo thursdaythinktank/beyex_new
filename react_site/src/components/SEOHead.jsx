@@ -3,9 +3,12 @@ import { Helmet } from 'react-helmet-async';
 /**
  * Reusable SEO head component for per-page meta tags, Open Graph, and JSON-LD schema
  */
+const DEFAULT_DESCRIPTION =
+  'Step inside any space, from anywhere. Beyex creates immersive 3D virtual tours and digital twins for properties, venues, and commercial spaces across the UK.';
+
 export function SEOHead({
   title,
-  description,
+  description = DEFAULT_DESCRIPTION,
   canonicalUrl,
   ogImage = 'https://beyex.com/logo.png',
   ogType = 'website',

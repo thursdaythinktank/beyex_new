@@ -44,32 +44,19 @@ export function Hero() {
   return (
     <section className="relative pt-28 pb-16 px-6 min-h-screen flex flex-col justify-center">
       <div className="max-w-7xl mx-auto w-full flex flex-col">
-        {/* Text content - centered above the tour */}
-        <motion.div
-          className="text-center mb-12 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.h1
-            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-apple-gray-900 leading-tight mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0 }}
-          >
+        {/* Text content - centered above the tour.
+            LCP elements (h1 + subhead) render at full opacity on first paint —
+            no JS-gated invisibility. Non-LCP siblings below keep their entrance stagger. */}
+        <div className="text-center mb-12 max-w-4xl mx-auto">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-apple-gray-900 leading-tight mb-6">
             Step Inside Any Space.
             <br />
             <span className="text-apple-blue-500">From Anywhere.</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className="text-xl sm:text-2xl text-apple-gray-500 max-w-2xl mx-auto mb-8 md:bg-transparent md:backdrop-blur-none md:border-0 md:px-0 md:py-0 md:rounded-none bg-white/60 backdrop-blur-md border border-white/40 px-6 py-4 rounded-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-          >
+          <p className="text-xl sm:text-2xl text-apple-gray-500 max-w-2xl mx-auto mb-8 md:bg-transparent md:backdrop-blur-none md:border-0 md:px-0 md:py-0 md:rounded-none bg-white/60 backdrop-blur-md border border-white/40 px-6 py-4 rounded-2xl">
             We capture real places — hotels, homes, heritage sites and industrial facilities — and turn them into immersive digital twins you can walk through in your browser.
-          </motion.p>
+          </p>
 
           <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -106,7 +93,7 @@ export function Hero() {
             <span className="font-medium text-apple-gray-900">Blackwell Grange</span> ·{' '}
             <span className="font-medium text-apple-gray-900">Padocare</span>
           </motion.p>
-        </motion.div>
+        </div>
 
         {/* Featured Tour Showcase - whole card opens the live tour */}
         <motion.div

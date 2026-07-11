@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'framer-motion';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Pricing from './pages/Pricing';
@@ -105,6 +106,8 @@ function App() {
           <Route path="/resources/digital-twins-manufacturing" element={<DigitalTwinsManufacturing />} />
           {/* Labs prototype — decision gate for the cityscape replacement */}
           <Route path="/labs/scan-resolve" element={<ScanResolvePage />} />
+          {/* 404 catch-all — must be last */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       {/* Floating buttons - appear when get-started section is visible */}
