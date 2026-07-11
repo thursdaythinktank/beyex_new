@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:ssg": "vite build && node scripts/prerender.mjs dist",
     "preview": "vite preview",
     "pm2:dev": "pm2 start ecosystem.config.cjs --only beyex-dev",
     "pm2:preview": "pm2 start ecosystem.config.cjs --only beyex-preview",
@@ -46,6 +47,9 @@
     "vite": "^4.5.14"
   },
   "devDependencies": {
-    "@playwright/test": "^1.57.0"
+    "@playwright/test": "^1.57.0",
+    "beasties": "^0.4.2",
+    "sirv": "^3.0.2",
+    "sirv-cli": "^3.0.1"
   }
 }
