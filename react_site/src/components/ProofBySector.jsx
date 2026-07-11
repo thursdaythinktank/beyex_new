@@ -119,6 +119,9 @@ function SectorRow({ row, index }) {
             alt={`${row.caseName} — 3D capture`}
             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
             loading="lazy"
+            decoding="async"
+            width="1600"
+            height="1000"
           />
           <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium">
             {row.caseName}
@@ -197,6 +200,9 @@ function DarkIndustriesRow() {
               alt={`${TOURS.padocare.name} — 3D capture`}
               className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
               loading="lazy"
+              decoding="async"
+              width="1600"
+              height="1000"
             />
             <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium">
               {TOURS.padocare.name}

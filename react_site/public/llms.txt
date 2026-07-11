@@ -1,0 +1,26 @@
+# Beyex
+
+> Beyex Ltd creates immersive 3D virtual tours and digital twins for real spaces — hotels, homes, heritage sites, commercial venues, and industrial facilities — that anyone can walk through in a browser.
+
+Beyex is a UK company (VAT 509 4886 54; CPV 71355100 Photogrammetry services, 71700000 Monitoring and control services). We capture physical spaces with Matterport and photogrammetry and deliver interactive, hostable 3D tours and digital twins.
+
+## Services
+- [Virtual Tours — Real Estate & Commercial](https://beyex.com/services/virtual-tours-commercial)
+- [Virtual Tours — Hospitality](https://beyex.com/services/virtual-tours-hospitality)
+- [Virtual Tours — Tourism & Heritage](https://beyex.com/services/virtual-tours-tourism)
+- [Virtual Tours — Education](https://beyex.com/services/virtual-tours-education)
+- [Virtual Tours — Real Estate](https://beyex.com/services/virtual-tours-real-estate)
+- [Virtual Tours — Construction](https://beyex.com/services/virtual-tours-construction)
+- [Digital Twins — Solar & Energy](https://beyex.com/services/digital-twins-solar-energy)
+- [Digital Twins — Industries](https://beyex.com/services/digital-twins-industries)
+- [Digital Twins — Manufacturing](https://beyex.com/services/digital-twins-manufacturing)
+
+## Key pages
+- [Pricing](https://beyex.com/pricing)
+- [About](https://beyex.com/about)
+- [Blog](https://beyex.com/blog)
+- [Contact](https://beyex.com/contact)
+
+## Resources
+- [How much does a 3D virtual tour cost in the UK?](https://beyex.com/blog/3d-virtual-tour-cost-uk)
+- [Matterport vs a local provider](https://beyex.com/blog/matterport-vs-local-provider)

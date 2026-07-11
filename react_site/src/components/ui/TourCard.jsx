@@ -16,6 +16,9 @@ export function TourCard({ thumbnail, title, category, onClick }) {
         src={thumbnail}
         alt={title}
         loading="lazy"
+        decoding="async"
+        width="1280"
+        height="720"
         className="w-full h-full object-cover"
       />
 

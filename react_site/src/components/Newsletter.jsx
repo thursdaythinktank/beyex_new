@@ -40,6 +40,7 @@ export function Newsletter() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              aria-label="Email address"
               placeholder="Email address"
               className="min-w-0 flex-1 px-3 py-2 text-sm rounded-lg border border-apple-gray-200 focus:border-apple-blue-500 focus:outline-none"
             />

@@ -39,9 +39,38 @@ export function ContentPageLayout({
     buttonLabel: ctaButtonLabel = 'Get Your Free Quote',
   } = cta;
 
+  // Build BreadcrumbList JSON-LD when breadcrumbs are provided.
+  // The visual nav always prepends "Home" → "/", so we mirror that here.
+  const breadcrumbSchema =
+    breadcrumbs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: 'https://beyex.com',
+            },
+            ...breadcrumbs.map((crumb, i) => ({
+              '@type': 'ListItem',
+              position: i + 2,
+              name: crumb.label,
+              item: `https://beyex.com${crumb.href ?? ''}`,
+            })),
+          ],
+        }
+      : null;
+
+  const mergedSchema = breadcrumbSchema
+    ? [...(Array.isArray(seoProps.schema) ? seoProps.schema : seoProps.schema ? [seoProps.schema] : []), breadcrumbSchema]
+    : seoProps.schema;
+
   return (
     <div className="min-h-screen bg-white">
-      <SEOHead {...seoProps} />
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-apple-gray-900 focus:rounded-lg focus:shadow-lg">Skip to content</a>
+      <SEOHead {...seoProps} schema={mergedSchema} />
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-apple-gray-100">
@@ -117,7 +146,7 @@ export function ContentPageLayout({
         </div>
       </div>
 
-      <main className="py-16">
+      <main id="main-content" className="py-16">
         <div className="max-w-4xl mx-auto px-6">
           {/* Embedded demo tour */}
           {demoTour && (
