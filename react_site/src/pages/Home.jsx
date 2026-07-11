@@ -1,14 +1,19 @@
+import { lazy, Suspense } from 'react';
 import { Navigation } from '../components/Navigation';
 import { Hero } from '../components/Hero';
-import { EvidenceWall } from '../components/EvidenceWall';
 import { HomeScanResolve } from '../components/HomeScanResolve';
-import { ProofBySector } from '../components/ProofBySector';
-import { ProcessFlow } from '../components/ProcessFlow';
-import { GetStarted } from '../components/GetStarted';
 import { Footer } from '../components/Footer';
 import { SEOHead } from '../components/SEOHead';
 import { StaticBackground } from '../components/StaticBackground';
 import { HeroGutterField } from '../components/HeroGutterField';
+
+// Below-the-fold sections — code-split so they don't weigh down the initial
+// bundle that gates the LCP hero. At prerender time puppeteer waits for network
+// idle, so these load and are captured into the static HTML.
+const EvidenceWall = lazy(() => import('../components/EvidenceWall').then((m) => ({ default: m.EvidenceWall })));
+const ProofBySector = lazy(() => import('../components/ProofBySector').then((m) => ({ default: m.ProofBySector })));
+const ProcessFlow = lazy(() => import('../components/ProcessFlow').then((m) => ({ default: m.ProcessFlow })));
+const GetStarted = lazy(() => import('../components/GetStarted').then((m) => ({ default: m.GetStarted })));
 
 /**
  * Home page — static background + drifting gutter point-cloud
@@ -59,14 +64,16 @@ export default function Home() {
         <Navigation />
         <main>
           <Hero />
-          {/* Evidence Wall: every published capture, filterable (#experiences) */}
-          <EvidenceWall />
-          {/* Scan Resolve set-piece — lazy-loads three.js only on capable devices when scrolled into view */}
-          <HomeScanResolve />
-          {/* Proof by Sector: case-anchored rows + dark industries band (#sectors) */}
-          <ProofBySector />
-          <ProcessFlow />
-          <GetStarted />
+          <Suspense fallback={<div className="min-h-screen" />}>
+            {/* Evidence Wall: every published capture, filterable (#experiences) */}
+            <EvidenceWall />
+            {/* Scan Resolve set-piece — lazy-loads three.js only on capable devices when scrolled into view */}
+            <HomeScanResolve />
+            {/* Proof by Sector: case-anchored rows + dark industries band (#sectors) */}
+            <ProofBySector />
+            <ProcessFlow />
+            <GetStarted />
+          </Suspense>
         </main>
         <Footer />
       </div>

@@ -3,18 +3,18 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'framer-motion';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import Terms from './pages/Terms';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import Pricing from './pages/Pricing';
-import CookiesPolicy from './pages/CookiesPolicy';
-import Contact from './pages/Contact';
-import About from './pages/About';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { FloatingCalendly } from './components/FloatingCalendly';
 import { CookieConsent } from './components/CookieConsent';
 import { initAnalytics, trackPageview } from './lib/analytics';
 
 // Lazy-loaded content pages (code-split to avoid impacting initial bundle)
+const Terms = lazy(() => import('./pages/Terms'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const CookiesPolicy = lazy(() => import('./pages/CookiesPolicy'));
+const Contact = lazy(() => import('./pages/Contact'));
+const About = lazy(() => import('./pages/About'));
 const VirtualToursEducation = lazy(() => import('./pages/services/VirtualToursEducation'));
 const DigitalTwinsSolarEnergy = lazy(() => import('./pages/services/DigitalTwinsSolarEnergy'));
 const VirtualToursCommercial = lazy(() => import('./pages/services/VirtualToursCommercial'));
