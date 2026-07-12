@@ -49,15 +49,6 @@ export default function DigitalTwinsManufacturingService() {
         { '@type': 'ListItem', position: 3, name: 'Manufacturing', item: 'https://beyex.com/services/digital-twins-manufacturing' },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
   ];
 
   return (

@@ -7,44 +7,6 @@ export default function Pricing() {
   const pricingSchema = [
     {
       '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: "What's included in the price?",
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'All packages include on-site scanning, professional processing, and an embed code for your website. Hosting is included complimentary for the first six months. Clients with an active service agreement continue to enjoy hosting at no additional cost; otherwise, a standard hosting fee applies.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'How long does the process take?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'On-site scanning typically takes 1-4 hours depending on property size. Your virtual tour is usually ready within 3-5 business days.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: "What's your refund policy?",
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Full refund if cancelled before the property scan. Once scanning begins, no refunds are available.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'Do you offer volume discounts?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Yes! We offer discounts for multiple properties or ongoing partnerships. Contact us to discuss your requirements.',
-          },
-        },
-      ],
-    },
-    {
-      '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://beyex.com/' },
@@ -97,6 +59,7 @@ export default function Pricing() {
 
   return (
     <div className="min-h-screen bg-white">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-apple-gray-900 focus:rounded-lg focus:shadow-lg">Skip to content</a>
       <SEOHead
         title="Pricing — 3D Virtual Tour Packages"
         description="Transparent pricing for professional 3D virtual tours. From small flats to large commercial venues, get an instant quote based on your property size."
@@ -118,6 +81,7 @@ export default function Pricing() {
         </div>
       </nav>
 
+      <main id="main-content">
       {/* Hero */}
       <section className="pt-32 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -332,6 +296,7 @@ export default function Pricing() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

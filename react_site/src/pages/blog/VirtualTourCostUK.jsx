@@ -42,15 +42,6 @@ export default function VirtualTourCostUK() {
         { '@type': 'ListItem', position: 3, name: 'Cost of a 3D virtual tour in the UK', item: 'https://beyex.com/blog/3d-virtual-tour-cost-uk' },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
   ];
 
   return (

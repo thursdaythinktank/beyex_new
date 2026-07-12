@@ -38,15 +38,6 @@ export default function MatterportVsLocalProvider() {
         { '@type': 'ListItem', position: 3, name: 'Matterport vs a local provider', item: 'https://beyex.com/blog/matterport-vs-local-provider' },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
   ];
 
   return (

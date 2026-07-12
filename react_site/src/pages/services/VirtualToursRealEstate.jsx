@@ -49,15 +49,6 @@ export default function VirtualToursRealEstate() {
         { '@type': 'ListItem', position: 3, name: 'Real Estate', item: 'https://beyex.com/services/virtual-tours-real-estate' },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
   ];
 
   return (

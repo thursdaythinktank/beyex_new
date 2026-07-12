@@ -51,15 +51,6 @@ export default function BusinessGrowth() {
         { '@type': 'ListItem', position: 3, name: 'How 3D digital tours help businesses grow', item: 'https://beyex.com/blog/3d-tours-help-businesses-grow' },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
   ];
 
   return (
@@ -90,7 +81,7 @@ export default function BusinessGrowth() {
             alt="A tablet on a café table showing an interactive 3D virtual tour of a boutique shop, with a holographic 3D floor plan and navigation nodes displayed above it"
             width="1024"
             height="576"
-            loading="eager"
+            loading="lazy"
             decoding="async"
             className="w-full rounded-3xl shadow-xl shadow-apple-gray-900/10 ring-1 ring-apple-gray-900/5"
           />

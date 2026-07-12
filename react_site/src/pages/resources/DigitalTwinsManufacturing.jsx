@@ -26,19 +26,6 @@ export default function DigitalTwinsManufacturing() {
     },
     {
       '@context': 'https://schema.org',
-      '@type': 'HowTo',
-      name: 'How to Implement Digital Twins in Manufacturing',
-      description: 'A step-by-step guide to implementing digital twin technology in manufacturing environments',
-      step: [
-        { '@type': 'HowToStep', name: 'Audit your existing infrastructure', text: 'Assess current SCADA systems, sensors, and data flows to identify integration points.' },
-        { '@type': 'HowToStep', name: 'Scan your facility', text: 'Create a high-fidelity 3D model of your manufacturing floor using LiDAR and photogrammetry.' },
-        { '@type': 'HowToStep', name: 'Connect data sources', text: 'Integrate SCADA, IoT sensors, and ERP data into the digital twin platform.' },
-        { '@type': 'HowToStep', name: 'Build operational dashboards', text: 'Create visualisations that overlay live data onto the 3D model for real-time monitoring.' },
-        { '@type': 'HowToStep', name: 'Train and iterate', text: 'Train operations teams, gather feedback, and continuously refine the digital twin.' },
-      ],
-    },
-    {
-      '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://beyex.com/' },

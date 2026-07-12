@@ -49,15 +49,6 @@ export default function VirtualToursConstruction() {
         { '@type': 'ListItem', position: 3, name: 'Construction', item: 'https://beyex.com/services/virtual-tours-construction' },
       ],
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
   ];
 
   return (
