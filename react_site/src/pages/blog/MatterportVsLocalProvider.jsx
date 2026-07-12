@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ContentPageLayout } from '../../components/ContentPageLayout';
-import { ContentSection, Callout } from '../../components/ui/ContentElements';
+import { ContentSection, Lead, SectionHeading, PullQuote, Callout } from '../../components/ui/ContentElements';
 
 const faqs = [
   {
@@ -70,17 +70,23 @@ export default function MatterportVsLocalProvider() {
       faqs={faqs}
     >
       <ContentSection>
-        <p className="text-apple-gray-700 leading-relaxed mb-4">
+        <Lead>
           Matterport is the best-known name in 3D virtual tours, and for good reason — the capture
-          technology is excellent (we use Matterport Pro3 cameras ourselves). But the brand and the
-          commercial model are two different things. The real decision for most businesses is not the
-          camera; it is who owns the finished tour, how it is hosted, and who you call when you need
-          help.
+          technology is excellent, and we use Matterport Pro3 cameras ourselves.
+        </Lead>
+        <p className="mt-6 text-lg text-apple-gray-700 leading-relaxed">
+          But the brand and the commercial model are two different things. The real decision for most
+          businesses is not the camera; it is who owns the finished tour, how it is hosted, and who
+          you call when you need help.
         </p>
       </ContentSection>
 
+      <PullQuote cite="The camera is the same. The commercial model is not.">
+        The real decision isn&rsquo;t the camera &mdash; it&rsquo;s who owns the finished tour.
+      </PullQuote>
+
       <ContentSection shaded>
-        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">The key differences</h2>
+        <SectionHeading eyebrow="Comparison">The key differences</SectionHeading>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
@@ -117,8 +123,8 @@ export default function MatterportVsLocalProvider() {
       </ContentSection>
 
       <ContentSection>
-        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Which should you choose?</h2>
-        <p className="text-apple-gray-700 leading-relaxed mb-4">
+        <SectionHeading eyebrow="Verdict">Which should you choose?</SectionHeading>
+        <p className="text-lg text-apple-gray-700 leading-relaxed mb-4">
           If you want the lowest long-term cost and full control of your asset, a local provider that
           delivers an owned tour usually wins. If you need a large, centrally-managed estate with
           deep platform integrations, a subscription may suit. For most UK SMEs marketing a property
@@ -128,7 +134,7 @@ export default function MatterportVsLocalProvider() {
           Tell us about your space and we will recommend the most cost-effective option — even if
           that is not us. <Link to="/contact" className="underline font-medium">Get in touch →</Link>
         </Callout>
-        <p className="text-apple-gray-700 leading-relaxed mt-4">
+        <p className="text-lg text-apple-gray-700 leading-relaxed mt-4">
           Wondering about budget? See{' '}
           <Link to="/blog/3d-virtual-tour-cost-uk" className="text-apple-blue-600 hover:underline">
             how much a 3D virtual tour costs in the UK

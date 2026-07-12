@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ContentPageLayout } from '../../components/ContentPageLayout';
-import { ContentSection, Callout } from '../../components/ui/ContentElements';
+import { ContentSection, Lead, SectionHeading, PullQuote, Callout } from '../../components/ui/ContentElements';
 
 const faqs = [
   {
@@ -74,20 +74,27 @@ export default function VirtualTourCostUK() {
       faqs={faqs}
     >
       <ContentSection>
-        <p className="text-apple-gray-700 leading-relaxed mb-4">
+        <Lead>
           If you are considering a 3D virtual tour for your property or business, the first question
-          is usually the most practical one: how much will it cost? The honest answer is that it
-          depends on the size and complexity of the space — but UK pricing is more predictable than
-          most people expect, and you can get an exact figure in seconds with an online quote.
+          is usually the most practical one: how much will it cost?
+        </Lead>
+        <p className="mt-6 text-lg text-apple-gray-700 leading-relaxed">
+          The honest answer is that it depends on the size and complexity of the space — but UK
+          pricing is more predictable than most people expect, and you can get an exact figure in
+          seconds with an online quote.
         </p>
       </ContentSection>
 
+      <PullQuote cite="You can get an exact figure in seconds.">
+        UK 3D-tour pricing is more predictable than most people expect.
+      </PullQuote>
+
       <ContentSection>
-        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">What drives the price</h2>
-        <p className="text-apple-gray-700 leading-relaxed mb-4">
+        <SectionHeading eyebrow="Cost factors">What drives the price</SectionHeading>
+        <p className="text-lg text-apple-gray-700 leading-relaxed mb-4">
           Three factors account for most of the variation in cost:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-apple-gray-700">
+        <ul className="list-disc pl-6 space-y-2 text-lg text-apple-gray-700">
           <li><strong>Floor area</strong> — larger spaces take longer to capture and process.</li>
           <li><strong>Complexity</strong> — number of floors, rooms, and separate areas.</li>
           <li><strong>Add-ons</strong> — guided tours, measurement tools, custom branding, and integrations.</li>
@@ -95,23 +102,23 @@ export default function VirtualTourCostUK() {
       </ContentSection>
 
       <ContentSection shaded>
-        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">Typical price bands</h2>
-        <p className="text-apple-gray-700 leading-relaxed mb-4">
+        <SectionHeading eyebrow="Pricing">Typical price bands</SectionHeading>
+        <p className="text-lg text-apple-gray-700 leading-relaxed mb-4">
           As a guide, our own UK pricing is structured by floor area:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-apple-gray-700">
+        <ul className="list-disc pl-6 space-y-2 text-lg text-apple-gray-700">
           <li><strong>Small</strong> (up to 3,000 sq ft): around £111–£185.</li>
           <li><strong>Medium</strong> (3,000–10,000 sq ft): around £222–£1,111.</li>
           <li><strong>Enterprise</strong> (10,000+ sq ft): custom quote with volume options.</li>
         </ul>
-        <p className="text-apple-gray-700 leading-relaxed mt-4">
+        <p className="text-lg text-apple-gray-700 leading-relaxed mt-4">
           See the full breakdown on our <Link to="/pricing" className="text-apple-blue-600 hover:underline">pricing page</Link>.
         </p>
       </ContentSection>
 
       <ContentSection>
-        <h2 className="text-3xl font-semibold text-apple-gray-900 mb-6">What is included</h2>
-        <p className="text-apple-gray-700 leading-relaxed mb-4">
+        <SectionHeading eyebrow="What's included">What is included</SectionHeading>
+        <p className="text-lg text-apple-gray-700 leading-relaxed mb-4">
           A good package should cover the capture, the finished interactive tour, an embed code for
           your website, and hosting. With Beyex you also keep full ownership of your tour — it is not
           locked behind a subscription. Curious how that compares to platform providers? Read{' '}
