@@ -94,6 +94,7 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-white">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-apple-gray-900 focus:rounded-lg focus:shadow-lg">Skip to content</a>
       <SEOHead
         title="Contact Beyex — Get a Free 3D Tour Quote"
         description="Get in touch with Beyex for a free 3D virtual tour quote. Call, email, or WhatsApp us. We respond within 24 hours."
@@ -116,7 +117,7 @@ export default function Contact() {
       </nav>
 
       {/* Content */}
-      <main className="pt-32 pb-24 px-6">
+      <main id="main-content" className="pt-32 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Info */}

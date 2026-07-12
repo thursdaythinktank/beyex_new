@@ -30,12 +30,13 @@ function ScanResolvePoster() {
         <source srcSet="/brewhouse.webp" type="image/webp" />
         <img
           src="/brewhouse.webp"
-          alt=""
+          alt="Brewhouse interior"
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover opacity-40"
           width="800"
           height="400"
           loading="lazy"
+          decoding="async"
         />
       </picture>
       <div className="absolute inset-0 bg-[#0d1620]/60" />
@@ -99,12 +100,13 @@ export function HomeScanResolve() {
             <source srcSet="/brewhouse.webp" type="image/webp" />
             <img
               src="/brewhouse.webp"
-              alt=""
+              alt="Brewhouse interior"
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover opacity-30"
               width="800"
               height="400"
               loading="lazy"
+              decoding="async"
             />
           </picture>
           <div className="absolute inset-0 bg-[#0d1620]/70" />

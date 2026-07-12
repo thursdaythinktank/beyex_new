@@ -2,6 +2,7 @@
  * Apple-inspired form input components
  * Consistent styling with focus states
  */
+import { useId } from 'react';
 
 export function Input({
   label,
@@ -11,17 +12,21 @@ export function Input({
   onChange,
   required = false,
   className = '',
+  id,
   ...props
 }) {
+  const generatedId = useId();
+  const inputId = id || generatedId;
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-sm font-medium text-apple-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-apple-gray-700">
           {label}
           {required && <span className="text-apple-blue-500 ml-1">*</span>}
         </label>
       )}
       <input
+        id={inputId}
         type={type}
         placeholder={placeholder}
         value={value}
@@ -56,17 +61,21 @@ export function Textarea({
   rows = 4,
   required = false,
   className = '',
+  id,
   ...props
 }) {
+  const generatedId = useId();
+  const inputId = id || generatedId;
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-sm font-medium text-apple-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-apple-gray-700">
           {label}
           {required && <span className="text-apple-blue-500 ml-1">*</span>}
         </label>
       )}
       <textarea
+        id={inputId}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -101,17 +110,21 @@ export function Select({
   onChange,
   required = false,
   className = '',
+  id,
   ...props
 }) {
+  const generatedId = useId();
+  const inputId = id || generatedId;
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-sm font-medium text-apple-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-apple-gray-700">
           {label}
           {required && <span className="text-apple-blue-500 ml-1">*</span>}
         </label>
       )}
       <select
+        id={inputId}
         value={value}
         onChange={onChange}
         required={required}
