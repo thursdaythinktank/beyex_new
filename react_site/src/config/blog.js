@@ -4,6 +4,15 @@
  */
 export const blogPosts = [
   {
+    slug: '3d-tours-help-businesses-grow',
+    path: '/blog/3d-tours-help-businesses-grow',
+    title: 'How 3D Digital Tours Help Businesses Grow',
+    excerpt:
+      'How a 3D virtual tour helps local shops, cafés, gyms, and restaurants build trust, attract the right customers, and turn online searchers into foot traffic.',
+    date: '2026-07-12',
+    dateLabel: 'July 2026',
+  },
+  {
     slug: '3d-virtual-tour-cost-uk',
     path: '/blog/3d-virtual-tour-cost-uk',
     title: 'How Much Does a 3D Virtual Tour Cost in the UK?',

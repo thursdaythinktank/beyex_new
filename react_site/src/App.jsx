@@ -25,6 +25,7 @@ const VirtualToursRealEstate = lazy(() => import('./pages/services/VirtualToursR
 const VirtualToursConstruction = lazy(() => import('./pages/services/VirtualToursConstruction'));
 const DigitalTwinsManufacturingService = lazy(() => import('./pages/services/DigitalTwinsManufacturingService'));
 const Blog = lazy(() => import('./pages/Blog'));
+const BusinessGrowth = lazy(() => import('./pages/blog/BusinessGrowth'));
 const VirtualTourCostUK = lazy(() => import('./pages/blog/VirtualTourCostUK'));
 const MatterportVsLocalProvider = lazy(() => import('./pages/blog/MatterportVsLocalProvider'));
 const AIVideoShipMaintenance = lazy(() => import('./pages/case-studies/AIVideoShipMaintenance'));
@@ -100,6 +101,7 @@ function App() {
           <Route path="/services/digital-twins-manufacturing" element={<DigitalTwinsManufacturingService />} />
           {/* Blog */}
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/3d-tours-help-businesses-grow" element={<BusinessGrowth />} />
           <Route path="/blog/3d-virtual-tour-cost-uk" element={<VirtualTourCostUK />} />
           <Route path="/blog/matterport-vs-local-provider" element={<MatterportVsLocalProvider />} />
           <Route path="/case-studies/ai-video-ship-maintenance" element={<AIVideoShipMaintenance />} />
