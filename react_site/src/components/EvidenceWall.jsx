@@ -103,6 +103,7 @@ export function EvidenceWall() {
               >
                 <TourCard
                   thumbnail={tour.image}
+                  thumbnailSm={tour.imageSm}
                   title={tour.name}
                   category={tour.sector}
                   onClick={() => setSelectedTour(tour)}

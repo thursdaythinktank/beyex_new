@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
  * Clickable tour card with thumbnail and hover overlay
  * Opens tour modal on click
  */
-export function TourCard({ thumbnail, title, category, onClick }) {
+export function TourCard({ thumbnail, thumbnailSm, title, category, onClick }) {
   return (
     <motion.div
       className="relative cursor-pointer group rounded-2xl overflow-hidden aspect-video glass-liquid glass-specular glass-glow"
@@ -14,6 +14,8 @@ export function TourCard({ thumbnail, title, category, onClick }) {
     >
       <img
         src={thumbnail}
+        srcSet={thumbnailSm ? `${thumbnailSm} 480w, ${thumbnail} 800w` : undefined}
+        sizes={thumbnailSm ? '(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw' : undefined}
         alt={title}
         loading="lazy"
         decoding="async"

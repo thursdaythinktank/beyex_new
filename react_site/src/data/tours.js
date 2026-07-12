@@ -27,7 +27,6 @@ export const TOURS = {
     matterportId: 'eMkANY4WhdJ',
     url: matterport('eMkANY4WhdJ'),
     image: '/home-card.webp',
-    imageSm: '/home-card-sm.webp',
   },
   dosaKitchen: {
     name: 'Dosa Kitchen',
@@ -35,7 +34,6 @@ export const TOURS = {
     matterportId: '8jrsKsP2cyY',
     url: matterport('8jrsKsP2cyY'),
     image: '/dosakitchen-card.webp',
-    imageSm: '/dosakitchen-card-sm.webp',
   },
   blackwellGrange: {
     name: 'Blackwell Grange',
@@ -57,6 +55,9 @@ export const TOURS = {
     matterportId: 'z5PMXpHT98k',
     url: matterport('z5PMXpHT98k'),
     image: '/week2week-card.webp',
+    // 480px variant for the small (~342px) EvidenceWall grid; full image is
+    // still served on larger usages (case-study LazyTourEmbed) via srcset.
+    imageSm: '/week2week-card-sm.webp',
   },
   padocare: {
     name: 'Padocare — 42 Factor AI',

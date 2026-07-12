@@ -12,8 +12,8 @@
     <meta name="theme-color" content="#ffffff" />
 
     <!-- Preload LCP image for faster rendering (desktop gets full size, mobile gets small) -->
-    <link rel="preload" href="/brewhouse.webp" as="image" type="image/webp" media="(min-width: 769px)" />
-    <link rel="preload" href="/brewhouse-sm.webp" as="image" type="image/webp" media="(max-width: 768px)" />
+    <link rel="preload" href="/brewhouse.webp" as="image" type="image/webp" media="(min-width: 769px)" fetchpriority="high" />
+    <link rel="preload" href="/brewhouse-sm.webp" as="image" type="image/webp" media="(max-width: 768px)" fetchpriority="high" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
