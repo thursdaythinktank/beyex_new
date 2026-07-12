@@ -4,7 +4,10 @@
  */
 
 const CheckIcon = () => (
-  <svg className="w-5 h-5 text-apple-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+  // Explicit width/height keep the icon at its intended size even before the
+  // deferred stylesheet applies (avoids a FOUC where a class-only SVG balloons
+  // to its default intrinsic size).
+  <svg width="20" height="20" className="w-5 h-5 text-apple-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
   </svg>
 );
@@ -96,8 +99,74 @@ export function ProcessStep({ number, title, children }) {
  */
 export function ContentSection({ children, shaded = false, className = '' }) {
   return (
-    <section className={`mb-12 ${shaded ? 'bg-apple-gray-50 -mx-6 px-6 py-10 rounded-2xl' : ''} ${className}`}>
+    <section className={`mb-12 ${shaded ? 'bg-apple-gray-50 -mx-6 px-6 py-10 rounded-2xl sm:-mx-10 sm:px-10' : ''} ${className}`}>
       {children}
     </section>
+  );
+}
+
+/**
+ * Large intro/lede paragraph — sets a bigger, calmer opening than body copy.
+ */
+export function Lead({ children }) {
+  return (
+    <p className="text-xl sm:text-2xl leading-relaxed text-apple-gray-700 font-light">
+      {children}
+    </p>
+  );
+}
+
+/**
+ * Section heading with a colored eyebrow label and accent rule.
+ * Adds hierarchy and rhythm so long articles do not read as one flat wall.
+ */
+export function SectionHeading({ eyebrow, children }) {
+  return (
+    <div className="mb-6">
+      {eyebrow && (
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-apple-blue-600 mb-3">
+          {eyebrow}
+        </p>
+      )}
+      <h2 className="text-3xl sm:text-[2rem] font-semibold text-apple-gray-900 leading-tight tracking-tight">
+        {children}
+      </h2>
+      <div className="mt-4 h-1 w-12 rounded-full bg-gradient-to-r from-apple-blue-500 to-apple-blue-400" />
+    </div>
+  );
+}
+
+/**
+ * Editorial pull quote — lifts a punchy line out of the body copy.
+ */
+export function PullQuote({ children, cite }) {
+  return (
+    <figure className="my-12 relative pl-6 sm:pl-8 border-l-4 border-apple-blue-500">
+      <span aria-hidden="true" className="absolute -top-4 left-4 text-6xl leading-none text-apple-blue-100 font-serif select-none">&ldquo;</span>
+      <blockquote className="relative text-2xl sm:text-3xl font-medium leading-snug text-apple-gray-900">
+        {children}
+      </blockquote>
+      {cite && <figcaption className="mt-3 text-sm text-apple-gray-500">{cite}</figcaption>}
+    </figure>
+  );
+}
+
+/**
+ * Bold, colored statistic band — high-contrast break from body copy.
+ * Pass an array of { value, label }.
+ */
+export function StatBand({ stats }) {
+  return (
+    <div className="my-10 grid grid-cols-1 sm:grid-cols-2 gap-px rounded-3xl overflow-hidden shadow-lg shadow-apple-blue-500/10">
+      {stats.map((s, i) => (
+        <div
+          key={i}
+          className={`p-8 text-white ${i % 2 === 0 ? 'bg-apple-blue-600' : 'bg-apple-blue-500'}`}
+        >
+          <p className="text-5xl font-bold tracking-tight">{s.value}</p>
+          <p className="mt-3 text-sm leading-relaxed text-blue-50/90">{s.label}</p>
+        </div>
+      ))}
+    </div>
   );
 }
