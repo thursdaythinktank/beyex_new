@@ -50,7 +50,7 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 space-y-4">
             <Link to="/">
-              <img src="/logo.png" alt="Beyex" className="h-8" width="77" height="32" />
+              <img src="/logo.png" alt="Beyex" className="h-8" width="77" height="32" loading="lazy" decoding="async" />
             </Link>
             <p className="text-sm text-apple-gray-600">
               Digital twins that let anyone step inside your space.

@@ -31,6 +31,7 @@ function ScanResolvePoster() {
         <img
           src="/brewhouse.webp"
           alt=""
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover opacity-40"
           width="800"
           height="400"
@@ -99,6 +100,7 @@ export function HomeScanResolve() {
             <img
               src="/brewhouse.webp"
               alt=""
+              aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover opacity-30"
               width="800"
               height="400"

@@ -25,7 +25,10 @@ export function LazyTourEmbed({ tour, className = '' }) {
         src={tour.image}
         alt={`${tour.name} - 3D tour preview`}
         className="absolute inset-0 w-full h-full object-cover"
+        width="1280"
+        height="720"
         loading="lazy"
+        decoding="async"
       />
       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
 

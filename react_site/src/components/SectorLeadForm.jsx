@@ -59,6 +59,7 @@ export function SectorLeadForm({ sector, heading = 'Get a free quote', id = 'lea
             type="email"
             name="email"
             required
+            aria-label="Email address"
             value={form.email}
             onChange={handleChange}
             placeholder="Email address"
@@ -67,6 +68,7 @@ export function SectorLeadForm({ sector, heading = 'Get a free quote', id = 'lea
           <input
             type="tel"
             name="phone"
+            aria-label="Phone number (optional)"
             value={form.phone}
             onChange={handleChange}
             placeholder="Phone (optional)"
@@ -76,6 +78,7 @@ export function SectorLeadForm({ sector, heading = 'Get a free quote', id = 'lea
         <textarea
           name="message"
           rows={3}
+          aria-label="Tell us about your space"
           value={form.message}
           onChange={handleChange}
           placeholder={`Tell us about your ${sector.toLowerCase()} space...`}

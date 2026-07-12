@@ -41,8 +41,18 @@ export function ContentPageLayout({
 
   // Build BreadcrumbList JSON-LD when breadcrumbs are provided.
   // The visual nav always prepends "Home" → "/", so we mirror that here.
+  // Skip auto-generation if the page already supplies its own BreadcrumbList
+  // via seoProps.schema — otherwise the page emits two, and the auto one has a
+  // weaker last item (the current page has no href).
+  const existingSchemas = Array.isArray(seoProps.schema)
+    ? seoProps.schema
+    : seoProps.schema
+    ? [seoProps.schema]
+    : [];
+  const hasBreadcrumbList = existingSchemas.some((s) => s && s['@type'] === 'BreadcrumbList');
+
   const breadcrumbSchema =
-    breadcrumbs.length > 0
+    breadcrumbs.length > 0 && !hasBreadcrumbList
       ? {
           '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
@@ -64,7 +74,7 @@ export function ContentPageLayout({
       : null;
 
   const mergedSchema = breadcrumbSchema
-    ? [...(Array.isArray(seoProps.schema) ? seoProps.schema : seoProps.schema ? [seoProps.schema] : []), breadcrumbSchema]
+    ? [...existingSchemas, breadcrumbSchema]
     : seoProps.schema;
 
   return (

@@ -8,6 +8,7 @@ import { Footer } from './Footer';
 export function LegalPageLayout({ title, lastUpdated, children }) {
   return (
     <div className="min-h-screen bg-white">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-apple-gray-900 focus:rounded-lg focus:shadow-lg">Skip to content</a>
       {/* Simple Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-apple-gray-100">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -24,7 +25,7 @@ export function LegalPageLayout({ title, lastUpdated, children }) {
       </nav>
 
       {/* Content */}
-      <main className="pt-24 pb-16">
+      <main id="main-content" className="pt-24 pb-16">
         <div className="max-w-3xl mx-auto px-6">
           {/* Header */}
           <header className="mb-12">
