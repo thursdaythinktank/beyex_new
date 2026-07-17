@@ -38,7 +38,10 @@ export function use3DTransform(options = {}) {
         rotateY: progress * rotateY,
         translateZ: progress * translateZ,
         scale: 1 + (progress * scaleAmount),
-        opacity: progress,
+        // Reach full opacity once the element is ~1/3 visible. Gating opacity on
+        // the raw ratio left tall embeds (e.g. a 16:9 tour on a small phone) that
+        // never reach ratio 1 permanently semi-transparent.
+        opacity: Math.min(1, progress * 3),
       });
     };
 

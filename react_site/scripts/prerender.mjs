@@ -76,13 +76,17 @@ async function startServer(dir) {
 }
 
 async function inlineCriticalCss(html, dir) {
-  // beasties needs the built stylesheet reachable from the served root. It
-  // resolves <link href="/assets/*.css"> against `path`, and rewrites the
-  // remaining full stylesheet to load async (preload + onload swap).
+  // beasties inlines the above-the-fold critical CSS. The remaining full
+  // stylesheet is left as a normal blocking <link rel="stylesheet"> rather than
+  // an async preload+onload swap: the production CSP (script-src without
+  // 'unsafe-inline') BLOCKS the inline `onload="this.rel='stylesheet'"` handler,
+  // so the swap never fires and the full stylesheet never applies — breaking all
+  // non-critical styling site-wide. The bundle is ~7.5 KB gzipped, so a blocking
+  // link costs almost nothing and is CSP-safe (and avoids a FOUC).
   const beasties = new Beasties({
     path: dir,
     publicPath: '/',
-    preload: 'swap',
+    preload: false,
     pruneSource: false, // keep the source stylesheet intact
     inlineFonts: false,
     logLevel: 'silent',
