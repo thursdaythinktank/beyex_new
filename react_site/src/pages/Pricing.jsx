@@ -23,7 +23,7 @@ export default function Pricing() {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-apple-gray-900 focus:rounded-lg focus:shadow-lg">Skip to content</a>
       <SEOHead
         title="Pricing — 3D Virtual Tour Packages"
-        description="Beyex 3D virtual tours start from £349. Contact us for a tailored quote for your space."
+        description="Beyex 3D virtual tours start from £399. Contact us for a tailored quote for your space."
         canonicalUrl="https://beyex.com/pricing"
         schema={pricingSchema}
       />
@@ -49,7 +49,7 @@ export default function Pricing() {
               Simple, transparent pricing
             </h1>
             <p className="text-2xl text-apple-gray-700 mb-4">
-              Our pricing starts from <span className="font-semibold text-apple-gray-900">£349</span>.
+              Our pricing starts from <span className="font-semibold text-apple-gray-900">£399</span>.
             </p>
             <p className="text-lg text-apple-gray-600 mb-10 max-w-xl mx-auto">
               Every space is different. Tell us about yours and we&rsquo;ll send a tailored,
