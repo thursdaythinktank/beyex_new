@@ -11,7 +11,7 @@ const contactSchema = [
     '@type': 'LocalBusiness',
     name: 'Beyex Ltd',
     image: 'https://beyex.com/logo.png',
-    telephone: '+44-7459-177457',
+    telephone: '+44-7836-405319',
     email: 'contact@beyex.com',
     url: 'https://beyex.com/contact',
     address: {
@@ -161,10 +161,10 @@ export default function Contact() {
                   <div>
                     <h3 className="font-semibold text-apple-gray-900 mb-1">Phone</h3>
                     <a
-                      href="tel:+447459177457"
+                      href="tel:+447836405319"
                       className="text-apple-blue-600 hover:underline"
                     >
-                      +44 7459 177457
+                      +44 7836 405319
                     </a>
                   </div>
                 </div>

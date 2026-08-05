@@ -261,8 +261,8 @@ export default function PrivacyPolicy() {
           </p>
           <p>
             Phone:{' '}
-            <a href="tel:+447459177457" className="text-apple-blue-600 hover:underline">
-              +44 7459 177457
+            <a href="tel:+447836405319" className="text-apple-blue-600 hover:underline">
+              +44 7836 405319
             </a>
           </p>
         </address>

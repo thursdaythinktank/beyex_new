@@ -123,7 +123,7 @@ app.post('/api/contact', rateLimit, async (req, res) => {
           <div style="background: #e8f4fd; padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #007AFF;">
             <h3 style="margin: 0 0 15px 0; color: #1d1d1f; font-size: 16px;">Get in Touch</h3>
             <p style="margin: 8px 0; color: #1d1d1f;">
-              <strong>Phone:</strong> <a href="tel:+447459177457" style="color: #007AFF; text-decoration: none;">+44 7459 177457</a>
+              <strong>Phone:</strong> <a href="tel:+447836405319" style="color: #007AFF; text-decoration: none;">+44 7836 405319</a>
             </p>
             <p style="margin: 8px 0; color: #1d1d1f;">
               <strong>Email:</strong> <a href="mailto:contact@beyex.com" style="color: #007AFF; text-decoration: none;">contact@beyex.com</a>
