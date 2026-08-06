@@ -287,7 +287,16 @@ app.post('/api/subscribe', rateLimit, async (req, res) => {
       return res.json({ success: true, already: true });
     }
 
-    console.error('Mailchimp error:', data.title || response.status);
+    // A 400 from Mailchimp is a client-side problem with the submitted email
+    // (typically a fake or typo'd address, e.g. "looks fake or invalid"). Surface
+    // it as a 400 with a clear message instead of a generic 502 "try again",
+    // which would wrongly tell the user to retry an address that never works.
+    if (response.status === 400) {
+      console.warn('Mailchimp rejected email:', data.title, '—', data.detail);
+      return res.status(400).json({ error: 'That email address looks invalid. Please check it and try again.' });
+    }
+
+    console.error('Mailchimp error:', data.title || response.status, '—', data.detail || '');
     return res.status(502).json({ error: 'Could not subscribe. Please try again.' });
   } catch (err) {
     console.error('Subscribe error:', err);

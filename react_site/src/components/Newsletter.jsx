@@ -7,6 +7,7 @@ import { useState } from 'react';
 export function Newsletter() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,10 +19,16 @@ export function Newsletter() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
-      if (!res.ok) throw new Error('failed');
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setErrorMsg(data.error || 'Could not subscribe right now. Please try again.');
+        setStatus('error');
+        return;
+      }
       setStatus('success');
       setEmail('');
     } catch {
+      setErrorMsg('Could not subscribe right now. Please try again.');
       setStatus('error');
     }
   };
@@ -53,7 +60,7 @@ export function Newsletter() {
             </button>
           </div>
           {status === 'error' && (
-            <p className="text-xs text-red-600">Could not subscribe right now. Please try again.</p>
+            <p className="text-xs text-red-600">{errorMsg || 'Could not subscribe right now. Please try again.'}</p>
           )}
         </form>
       )}
