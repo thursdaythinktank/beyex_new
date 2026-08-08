@@ -38,6 +38,7 @@ const ROUTES = [
   '/pricing',
   '/contact',
   '/blog',
+  '/blog/3d-tours-sell-properties-faster',
   '/blog/3d-tours-help-businesses-grow',
   '/terms',
   '/privacy-policy',

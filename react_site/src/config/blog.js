@@ -4,6 +4,15 @@
  */
 export const blogPosts = [
   {
+    slug: '3d-tours-sell-properties-faster',
+    path: '/blog/3d-tours-sell-properties-faster',
+    title: 'Properties With 3D Virtual Tours Sell Up to 31% Faster',
+    excerpt:
+      'Two identical houses, same street, same week — one sells in a month, the other lingers. The honest story behind the "31% faster" stat, and why 3D tours mean fewer, better viewings.',
+    date: '2026-08-08',
+    dateLabel: 'August 2026',
+  },
+  {
     slug: '3d-tours-help-businesses-grow',
     path: '/blog/3d-tours-help-businesses-grow',
     title: 'How 3D Digital Tours Help Businesses Grow',
