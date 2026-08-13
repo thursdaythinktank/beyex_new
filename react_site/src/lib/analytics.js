@@ -8,11 +8,13 @@
  * connect.facebook.net, snap.licdn.com).
  */
 const GA_MEASUREMENT_ID = 'G-9KYHC00464';
+const GTM_CONTAINER_ID = 'GTM-TRND8R72';
 const META_PIXEL_ID = '1599995737760270';
 const LINKEDIN_PARTNER_ID = '10260105';
 const CONSENT_KEY = 'beyex-cookie-consent';
 
 let gaLoaded = false;
+let gtmLoaded = false;
 let metaLoaded = false;
 let linkedinLoaded = false;
 
@@ -51,6 +53,26 @@ function loadGA() {
   window.gtag = gtag;
   gtag('js', new Date());
   gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+}
+
+/**
+ * Google Tag Manager container.
+ * This is the standard GTM bootstrap, but injected programmatically (no inline
+ * <script>) so it satisfies the strict CSP — googletagmanager.com is already
+ * allow-listed in script-src. GTM is loaded here, behind the consent gate,
+ * rather than unconditionally in <head>, so no container tags fire before opt-in.
+ */
+function loadGTM() {
+  if (gtmLoaded || typeof window === 'undefined' || !GTM_CONTAINER_ID) return;
+  gtmLoaded = true;
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`;
+  document.head.appendChild(script);
 }
 
 /** Meta (Facebook) Pixel */
@@ -105,6 +127,7 @@ function loadLinkedIn() {
 
 /** Load every consent-gated tracker. Each loader is individually guarded. */
 export function loadAnalytics() {
+  loadGTM();
   loadGA();
   loadMetaPixel();
   loadLinkedIn();
